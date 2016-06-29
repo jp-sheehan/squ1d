@@ -1,0 +1,55 @@
+
+SPECIES			1
+			Name		Charge		Mass		Magnetization
+			ARGON		1.0e0		6.68e-26	1
+
+
+COULOMB_COLLISIONS	0
+
+
+COLLISION_TYPES		1
+			Name			Type		CrossSection
+			ARGON			NEUTRAL		CONSTANT       1.0
+			NeutralDensity		1.0e0        
+			NeutralTemperature	1.0e1        
+
+
+BOUNDARIES		2
+
+			Name		left                 
+			Range		0.0      
+			Type		PERIODIC
+			eDensity	PERIODIC 
+			eTemp		DIRICHLET	0.0e4		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0  
+			Phi		PERIODIC
+			BField    	DIRICHLET	0.0		0.0		0.0  
+
+			Name		right                
+			Range		1.0       
+			Type		PERIODIC
+			eDensity	PERIODIC 
+			eTemp		DIRICHLET	0.0e4		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0  
+			Phi		PERIODIC
+			BField    	DIRICHLET	0.0		0.0		0.0  
+
+INITIAL_CONDITIONS
+			ElecDensity		1.e5		PERTURBATION		0.0
+			ElecTemperature		0.0		MAXWELLIAN        
+			ElecVelocity		1.0e3		0.0		0.0
+			Phi			0.0
+			MagneticField		0.0		0.0		0.0
+
+SPECIAL_REGIONS		0
+
+EOF
+
+............................Description.................................
+
+Ion-neutral collision relaxation test for Argon.
+
+........................................................................
+
+
+

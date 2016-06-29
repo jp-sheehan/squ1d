@@ -1,0 +1,26 @@
+#
+#   makefile for solver
+#
+OBJ = main_PIC.o solver.o mathfunctions.o mesh.o initializesolver.o writeoutput.o boundary.o solvertype.o   #..Objects to compile
+CC = mpic++ #g++ #..Select the Compiler
+LOADER = mpic++ #g++ #gfortran   #..Select the Loader
+LFLAGS = -L/home/frans/Downloads/lapack-3.5.0
+IFLAGS = -I/home/frans/Downloads/lapack-3.5.0/lapacke/include
+FLIB = /home/frans/Downloads/lapack-3.5.0
+#LIBRARIES = $(FLIB)/liblapacke.a $(FLIB)/liblapack.a $(FLIB)/librefblas.a
+LFLAGS = -O2 -g -pg -std=gnu++0x -lstdc++ -lm -lmpi -llapack -Wall
+#LFLAGS = -lpthread -lm -ldl -O2 -g -pg -std=gnu++0x -lstdc++
+CFLAGS = 
+
+PIC.exe:  $(OBJ) $(LIBRARIES)
+	$(LOADER) $(CFLAGS) -m64 -w -DMKL_ILP64 $(OBJ) $(LFLAGS) -o PIC.exe 
+	export LD_LIBRARY_PATH="$(FLIB)":$(LD_LIBRARY_PATH);
+
+.cpp.o:
+	$(CC) -c -m64 -w -DMKL_ILP64 $(CFLAGS) $< $(IFLAGS) $(LIBRARIES)  $(LFLAGS) -o $@ 
+
+clean:  
+	rm *.o *.exe 
+
+cleandat: 
+	rm *.dat *.out

@@ -1,0 +1,61 @@
+LengthScale	     1.0
+TimeScale	     1.0
+
+cfl        	     1.0
+TimeStep	     6e-6
+Iterations	     20000
+Print_Iteration      200
+
+ParticleWeight       10
+
+InterpolationScheme  FIRST
+ParticleMover        BORIS
+
+GAS
+BackgroundDensity    0.0
+
+SPECIES	             2
+                     Name             Charge             Mass           Magnetization
+                     electron        -1.602e-19          9.109e-31      0
+                     ion              1.602e-19          3.644e-29      0
+
+COULOMB_COLLISIONS   0
+
+COLLISION_TYPES      0
+
+BOUNDARIES           2
+left                 xrange    0.0      
+                     type      SOURCE      FLUX
+                     eDensity  DIRICHLET   1.0e4        UNIFORM 
+                     eTemp     DIRICHLET   4.2e0       MAXWELLIAN
+                     eVel      DIRICHLET   0.0          0.0           0.0  
+                     iDensity  DIRICHLET   6.324e4      UNIFORM
+                     iTemp     DIRICHLET   4.2e0       MAXWELLIAN 
+                     iVel      DIRICHLET   0.0          0.0           0.0  
+                     Phi       DIRICHLET   0.0
+                     BField    DIRICHLET   0.0          0.0           0.0  
+right                xrange    1.0       
+                     type      WALL        FLOATING
+                     edensity  DIRICHLET   0.0          UNIFORM
+                     eTemp     DIRICHLET   1.0e10       MAXWELLIAN
+                     eVel      DIRICHLET   0.0          0.0           0.0
+                     idensity  DIRICHLET   0.0          UNIFORM
+                     ionTemp   DIRICHLET   1.0e10       MAXWELLIAN
+                     ionVel    DIRICHLET   0.0          0.0           0.0
+                     Phi       NEUMANN     0.0   
+                     BField    DIRICHLET   0.0          0.0           0.0  
+
+INITIAL_CONDITIONS
+ElecDensity          0.0            PERTURBATION     0.0
+IonDensity           0.0            PERTURBATION     0.0
+ElecTemperature      0e0            MAXWELLIAN        
+IonTemperature       0.0            MAXWELLIAN
+ElecVelocity         1.0            0.0              0.0
+IonVelocity          0.0            0.0              0.0
+Phi                  0.0
+MagneticField        0.0            0.0              0.0
+
+SPECIAL_REGIONS      0
+
+EOF
+

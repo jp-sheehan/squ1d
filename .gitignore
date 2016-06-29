@@ -1,0 +1,8 @@
+*~
+.*.swp
+.*.swo
+*.dat
+*.log
+*.o
+*.out
+*.exe

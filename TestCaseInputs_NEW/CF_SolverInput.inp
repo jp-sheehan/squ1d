@@ -1,0 +1,54 @@
+LengthScale	     1.0
+TimeScale	     1.0
+
+cfl        	     1.0
+TimeStep	     1e-10
+Iterations	     1000
+Print_Iteration      999
+
+ParticleWeight       1
+
+InterpolationScheme  FIRST
+ParticleMover        BORIS
+
+GAS
+BackgroundDensity    0.0
+
+SPECIES	             1
+                     Name                  Charge       Mass             Magnetization
+                     electron              1.0e0        9.11e-31         0
+
+COLLISION_TYPES      0
+
+COLLISION_TYPES      1
+                     electron               NEUTRAL      ARGON
+                     neutral_background     Density      1.0e18        TEMPERATURE    2.93e2
+
+BOUNDARIES           2
+left                 xrange      0.0      
+                     type        PERIODIC
+                     eDensity    PERIODIC  
+                     eTemp       DIRICHLET   0.0     MAXWELLIAN 
+                     eVel        DIRICHLET   1.0     0.0    0.0  
+                     Phi         PERIODIC    0.0
+                     BField      DIRICHLET   0.0     0.0    0.0  
+right                xrange      1.0       
+                     type        PERIODIC
+                     edensity    PERIODIC
+                     eTemp       DIRICHLET   0.0     MAXWELLIAN
+                     eVel        DIRICHLET   1.0     0.0    0.0
+                     Phi         PERIODIC    0.0   
+                     BField      DIRICHLET   0.0     0.0    0.0  
+
+INITIAL_CONDITIONS
+ElecDensity1         1e5          PERTURBATION     0.0
+ElecTemperature1     0.0e1        MAXWELLIAN       
+ElecVelocity1        1.75e7       0.0        0.0
+Phi                  0.0
+MagneticField        0.0          0.0        0.0
+
+SPECIAL_REGIONS      0
+
+
+EOF
+

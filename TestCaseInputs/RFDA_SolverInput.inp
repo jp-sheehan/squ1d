@@ -1,0 +1,63 @@
+LengthScale	     1.0
+TimeScale	     1.0
+
+cfl        	     1.0
+TimeStep	     7.20179e-11
+Iterations	     10000000
+Print_Iteration      100000
+
+ParticleWeight       1.0e8
+
+InterpolationScheme  FIRST
+ParticleMover        SIMPLE
+
+GAS
+BackgroundDensity    0.0
+
+SPECIES	             2
+                     Name                Charge             Mass             Magnetization          
+                     electron           -1.602e-19          9.11e-31         0                 
+                     ARGON               1.602e-19          6.68e-26         0        
+
+COLLISION_TYPES      2
+		     electron               NEUTRAL          ARGON
+                     ARGON                  NEUTRAL          ARGON
+                     neutral_background     Density          1.57e21        Temperature  3.0e2
+
+
+BOUNDARIES           2
+left                 xrange    0.0      
+                     type      WALL        VOLTAGE      1.356e7
+                     eDensity  DIRICHLET   3.0e15       UNIFORM
+                     eTemp     DIRICHLET   0.0e4        MAXWELLIAN 
+                     eVel      DIRICHLET   0.0          0.0           0.0  
+                     iDensity  DIRICHLET   3.0e15       UNIFORM
+                     iTemp     DIRICHLET   0.0e4        MAXWELLIAN 
+                     iVel      DIRICHLET   0.0          0.0           0.0  
+                     Phi       DIRICHLET   500
+                     BField    DIRICHLET   0.0          0.0           0.0  
+right                xrange    1.0       
+                     type      WALL        OTHER
+                     edensity  DIRICHLET   3.0e15       UNIFORM
+                     eTemp     DIRICHLET   0.0e10       MAXWELLIAN
+                     eVel      DIRICHLET   0.0          0.0           0.0
+                     iDensity  DIRICHLET   3.0e15       UNIFORM
+                     iTemp     DIRICHLET   0.0e4        MAXWELLIAN 
+                     iVel      DIRICHLET   0.0          0.0           0.0  
+                     Phi       DIRICHLET   0.0   
+                     BField    DIRICHLET   0.0          0.0           0.0  
+
+INITIAL_CONDITIONS
+eDensity           1.e15          PERTURBATION     0.0
+iDensity           1.e15          PERTURBATION     0.0
+eTemperature       2.298e4       MAXWELLIAN
+iTemperature       2.298e4       MAXWELLIAN
+eVelocity          0.0            0.0              0.0
+iVelocity          0.0            0.0              0.0
+Phi                  0.0
+MagneticField        0.0            0.0              0.0
+
+
+SPECIAL_REGIONS      0
+
+EOF
