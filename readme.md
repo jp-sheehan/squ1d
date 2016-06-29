@@ -1,4 +1,4 @@
-# Project Name
+# SQu1D
 
 TODO: Write a project description
 
