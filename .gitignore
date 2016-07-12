@@ -6,3 +6,4 @@
 *.o
 *.out
 *.exe
+results/
