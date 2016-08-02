@@ -111,9 +111,11 @@ int main(int argc, char *argv[])
    sflag = pr.readsolver();
 
    if(sflag==0) st.electrostatic1DPIC();
+   /* not implemented
    else if(sflag==2) st.electromagnetic2DPIC();
    else if(sflag==10) st.euler1D();   
    else if(sflag==11) st.euler2D();   
+   */
 
    MPI_Finalize();
 

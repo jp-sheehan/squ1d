@@ -40,7 +40,7 @@ class initializeSolver
         int readsolver(); //..Read solver type
 	void readdata(solverVars &,mesh &, std::vector<boundvars> &, std::vector<spclvars> &); //..Read data for specific run and solver type
         void initializePIC(std::vector<particles> &,fields &, std::vector<contnm> &, mesh &,std::vector<boundvars> &,std::vector<spclvars> &,solverVars &, writeOutput &,MPIvars &);//..Intialize PIC solver
-        void initializeEuler(flow &, mesh &,boundary &,solverVars);  //..Initialize Euler solver (CFD project)
+        //void initializeEuler(flow &, mesh &,boundary &,solverVars);  //..Initialize Euler solver (CFD project)
         void initializeParticles(particles &,mesh,solverVars,int); //..Initialize particles
         void initializeParticles(particles &,mesh,solverVars,int,int); //..Initialize particle from restart file
         void initializeEfield(std::vector<double> &, std::vector<double>,int,int); //..Initialize electric field

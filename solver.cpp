@@ -5085,7 +5085,7 @@ void solver::updateNeutralBackground(contnm &s_neut, const mesh &s_msh, double s
 
 
 
-
+/*
 
 
 
@@ -5979,3 +5979,5 @@ double solver::thetaMUSCL(double up,double uc,double um)
 
     return theta;
 }
+
+*/

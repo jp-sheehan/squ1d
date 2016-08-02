@@ -12,7 +12,7 @@
 #define MATHFUNCTIONS_H
 
 class mathFunctions 
- {
+{
    public:
       double el_first_comp(double); //..First complete integral
       double el_second_comp(double); //..Second complete integral
@@ -41,17 +41,17 @@ class mathFunctions
       void smoothData(std::vector<double> &,int,int,int); //..Smooth Vector Data
 
       /*double ddxpwc(mesh, std::vector<double>, int, int,int) ;
-      double ddxpwc(mesh, std::vector<double>, int,int) ;
-      double ddxcwp(mesh, std::vector<double>, int, int,int) ;
-      double ddxcwp(mesh, std::vector<double>, int,int) ;
-      double ddxp(mesh, std::vector<double>, int,int) ;
-      double ddxp(mesh, std::vector<double>, int, int,int) ;
-      double ddxc(mesh, std::vector<double>, int,int) ;
-      double ddxc(mesh, std::vector<double>, int, int,int) ;
-      */
+        double ddxpwc(mesh, std::vector<double>, int,int) ;
+        double ddxcwp(mesh, std::vector<double>, int, int,int) ;
+        double ddxcwp(mesh, std::vector<double>, int,int) ;
+        double ddxp(mesh, std::vector<double>, int,int) ;
+        double ddxp(mesh, std::vector<double>, int, int,int) ;
+        double ddxc(mesh, std::vector<double>, int,int) ;
+        double ddxc(mesh, std::vector<double>, int, int,int) ;
+        */
 
    private:  
       double el_loopcurrent, el_loopradius, el_r,el_theta;
       double el_loopcenter[3], el_centroid[3];
- };
+};
 #endif

@@ -17,8 +17,8 @@ void sType::electrostatic1DPIC()
    std::vector<particles> prt;
    std::vector<contnm> cnt;
    MPIvars mpiv;
-	
-//..Initialize code..//
+
+   //..Initialize code..//
 
    MPI_Comm_size(MPI_COMM_WORLD,&numprocs);   //MPI
    MPI_Comm_rank(MPI_COMM_WORLD,&procid);  //MPI
@@ -34,22 +34,22 @@ void sType::electrostatic1DPIC()
    mathFunctions mth;
    std::vector<boundvars> bdv;
    std::vector<spclvars> spclv;
- 
+
    pr.readdata(svar,msh,bdv,spclv);
    slvr.coulForce = 0;
 
    //omp_set_num_threads(svar.nsp);
 
    /*#pragma omp parallel private(tid)  // OMP
-   {
-    tid = omp_get_thread_num();
-    if(tid==0)
-    {
-      numthreads = omp_get_num_threads();
-      std::cout << "\n\nNumber of threads: \t" << numthreads << std::endl;
-    }
-   }*/
-   
+     {
+     tid = omp_get_thread_num();
+     if(tid==0)
+     {
+     numthreads = omp_get_num_threads();
+     std::cout << "\n\nNumber of threads: \t" << numthreads << std::endl;
+     }
+     }*/
+
    writeOutput wrt(0,svar.nsp);
 
    msh.generatePICmesh(svar.lscale); 
@@ -57,10 +57,10 @@ void sType::electrostatic1DPIC()
 
    if(procid==0) //MPI
    {
-     std::cout << "\nRunning with " << numprocs << " processors...\n"; 
+      std::cout << "\nRunning with " << numprocs << " processors...\n"; 
 
-     wrt.writepMesh(msh);
-     wrt.writecMesh(msh);
+      wrt.writepMesh(msh);
+      wrt.writecMesh(msh);
    }
 
    svar.totalTime = 0.0;
@@ -79,111 +79,111 @@ void sType::electrostatic1DPIC()
    if(svar.nspcl>0) bnd.applySpecialRegionsPIC(msh,cnt,prt,svar,spclv,EM);
 
    /*for(j=0;j<svar.nsp;j++) 
-   {
+     {
      for(k=0;k<numprocs;k++) //MPI
      {
-       MPI_Barrier(MPI_COMM_WORLD);
-       if(k==procid) wrt.writeParticles(prt[j],EM,msh,slvr.totalTime);
+     MPI_Barrier(MPI_COMM_WORLD);
+     if(k==procid) wrt.writeParticles(prt[j],EM,msh,slvr.totalTime);
      } //MPI
-   }*/
+     }*/
 
-   #if SIMTYPE==2
+#if SIMTYPE==2
    if(svar.outvdf==1)
    {
-     for(j=0;j<prt[0].nsp;j++) wrt.findvdf(prt[j],msh,svar.outvdf_flag,slvr.totalTime);  //MPI
-     for(j=0;j<prt[0].nsp;j++) wrt.findphasespace(prt[j],msh,svar.outvdf_flag,slvr.totalTime);   //MPI
+      for(j=0;j<prt[0].nsp;j++) wrt.findvdf(prt[j],msh,svar.outvdf_flag,slvr.totalTime);  //MPI
+      for(j=0;j<prt[0].nsp;j++) wrt.findphasespace(prt[j],msh,svar.outvdf_flag,slvr.totalTime);   //MPI
    }
-   #endif
+#endif
 
    auto t1 = std::chrono::high_resolution_clock::now();
 
-////////////...............Main loop..........///////////////////////
+   ////////////...............Main loop..........///////////////////////
 
    for(i=1; i<(svar.iter+1); i++)
    {
-      #if SIMTYPE==0 || SIMTYPE==3
-        //bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
-        slvr.poisson1D(msh,EM.phi,cnt,bdv,prt,slvr.deltaT,slvr.totalTime);   //..MB Comment out for
-        slvr.phitoE(EM.phi,EM.E,msh); //..MB Comment out for
-        bnd.applyEfieldBoundary(msh,EM,bdv); //..MB Comment out for
-      #endif
+#if SIMTYPE==0 || SIMTYPE==3
+      //bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
+      slvr.poisson1D(msh,EM.phi,cnt,bdv,prt,slvr.deltaT,slvr.totalTime);   //..MB Comment out for
+      slvr.phitoE(EM.phi,EM.E,msh); //..MB Comment out for
+      bnd.applyEfieldBoundary(msh,EM,bdv); //..MB Comment out for
+#endif
 
       if(svar.rst==0 || i>1) //..Avoid double update on restart
       {
-        for(j=0;j<svar.nsp;j++) slvr.updatePartVel(prt[j], EM, msh, svar.mvscheme);
+         for(j=0;j<svar.nsp;j++) slvr.updatePartVel(prt[j], EM, msh, svar.mvscheme);
       }
 
       for(j=0;j<svar.nsp;j++) slvr.checkNAN(prt[j], EM, msh); //MPI
 
       if((i-1)%svar.p_iter == 0)  //........File Outputs
       {
-        MPI_Barrier(MPI_COMM_WORLD);  //MPI
+         MPI_Barrier(MPI_COMM_WORLD);  //MPI
 
-        for(j=0;j<svar.nsp;j++) slvr.redistributeparticles(prt[j],msh.vecdims,msh.meshdims);  //MPI
-        MPI_Barrier(MPI_COMM_WORLD);  //MPI
+         for(j=0;j<svar.nsp;j++) slvr.redistributeparticles(prt[j],msh.vecdims,msh.meshdims);  //MPI
+         MPI_Barrier(MPI_COMM_WORLD);  //MPI
 
-        slvr.weighContinuumPIC(prt,cnt,msh,mpiv);  //CHGMPI
-        for(j=0;j<svar.nsp;j++) mth.smoothData(cnt[j].N,msh.smthcnt);
+         slvr.weighContinuumPIC(prt,cnt,msh,mpiv);  //CHGMPI
+         for(j=0;j<svar.nsp;j++) mth.smoothData(cnt[j].N,msh.smthcnt);
 
-        if(procid==0)
-        {
-          bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
-          if(svar.outcont==1) for(j=0;j<cnt[0].nsp;j++) wrt.writePICField(msh, cnt[j], EM,slvr.totalTime);
-          if(svar.outcont==1) wrt.writePICField(msh, cnt, EM,slvr.totalTime);
-          
-        }
-        MPI_Barrier(MPI_COMM_WORLD); //MPI
-        if(svar.outpart==1) 
-        {
-          for(j=0;j<prt[0].nsp;j++) 
-          {
-            MPI_Barrier(MPI_COMM_WORLD);
-            wrt.writeParticles(prt[j],EM,msh,slvr.totalTime);
-          }
-        }
-        if(svar.outvdf==1)  
-        {
-          for(j=0;j<prt[0].nsp;j++) wrt.findvdf(prt[j],msh,svar.outvdf_flag,slvr.totalTime);//MPI
-          for(j=0;j<prt[0].nsp;j++) wrt.findphasespace(prt[j],msh,svar.outvdf_flag,slvr.totalTime);   //CMPI
-        }
+         if(procid==0)
+         {
+            bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
+            if(svar.outcont==1) for(j=0;j<cnt[0].nsp;j++) wrt.writePICField(msh, cnt[j], EM,slvr.totalTime);
+            if(svar.outcont==1) wrt.writePICField(msh, cnt, EM,slvr.totalTime);
+
+         }
+         MPI_Barrier(MPI_COMM_WORLD); //MPI
+         if(svar.outpart==1) 
+         {
+            for(j=0;j<prt[0].nsp;j++) 
+            {
+               MPI_Barrier(MPI_COMM_WORLD);
+               wrt.writeParticles(prt[j],EM,msh,slvr.totalTime);
+            }
+         }
+         if(svar.outvdf==1)  
+         {
+            for(j=0;j<prt[0].nsp;j++) wrt.findvdf(prt[j],msh,svar.outvdf_flag,slvr.totalTime);//MPI
+            for(j=0;j<prt[0].nsp;j++) wrt.findphasespace(prt[j],msh,svar.outvdf_flag,slvr.totalTime);   //CMPI
+         }
       }
       else if(i%svar.outfinalskip == 0 && i > (svar.iter-svar.outfinal))
       {
-        MPI_Barrier(MPI_COMM_WORLD);  //MPI
+         MPI_Barrier(MPI_COMM_WORLD);  //MPI
 
-        slvr.weighContinuumPIC(prt,cnt,msh,mpiv);
-        for(j=0;j<svar.nsp;j++) mth.smoothData(cnt[j].N,msh.smthcnt);
+         slvr.weighContinuumPIC(prt,cnt,msh,mpiv);
+         for(j=0;j<svar.nsp;j++) mth.smoothData(cnt[j].N,msh.smthcnt);
 
-        if(procid==0)
-        {
-          bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
-          if(svar.outcont==1) for(j=0;j<cnt[0].nsp;j++) wrt.writePICField(msh, cnt[j], EM,slvr.totalTime);
-          if(svar.outcont==1) wrt.writePICField(msh, cnt, EM,slvr.totalTime);
-          
-          //for(j=0;j<prt[0].nsp;j++) wrt.writeSingleParticle(prt[j],EM,msh,slvr.totalTime);
-        }
-        MPI_Barrier(MPI_COMM_WORLD); //MPI
-        if(svar.outpart==1) 
-        {
-          for(j=0;j<prt[0].nsp;j++) 
-          {
-            MPI_Barrier(MPI_COMM_WORLD);
-            wrt.writeParticles(prt[j],EM,msh,slvr.totalTime);
-          }
-        }
-        if(svar.outvdf==1)  
-        {
-          for(j=0;j<prt[0].nsp;j++) wrt.findvdf(prt[j],msh,svar.outvdf_flag,slvr.totalTime);//MPI
-          for(j=0;j<prt[0].nsp;j++) wrt.findphasespace(prt[j],msh,svar.outvdf_flag,slvr.totalTime);   //MPI
-        }
+         if(procid==0)
+         {
+            bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
+            if(svar.outcont==1) for(j=0;j<cnt[0].nsp;j++) wrt.writePICField(msh, cnt[j], EM,slvr.totalTime);
+            if(svar.outcont==1) wrt.writePICField(msh, cnt, EM,slvr.totalTime);
+
+            //for(j=0;j<prt[0].nsp;j++) wrt.writeSingleParticle(prt[j],EM,msh,slvr.totalTime);
+         }
+         MPI_Barrier(MPI_COMM_WORLD); //MPI
+         if(svar.outpart==1) 
+         {
+            for(j=0;j<prt[0].nsp;j++) 
+            {
+               MPI_Barrier(MPI_COMM_WORLD);
+               wrt.writeParticles(prt[j],EM,msh,slvr.totalTime);
+            }
+         }
+         if(svar.outvdf==1)  
+         {
+            for(j=0;j<prt[0].nsp;j++) wrt.findvdf(prt[j],msh,svar.outvdf_flag,slvr.totalTime);//MPI
+            for(j=0;j<prt[0].nsp;j++) wrt.findphasespace(prt[j],msh,svar.outvdf_flag,slvr.totalTime);   //MPI
+         }
       }
 
       if((i-1)%svar.p_iter == 0 && procid==0 && svar.outrst==1)  wrt.writeRestart(bdv,slvr.totalTime,i,svar.nsp);  
       else if(i%svar.outfinalskip == 0 && i > (svar.iter-svar.outfinal) && svar.outrst==1) wrt.writeRestart(bdv,slvr.totalTime,i,svar.nsp);  
 
-      #if SIMTYPE==3
+#if SIMTYPE==3
       for(j=0;j<prt[0].nsp;j++) wrt.writeSingleParticle(prt[j],EM,msh,slvr.totalTime);
-      #endif
+#endif
 
       if(svar.outavg==1)  wrt.findglobalenergy(prt,EM,msh,slvr.totalTime);  //MPI
 
@@ -196,15 +196,15 @@ void sType::electrostatic1DPIC()
 
       MPI_Barrier(MPI_COMM_WORLD);
 
-      #if SIMTYPE!=1
+#if SIMTYPE!=1
       if(svar.nct>0)
       {   
-        for(j=0;j<svar.nsp;j++) slvr.collideParticles(prt,msh,cnt[svar.nsp],slvr.totalTime,j);  //MB
-        //slvr.updateNeutralBackground(cnt[svar.nsp],msh,slvr.deltaT);
+         for(j=0;j<svar.nsp;j++) slvr.collideParticles(prt,msh,cnt[svar.nsp],slvr.totalTime,j);  //MB
+         //slvr.updateNeutralBackground(cnt[svar.nsp],msh,slvr.deltaT);
       }
-      #endif
+#endif
 
- 
+
       slvr.weighContinuumPIC(prt,cnt,msh,mpiv);   //FIX SUBCYCLE
       for(j=0;j<svar.nsp;j++) mth.smoothData(cnt[j].N,msh.smthcnt);
       if(svar.coul>0)  slvr.coulombCollisions(prt,msh,cnt,mpiv); 
@@ -222,8 +222,8 @@ void sType::electrostatic1DPIC()
       slvr.totalTime = slvr.totalTime + slvr.deltaT;
       svar.totalTime = slvr.totalTime;
       if(procid==0)  std::cout << "\nIT:  " << i << "\t" << "Time: " << slvr.totalTime;
- 
-      
+
+
    }
 
    auto t2 = std::chrono::high_resolution_clock::now();
@@ -231,88 +231,92 @@ void sType::electrostatic1DPIC()
 
    //slvr.updateAppliedPotential(pr.init_phi,EM.phi,msh);
    //slvr.timestep(ions,msh.pmesh, msh.meshlength, msh.numpoints, svar.dt, svar.cfl,msh.meshdims,msh.vecdims);
-   
+
 }
 
+/*
 
 //..2D electromagnetic  PIC..//
+//Not implemented
 
 void sType::electromagnetic2DPIC()
 {
-   int i;
-   std::vector<int> test,test2;
-   for(i=0;i<4;i++)  test.push_back(0);   
-   for(i=0;i<2;i++)  test2.push_back(0.0);   
+int i;
+std::vector<int> test,test2;
+for(i=0;i<4;i++)  test.push_back(0);   
+for(i=0;i<2;i++)  test2.push_back(0.0);   
 
 
-   std::cout << "Howdy, Welcome to Frans' PIC Solver \n \n";
-	
-   initializeSolver pr;
-   solverVars svar;
-   mesh msh;
-   particles ions;
-   fields    EM;
-   flow      cont;
-   solver slvr;
-   boundary bnd;
-   writeOutput wrt(0,1);
+std::cout << "Howdy, Welcome to Frans' PIC Solver \n \n";
+
+initializeSolver pr;
+solverVars svar;
+mesh msh;
+particles ions;
+fields    EM;
+flow      cont;
+solver slvr;
+boundary bnd;
+writeOutput wrt(0,1);
 
 }
 
 //..1D Euler..//
+//Not implemented
 
 void sType::euler1D()
 {
-   int i;
+int i;
 
-   std::vector<int> test,test2;
-   for(i=0;i<4;i++)  test.push_back(0);   
-   for(i=0;i<2;i++)  test2.push_back(0.0);   
-	
-   initializeSolver pr;
-   solverVars svar;
-   mesh msh;
-   flow  fluid;
-   solver slvr;
-   writeOutput wrt(0,1);
-   boundary bnd;
-   std::vector<boundvars> bdv;
-   std::vector<spclvars> spclv;
- 
-   pr.readdata(svar,msh,bdv,spclv);
+std::vector<int> test,test2;
+for(i=0;i<4;i++)  test.push_back(0);   
+for(i=0;i<2;i++)  test2.push_back(0.0);   
 
-   msh.generateEulermesh(svar.lscale); 
-   wrt.writepMesh(msh);
-   wrt.writecMesh(msh);
+initializeSolver pr;
+solverVars svar;
+mesh msh;
+flow  fluid;
+solver slvr;
+writeOutput wrt(0,1);
+boundary bnd;
+std::vector<boundvars> bdv;
+std::vector<spclvars> spclv;
 
-   pr.initializeEuler(fluid,msh,bnd,svar);
+pr.readdata(svar,msh,bdv,spclv);
 
-   slvr.deltaT = svar.dt; 
+msh.generateEulermesh(svar.lscale); 
+wrt.writepMesh(msh);
+wrt.writecMesh(msh);
 
-   std::clock_t start;
-   start = std::clock();
+pr.initializeEuler(fluid,msh,bnd,svar);
 
-   wrt.writeFlowEuler(msh,fluid);
+slvr.deltaT = svar.dt; 
 
-   for(i=1; i<(svar.iter+1); i++)
-   {
-      bnd.applyPeriodicBoundaryConditions(msh,fluid);
-      slvr.updateEulerFlow(fluid,msh,slvr.deltaT,svar.tdflag,svar.sdflag);
-      if(i%svar.p_iter == 0) 
-      {
-         std::cout << "IT:" << i << std::endl;
-         wrt.writeFlowEuler(msh,fluid);
-      }
-   }
+std::clock_t start;
+start = std::clock();
 
-   std::cout << "\n\nVolume Average Error:\t" << std::setprecision(10) << slvr.errorCheck(fluid,msh) ;
+wrt.writeFlowEuler(msh,fluid);
 
-   std::cout << "\n\nTotal Time:" << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl ;
+for(i=1; i<(svar.iter+1); i++)
+{
+bnd.applyPeriodicBoundaryConditions(msh,fluid);
+slvr.updateEulerFlow(fluid,msh,slvr.deltaT,svar.tdflag,svar.sdflag);
+if(i%svar.p_iter == 0) 
+{
+std::cout << "IT:" << i << std::endl;
+wrt.writeFlowEuler(msh,fluid);
+}
+}
+
+std::cout << "\n\nVolume Average Error:\t" << std::setprecision(10) << slvr.errorCheck(fluid,msh) ;
+
+std::cout << "\n\nTotal Time:" << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl ;
 
 }
 
 
 //..2D Euler..//
+//Not implemented
 
 void sType::euler2D()
 {
@@ -321,7 +325,7 @@ void sType::euler2D()
    std::vector<int> test,test2;
    for(i=0;i<4;i++)  test.push_back(0);   
    for(i=0;i<2;i++)  test2.push_back(0.0);   
-	
+
    initializeSolver pr;
    solverVars svar;
    mesh msh;
@@ -331,7 +335,7 @@ void sType::euler2D()
    boundary bnd;
    std::vector<boundvars> bdv;
    std::vector<spclvars> spclv;
- 
+
    pr.readdata(svar,msh,bdv,spclv);
 
 
@@ -350,16 +354,18 @@ void sType::euler2D()
 
    for(i=1;i<(svar.iter+1); i++)
    {
-     bnd.applyBoundaryConditionsEuler(msh,fluid);
-     slvr.updateEulerFlow2D(fluid,msh,slvr.deltaT,svar.tdflag,svar.sdflag);
- 
-     std::cout << "IT:" << i << std::endl;
-     if(i%svar.p_iter == 0) 
+      bnd.applyBoundaryConditionsEuler(msh,fluid);
+      slvr.updateEulerFlow2D(fluid,msh,slvr.deltaT,svar.tdflag,svar.sdflag);
+
+      std::cout << "IT:" << i << std::endl;
+      if(i%svar.p_iter == 0) 
       {
          wrt.writeFlowEuler(msh,fluid);
       }
    }
- 
+
    std::cout << "Total Time:\t" << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << "\t ms" << std::endl ;
 
 }
+
+*/

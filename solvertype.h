@@ -24,9 +24,11 @@ class sType
  
 	public:
 
+        void electrostatic1DPIC() ;
+        /* The following have not been implemented
         void euler1D() ;
         void euler2D() ;
-        void electrostatic1DPIC() ;
         void electromagnetic2DPIC() ;
+        */
 };
 #endif

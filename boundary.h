@@ -18,32 +18,32 @@
 #define BOUNDARY_H
 class boundary
 {
-	private:
+   private:
 
-	public:
+   public:
 
-        void clearallbdv(boundvars &); //..Clear all boundary values	
-	void seedParticles(mesh, std::vector<contnm> &, std::vector<particles> &, solverVars, std::vector<boundvars> &b_bvar); //..Seeds particles at boundary
-	void cleanParticles(particles&, std::vector<double>, std::vector<boundvars> &,mesh &,int, int,int); //..Move,remove, and counts particles
-	void collectParticles(particles&, std::vector<double>, int, int,int); //..
-	void applyParticleBoundaryConditions(mesh, std::vector<contnm> &, std::vector<particles> &, solverVars, std::vector<boundvars> &); //..Apply particle BC
-        void initializeBoundary(mesh &,std::vector<boundvars> &,std::vector<particles> &); //..Initializes boundary functions
-        void initializeSpecialRegions(mesh &,std::vector<spclvars> &,std::vector<particles> &); //..Initializes special regions
-        void initializeParticleCounter(std::vector<boundvars> &,std::vector<particles>); //..Initialize particle counter for those leaving domain
-        void setParticleCounter(std::vector<boundvars> &,std::vector<particles>,int); //..Initialize particle counter for those leaving domain
-        void findBoundaryCells(mesh &,std::vector<boundvars> &);  //..Find cells on boundary
-        void findSpecialRegionCells(mesh &,std::vector<spclvars> &);  //..Find cells in special regions
-        void applyPeriodicBoundaryConditions(mesh,flow &); //..Apply periodic BC (CFD Proj)
-        void applyBoundaryConditionsEuler(mesh,flow &);  //..Apply Euler BC (CFD Proj)
-        void applyContinuumBoundaryConditions(mesh,fields &,std::vector<contnm> &,std::vector<boundvars> &); //..Apply Continuum BC
-        void applyBoundaryConditionsPIC(mesh,fields &,flow &); //..
-        void applyEfieldBoundary(mesh &, fields &, std::vector<boundvars> &); //..Apply boundary conditions on Electric Field
-	void applySpecialRegionsPIC(mesh, std::vector<contnm> &, std::vector<particles> &, solverVars, std::vector<spclvars> &, fields &); //..Apply special regions
-        double beqnparser(std::string, std::vector<double>);  //..Parser for boundary condition inputs
+      void clearallbdv(boundvars &); //..Clear all boundary values	
+      void seedParticles(mesh, std::vector<contnm> &, std::vector<particles> &, solverVars, std::vector<boundvars> &b_bvar); //..Seeds particles at boundary
+      void cleanParticles(particles&, std::vector<double>, std::vector<boundvars> &,mesh &,int, int,int); //..Move,remove, and counts particles
+      void collectParticles(particles&, std::vector<double>, int, int,int); //..
+      void applyParticleBoundaryConditions(mesh, std::vector<contnm> &, std::vector<particles> &, solverVars, std::vector<boundvars> &); //..Apply particle BC
+      void initializeBoundary(mesh &,std::vector<boundvars> &,std::vector<particles> &); //..Initializes boundary functions
+      void initializeSpecialRegions(mesh &,std::vector<spclvars> &,std::vector<particles> &); //..Initializes special regions
+      void initializeParticleCounter(std::vector<boundvars> &,std::vector<particles>); //..Initialize particle counter for those leaving domain
+      void setParticleCounter(std::vector<boundvars> &,std::vector<particles>,int); //..Initialize particle counter for those leaving domain
+      void findBoundaryCells(mesh &,std::vector<boundvars> &);  //..Find cells on boundary
+      void findSpecialRegionCells(mesh &,std::vector<spclvars> &);  //..Find cells in special regions
+      void applyPeriodicBoundaryConditions(mesh,flow &); //..Apply periodic BC (CFD Proj)
+      void applyBoundaryConditionsEuler(mesh,flow &);  //..Apply Euler BC (CFD Proj)
+      void applyContinuumBoundaryConditions(mesh,fields &,std::vector<contnm> &,std::vector<boundvars> &); //..Apply Continuum BC
+      void applyBoundaryConditionsPIC(mesh,fields &,flow &); //..
+      void applyEfieldBoundary(mesh &, fields &, std::vector<boundvars> &); //..Apply boundary conditions on Electric Field
+      void applySpecialRegionsPIC(mesh, std::vector<contnm> &, std::vector<particles> &, solverVars, std::vector<spclvars> &, fields &); //..Apply special regions
+      double beqnparser(std::string, std::vector<double>);  //..Parser for boundary condition inputs
 
 
-        int nbound;
-        int nsp;
+      int nbound;
+      int nsp;
 
 
 };
