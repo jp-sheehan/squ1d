@@ -88,6 +88,7 @@ void sType::electrostatic1DPIC()
      }*/
 
 #if SIMTYPE==2
+   // only for the collision test simulation
    if(svar.outvdf==1)
    {
       for(j=0;j<prt[0].nsp;j++) wrt.findvdf(prt[j],msh,svar.outvdf_flag,slvr.totalTime);  //MPI
@@ -102,6 +103,7 @@ void sType::electrostatic1DPIC()
    for(i=1; i<(svar.iter+1); i++)
    {
 #if SIMTYPE==0 || SIMTYPE==3
+      // Only for the full simulation or single particle simulation
       //bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
       slvr.poisson1D(msh,EM.phi,cnt,bdv,prt,slvr.deltaT,slvr.totalTime);   //..MB Comment out for
       slvr.phitoE(EM.phi,EM.E,msh); //..MB Comment out for

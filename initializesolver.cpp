@@ -924,6 +924,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
       }
 
    }
+   /*
    else if(sflag>=10)
    {
       infile  >>  temp;
@@ -944,6 +945,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
       for(i=0;i<i_msh.vecdims;i++) std::cout << init_U[i] << "\t";
       std::cout << std::endl;
    }
+   */
 
    infile >> temp;
 
@@ -986,6 +988,7 @@ void initializeSolver::initializePIC(std::vector<particles> &i_prt, fields & i_E
    MPI_Comm_size(MPI_COMM_WORLD,&numprocs);   //MPI
    MPI_Comm_rank(MPI_COMM_WORLD,&procid);  //MPI
 
+   /* conditions are the same
    if(i_mesh.philoc==0) 
    {
       initializephi(i_EM.phi,i_mesh);   //CHG
@@ -996,9 +999,12 @@ void initializeSolver::initializePIC(std::vector<particles> &i_prt, fields & i_E
       initializephi(i_EM.phi,i_mesh);  //CHG
       initializephitoE(i_EM.phi,i_EM.E,i_mesh); //CHG
    }
+   */
+   initializephi(i_EM.phi,i_mesh);  //CHG
+   initializephitoE(i_EM.phi,i_EM.E,i_mesh); //CHG
 
-   if(i_mesh.Bloc==0) initializeBfield(i_EM.B,i_mesh.cmesh,i_mesh.meshdims,i_mesh.vecdims,i_svar.flag_CL);
-   else if(i_mesh.Bloc==1) initializeBfield(i_EM.B,i_mesh.pmesh,i_mesh.meshdims,i_mesh.vecdims,i_svar.flag_CL);
+   if(i_mesh.Bloc==0) initializeBfield(i_EM.B,i_mesh.cmesh,i_mesh.meshdims,i_mesh.vecdims,i_svar.flag_CL); // cell centered
+   else if(i_mesh.Bloc==1) initializeBfield(i_EM.B,i_mesh.pmesh,i_mesh.meshdims,i_mesh.vecdims,i_svar.flag_CL); // point (edge) centered
 
    if(i_mesh.meshdims==1) i_mesh.mesharea(i_EM);  //Set Cross-sectional area   CHG
 
@@ -1928,11 +1934,13 @@ double initializeSolver::eqnparser(std::string expression_string, std::vector<do
       case 1:
          i_x = i_point[0];
          symbol_table.add_variable("x",i_x);
+         break;
       case 2:
          i_x = i_point[0];
          i_y = i_point[1];
          symbol_table.add_variable("x",i_x);
          symbol_table.add_variable("y",i_y);
+         break;
       case 3:
          i_x = i_point[0];
          i_y = i_point[1];
@@ -1940,6 +1948,7 @@ double initializeSolver::eqnparser(std::string expression_string, std::vector<do
          symbol_table.add_variable("x",i_x);
          symbol_table.add_variable("y",i_y);
          symbol_table.add_variable("z",i_z);
+         break;
    }
 
 

@@ -2,6 +2,7 @@
 .*.swp
 .*.swo
 *.dat
+*.inp
 *.log
 *.o
 *.out
