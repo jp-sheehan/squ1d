@@ -2,9 +2,12 @@
 .*.swp
 .*.swo
 *.dat
-*.inp
 *.log
+SolverType.inp
+SolverInput.inp
 *.o
 *.out
 *.exe
+*.old
+.*.old
 results/
