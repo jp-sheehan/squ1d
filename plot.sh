@@ -2,11 +2,15 @@
 
 # defaults
 program="gnuplot"
-number=$(ls -t | grep restart | head -1 | grep -o '[0-9]\+') # most recent number
+dir="./"
 
 # inputs
-while getopts ":p:n:" opt; do
+while getopts ":d:p:n:" opt; do
    case $opt in
+      d)
+         # set the directory in which to search
+         dir=$OPTARG
+         ;;
       p)
          # Set which program should be used to plot the data
          program=$OPTARG
@@ -25,6 +29,7 @@ while getopts ":p:n:" opt; do
    esac
 done
 
+number=$(ls -t $dir| grep restart | head -1 | grep -o '[0-9]\+') # most recent number
 shift $((OPTIND-1))
 parameters=("$@")
 
@@ -35,7 +40,7 @@ fi
 
 for p in "${parameters[@]}"; do
    #script="./plot/${program}_${p}.gp"
-   vars="fnum=$number; param='$p'"
+   vars="fnum=$number; param='$p'; dir='$dir'"
    cmd="$program -e \"$vars\" $script"
    eval $cmd #run script in this terminal
    # gnome-terminal -e sh $script #run script from new terminal (to have multiple windows)
