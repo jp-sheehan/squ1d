@@ -6,17 +6,17 @@ set output
 load "~/squ1d/scripts/setplotparams.gp"
 
 if (param eq "Te") {
-   filename=sprintf("%selectronOutput_pField%d.dat",dir,fnum)
+   filename=sprintf("%selectronOutput_%sField%d.dat",dir,loc,fnum)
 } else { if (param eq "ne") {
-   filename=sprintf("%selectronOutput_pField%d.dat",dir,fnum)
+   filename=sprintf("%selectronOutput_%sField%d.dat",dir,loc,fnum)
 } else { if (param eq "B") {
-   filename=sprintf("%selectronOutput_pField%d.dat",dir,fnum)
+   filename=sprintf("%selectronOutput_%sField%d.dat",dir,loc,fnum)
 } else { if (param eq "ni") {
-   filename=sprintf("%s%sOutput_pField%d.dat",dir,ionspec,fnum)
+   filename=sprintf("%s%sOutput_%sField%d.dat",dir,ionspec,loc,fnum)
 } else { if (param eq "vi") {
-   filename=sprintf("%s%sOutput_pField%d.dat",dir,ionspec,fnum)
+   filename=sprintf("%s%sOutput_%sField%d.dat",dir,ionspec,loc,fnum)
 } else { if (param eq "phi") {
-   filename=sprintf("%selectronOutput_pField%d.dat",dir,fnum)
+   filename=sprintf("%selectronOutput_%sField%d.dat",dir,loc,fnum)
 } else { if (param eq "eps") {
    filename=sprintf("%selectronParticles%d.dat",dir,fnum)
 } else { if (param eq "ips") {

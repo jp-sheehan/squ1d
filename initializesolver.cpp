@@ -925,6 +925,12 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
             infile >> temp >> tempdouble;
             tempspclv.spclomega = tempdouble;
          }
+         else
+         {
+            std::cout << "\nERROR in SPECIAL REGION\n";
+            std::cout << "Only SOURCE, HEATING, or EFIELD are allowd.  Found: " << tempspclv.spcltype << std::endl;
+            exit(EXIT_FAILURE);
+         }
 
          i_spclv.push_back(tempspclv);
          clearallspclv(tempspclv);

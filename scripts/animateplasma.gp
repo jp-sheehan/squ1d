@@ -5,17 +5,17 @@ set output sprintf("%s%s.gif",dir,param)
 load "~/squ1d/scripts/setplotparams.gp"
 
 if (param eq "Te") {
-   filename_base=sprintf("%selectronOutput_pField",dir)
+   filename_base=sprintf("%selectronOutput_%sField",dir,loc)
 } else { if (param eq "ne") {
-   filename_base=sprintf("%selectronOutput_pField",dir)
+   filename_base=sprintf("%selectronOutput_%sField",dir,loc)
 } else { if (param eq "B") {
-   filename_base=sprintf("%selectronOutput_pField",dir)
+   filename_base=sprintf("%selectronOutput_%sField",dir,loc)
 } else { if (param eq "ni") {
-   filename_base=sprintf("%s%sOutput_pField",dir,ionspec)
+   filename_base=sprintf("%s%sOutput_%sField",dir,ionspec,loc)
 } else { if (param eq "vi") {
-   filename_base=sprintf("%s%sOutput_pField",dir,ionspec)
+   filename_base=sprintf("%s%sOutput_%sField",dir,ionspec,loc)
 } else { if (param eq "phi") {
-   filename_base=sprintf("%selectronOutput_pField",dir)
+   filename_base=sprintf("%selectronOutput_%sField",dir,loc)
 } else { if (param eq "eps") {
    filename_base=sprintf("%selectronParticles",dir)
 } else { if (param eq "ips") {

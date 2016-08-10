@@ -44,6 +44,17 @@ if [ "$number" -eq "-1" ]; then
    number=$(ls -t $dir| grep restart | head -1 | grep -o '[0-9]\+') # most recent number
 fi
 
+pusher=$(fgrep "PARTICLE_MOVER" ${dir}SolverType.inp | head -1)
+if [[ "$pusher" == *"SIMPLE"* ]]; then
+   loc="p"
+elif [[ "$pusher" == *"BORIS"* ]]; then
+   loc="p"
+elif [[ "$pusher" == *"Q1D"* ]]; then
+   loc="c"
+else
+   loc="c"
+fi
+
 shift $((OPTIND-1))
 parameters=("$@")
 
@@ -54,7 +65,7 @@ fi
 
 for p in "${parameters[@]}"; do
    #script="./plot/${program}_${p}.gp"
-   vars="fnum=$number; param='$p'; dir='$dir'; ionspec='$ionspec'"
+   vars="fnum=$number; param='$p'; dir='$dir'; loc='$loc'; ionspec='$ionspec'"
    cmd="$program -e \"$vars\" $script"
    eval $cmd #run script in this terminal
    # gnome-terminal -e sh $script #run script from new terminal (to have multiple windows)

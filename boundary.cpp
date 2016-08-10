@@ -501,12 +501,14 @@ double boundary::beqnparser(std::string expression_string, std::vector<double> i
       case 1:
          i_x = i_point[0];
          symbol_table.add_variable("x",i_x);
+         break;
       case 2:
          i_x = i_point[0];
          i_y = i_point[1];
          symbol_table.add_variable("x",i_x);
          symbol_table.add_variable("y",i_y);
          symbol_table.add_variable("z",i_z);
+         break;
       case 3:
          i_x = i_point[0];
          i_y = i_point[1];
@@ -514,6 +516,7 @@ double boundary::beqnparser(std::string expression_string, std::vector<double> i
          symbol_table.add_variable("x",i_x);
          symbol_table.add_variable("y",i_y);
          symbol_table.add_variable("z",i_z);
+         break;
    }
 
 

@@ -21,3 +21,6 @@ clean:
 
 cleandat: 
 	rm *.dat *.out *.gif *.png *.jpg
+
+cleanjunk:
+	rm *~ .*~ .*.swp .*.swo
