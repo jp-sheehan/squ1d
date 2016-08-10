@@ -10,4 +10,9 @@ SolverInput.inp
 *.exe
 *.old
 .*.old
+*.png
+*.jpg
+*.eps
+*.pdf
+*.gif
 results/

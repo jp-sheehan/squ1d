@@ -22,12 +22,13 @@ int initializeSolver::readsolver()
    rdfile.close();
 
    if(setype == "ELECTROSTATIC" && sptype == "PIC") sflag = 0;
-   else if(setype == "ELECTROMAGNETIC" && sptype == "HYBRID") sflag = 2;
-   else if(setype == "EULER" && sptype == "1D") sflag = 10;
-   else if(setype == "EULER" && sptype == "2D") sflag = 11;
+   //else if(setype == "ELECTROMAGNETIC" && sptype == "HYBRID") sflag = 2;
+   //else if(setype == "EULER" && sptype == "1D") sflag = 10;
+   //else if(setype == "EULER" && sptype == "2D") sflag = 11;
    else
    {
       std::cout << "\nExiting...ERROR in SOLVER TYPE\n";
+      std::cout << "Only ELECTROSTATIC PIC is allowed." << std::endl;
       exit(EXIT_FAILURE); 
    }
 
@@ -75,6 +76,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
    else
    {
       std::cout << "\nExiting...ERROR in SOLVER TYPE\n";
+      std::cout << "rd_meshwrite: " << rd_meshwrite << std::endl;
       exit(EXIT_FAILURE); 
    }
 
@@ -93,6 +95,8 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
    else
    {
       std::cout << "\nExiting...ERROR in SYMMETRY\n";
+      std::cout << "Dimensions: " << i_msh.meshdims << std::endl;
+      std::cout << "Symmetry: " << i_msh.sym << std::endl;
       exit(EXIT_FAILURE); 
    }
 
@@ -108,6 +112,8 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
    else
    {
       std::cout << "\nExiting...ERROR in SOLVER TYPE\n";
+      std::cout << "setype: " << setype << std::endl;
+      std::cout << "sptype: " << sptype << std::endl;
       exit(EXIT_FAILURE); 
    }
 
@@ -130,6 +136,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
    else
    {
       std::cout << "\nExiting...ERROR in SOLVER TYPE\n";
+      std::cout << "Number of mesh dimension must be 1.  Input meshdims: " << i_msh.meshdims << std::endl;
       exit(EXIT_FAILURE); 
    }
 
@@ -312,6 +319,8 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
       else
       {
          std::cout << "\nExiting...ERROR in SOLVER TYPE\n";
+         std::cout << "Interpolation scheme must be ZEROTH or FIRST." << std::endl
+            << "Inerpolation scheme: " << temp << std::endl;
          exit(EXIT_FAILURE); 
       }
 
@@ -325,6 +334,8 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
       else
       {
          std::cout << "\nExiting...ERROR in SOLVER TYPE\n";
+         std::cout << "Particle mover must be SIMPLE, BORIS, or Q1D." << std::endl
+            << "Particle mover: " << temp << std::endl;
          exit(EXIT_FAILURE); 
       }
 
@@ -340,6 +351,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
       if(temp !="EOF") 
       {
          std::cout << "\nExiting...EOF ERROR in SOLVER TYPE\n";
+         std::cout << "No inputs should be included after the background density." << std::endl;
          exit(EXIT_FAILURE); 
       }
 
@@ -952,6 +964,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
    if(temp !="EOF") 
    {
       std::cout << "\nExiting...EOF ERROR in SOLVER INPUT\n";
+      std::cout << "Expected EOF.  Found: " << temp << std::endl;
       exit(EXIT_FAILURE); 
    }
 

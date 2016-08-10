@@ -4,11 +4,10 @@
 program="gnuplot"
 dir="./"
 ionspec="ARGON"
-number=-1
 
 # inputs
 
-while getopts ":d:i:p:n:" opt; do
+while getopts ":d:i:p:" opt; do
    case $opt in
       d)
          # set the directory in which to search
@@ -26,10 +25,6 @@ while getopts ":d:i:p:n:" opt; do
          # Set which program should be used to plot the data
          program=$OPTARG
          ;;
-      n)
-         # data set number
-         number=$OPTARG
-         ;;
       \?)
          echo "Invalid option: -$OPTARG" >&2
          ;;
@@ -40,22 +35,21 @@ while getopts ":d:i:p:n:" opt; do
    esac
 done
 
-if [ "$number" -eq "-1" ]; then
-   number=$(ls -t $dir| grep restart | head -1 | grep -o '[0-9]\+') # most recent number
-fi
+number=$(ls -t $dir| grep restart | head -1 | grep -o '[0-9]\+') # most recent number
 
 shift $((OPTIND-1))
 parameters=("$@")
 
 if [ $program == "gnuplot" ]
 then
-   script="./scripts/plotplasma.gp"
+   script="./scripts/animateplasma.gp"
 fi
 
 for p in "${parameters[@]}"; do
    #script="./plot/${program}_${p}.gp"
-   vars="fnum=$number; param='$p'; dir='$dir'; ionspec='$ionspec'"
+   vars="maxnum=$number; param='$p'; dir='$dir'; ionspec='$ionspec'"
    cmd="$program -e \"$vars\" $script"
    eval $cmd #run script in this terminal
    # gnome-terminal -e sh $script #run script from new terminal (to have multiple windows)
+   gifview "$dir$p.gif"
 done

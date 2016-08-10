@@ -20,4 +20,4 @@ clean:
 	rm *.o *.exe 
 
 cleandat: 
-	rm *.dat *.out
+	rm *.dat *.out *.gif *.png *.jpg
