@@ -31,7 +31,9 @@ class mesh
       void disconnectpartandmesh(particles &);  //..Disconnect particles and mesh
       void mesharea(fields); //..Find mesh area
 
-      int meshdims,vecdims,Bloc,Eloc,philoc,numghost,pdist;
+      int meshdims,vecdims;
+      int Bloc,Eloc,philoc; // 0: cell centers; 1: cell corners
+      int numghost,pdist;
       int smthcnt;
       int perflag;
       int sflag;

@@ -14,8 +14,8 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
    //std::vector<double> vel,vminus,vplus,vprime,vupdate,tangent;
    //std::vector<double> int_B,int_gradB,int_E,cvec;
 
-   long int np = s_part.pos.size()/s_msh.meshdims;
-   long int npg  = np - s_part.gp;
+   long int np = s_part.pos.size()/s_msh.meshdims; // total number of particles
+   long int npg  = np - s_part.gp; // number of particles that aren't ghost cells
    double sign;
 
 
@@ -29,6 +29,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
    deltaTQ1D= dt;
 
    //..Setup for backward half-step move scheme..//
+   // I do not think this is used anymore
 
    if(s_mvscheme<0)
    {
@@ -45,7 +46,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
    //std::cout << "\n\tAdvancing Particle Velocities...";
 
    //..Simple electric field..//
-   if((fabs(s_mvscheme)==1) || (s_part.mag==0)) 
+   if((fabs(s_mvscheme)==1) || (s_part.mag==0))  // mvscheme==1: SIMPLE
    {
       //#pragma omp parallel private(en_temp,i,j) //OMP
       //{ 
@@ -63,7 +64,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
       {
          en_temp = 0.0;
          //std::cout << "\nParticle:  " << i << std::endl;
-         weighEfield(int_E,s_part,s_EM,s_msh,i);
+         weighEfield(int_E,s_part,s_EM,s_msh,i); // 0th or 1st order interpolation
          //std::cout << int_E[0] << "\t" << int_E[1] << "\t" << int_E[2] << std::endl;
          for(j=0; j<s_msh.vecdims; j++)  vel[j] = s_part.vel[i*s_msh.vecdims+j] + qom*dt*int_E[j];
          //std::cout << qom << "\t" << dt << "\t" << qom*dt*int_E[0] << "\n";
@@ -79,7 +80,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
    }
 
    //..Boris Method..//
-   else if(fabs(s_mvscheme)==2)
+   else if(fabs(s_mvscheme)==2) // mvscheme==2: BORIS
    { 
       //#pragma omp parallel private(i,j,en_temp) //OMP
       //{
@@ -137,7 +138,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
    }
 
    //..Quasi-1D method..//
-   else if(fabs(s_mvscheme)==3) 
+   else if(fabs(s_mvscheme)==3) // mvscheme==3: Q1D
    {
       //#pragma omp parallel private(i,j,en_temp)  //OMP
       //{
@@ -1316,8 +1317,10 @@ void solver::weighEfield(std::vector<double> &int_E, const particles &s_part, co
    int s_neighbors[2];
    double s_arearatio[2];
 
+   /* only 1D mesh
    if(s_msh.meshdims==1)
    {
+   */
       if(s_msh.intscheme == 0)  //Nearest Cell Interpolation
       {
          if(s_msh.Eloc==0)
@@ -1364,7 +1367,7 @@ void solver::weighEfield(std::vector<double> &int_E, const particles &s_part, co
             }
          }
       }
-
+/*
    }
    else if(s_msh.meshdims==2)
    {
@@ -1420,6 +1423,7 @@ void solver::weighEfield(std::vector<double> &int_E, const particles &s_part, co
          }
       }
    }
+   */
 }
 
 //..Interpolate magnetic field to particles..//
@@ -1680,7 +1684,7 @@ void solver::poisson1D(mesh m_msh, std::vector<double> &m_phi, const std::vector
    //std::cout << std::endl << area[0] << "\t" << area[1] << std::endl;
 
 
-   if(m_msh.philoc==1)   //..For non-staggerred grids  //CHECK ALL THESE BCS
+   if(m_msh.philoc==1)   //..For non-staggerred grids, i.e. phi on cell corners  //CHECK ALL THESE BCS
    {
       n = m_msh.pintcells.size();
       nrhs = 1;
@@ -1724,6 +1728,7 @@ void solver::poisson1D(mesh m_msh, std::vector<double> &m_phi, const std::vector
             for(i=1;i<(n-1);i++) b[i] = (-m_msh.deltax*m_msh.deltax*ieps0*(m_rho[i+1]));  //Set RHS
             b[n-1] = (-m_msh.deltax*m_msh.deltax*ieps0*(m_rho[n])-m_phi[n+1]);  //Set last RHS
 
+            // matrix solver
 #if COMPILER==0
             dgtsv_(&n,&nrhs,dl,d,du,b,&ldb,&info);
 #elif COMPILER==1
@@ -1992,7 +1997,7 @@ void solver::poisson1D(mesh m_msh, std::vector<double> &m_phi, const std::vector
          exit(EXIT_FAILURE);
       }
    }
-   else      //Solve for staggered mesh   //CHECK ALL THESE BCS
+   else      //Solve for staggered mesh (i.e. phi on cell centers)  //CHECK ALL THESE BCS
    {
       n = m_msh.cintcells.size();
       nrhs = 1;
@@ -2594,14 +2599,16 @@ void solver::phitoE(std::vector<double> &s_EM_phi, std::vector<double> &s_EM_E, 
 
    mathFunctions mth;
 
+   /* Use 1 dimension always
    if(s_msh.meshdims==1)
    {
+   */
       //std::cout << "\n\tCalculating E-Field...";
 
       if(s_msh.philoc==0)
       {
 
-         num_cells = s_msh.pmesh.size();
+         num_cells = s_msh.pmesh.size(); // I guess this automatically assumes that the E field is on the edges
 
          for(i=0;i<num_cells;i++)
          {
@@ -2621,7 +2628,9 @@ void solver::phitoE(std::vector<double> &s_EM_phi, std::vector<double> &s_EM_E, 
             //s_EM_E[s_msh.vecdims*i+1] = 0.0;
             //s_EM_E[s_msh.vecdims*i+2] = 0.0;
          }
+      /* Use 1 dimension always
       }
+      */
    }
 
    //for(i=0;i<s_EM_E.size();i++) std::cout << s_EM_E[i];
@@ -2643,12 +2652,14 @@ double solver::eqnparser(std::string expression_string, std::vector<double> s_po
       case 1:
          s_x = s_point[0];
          symbol_table.add_variable("x",s_x);
+         break;
       case 2:
          s_x = s_point[0];
          s_y = s_point[1];
          symbol_table.add_variable("x",s_x);
          symbol_table.add_variable("y",s_y);
          symbol_table.add_variable("z",s_z);
+         break;
       case 3:
          s_x = s_point[0];
          s_y = s_point[1];
@@ -2656,6 +2667,7 @@ double solver::eqnparser(std::string expression_string, std::vector<double> s_po
          symbol_table.add_variable("x",s_x);
          symbol_table.add_variable("y",s_y);
          symbol_table.add_variable("z",s_z);
+         break;
    }
 
    symbol_table.add_variable("t",totalTime);
@@ -4931,7 +4943,7 @@ void solver::findseedproc(particles &s_part)  //MPI
 }
 
 
-//.....Redistribut particles evenly across processors.....//
+//.....Redistribute particles evenly across processors.....//
 
 void solver::redistributeparticles(particles &s_part,int s_vecdims, int s_meshdims)  //MPI
 { 
@@ -4959,14 +4971,14 @@ void solver::redistributeparticles(particles &s_part,int s_vecdims, int s_meshdi
 
    numpart = s_part.en.size();
 
-   MPI_Barrier(MPI_COMM_WORLD);
+   MPI_Barrier(MPI_COMM_WORLD); // block until all processes have reached this routine
    //MPI_Gather(&numpart,1,MPI_INT,&numpart_array.front(),1,MPI_INT,0,MPI_COMM_WORLD);
-   MPI_Allgather(&numpart,1,MPI_INT,&numpart_array.front(),1,MPI_INT,MPI_COMM_WORLD);
-   MPI_Barrier(MPI_COMM_WORLD);
+   MPI_Allgather(&numpart,1,MPI_INT,&numpart_array.front(),1,MPI_INT,MPI_COMM_WORLD); // Gather data from all taksks and distribute the combined data to all tasks
+   MPI_Barrier(MPI_COMM_WORLD); // block until all processes have reached this routine
 
-   MPI_Allreduce(&numpart,&numpart_total,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD);
+   MPI_Allreduce(&numpart,&numpart_total,1,MPI_INT,MPI_SUM,MPI_COMM_WORLD); // Combines values from all processes and distributes the result back to all processes
 
-   for(i=0;i<numpart_total;i++)
+   for(i=0;i<numpart_total;i++) // iterate over the number of elements in send buffer
    {
       for(j=0;j<s_meshdims;j++) s_pos.push_back(0.0);
       for(j=0;j<s_vecdims;j++) s_vel.push_back(0.0);

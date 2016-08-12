@@ -50,7 +50,7 @@ if [[ "$pusher" == *"SIMPLE"* ]]; then
 elif [[ "$pusher" == *"BORIS"* ]]; then
    loc="p"
 elif [[ "$pusher" == *"Q1D"* ]]; then
-   loc="c"
+   loc="p"
 else
    loc="c"
 fi
@@ -60,7 +60,7 @@ parameters=("$@")
 
 if [ $program == "gnuplot" ]
 then
-   script="./scripts/plotplasma.gp"
+   script="~/squ1d/scripts/plotplasma.gp"
 fi
 
 for p in "${parameters[@]}"; do

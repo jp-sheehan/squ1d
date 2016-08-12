@@ -105,8 +105,14 @@ void sType::electrostatic1DPIC()
 #if SIMTYPE==0 || SIMTYPE==3
       // Only for the full simulation or single particle simulation
       //bnd.applyContinuumBoundaryConditions(msh,EM,cnt,bdv);
+      
+      // Calculate electric potential (phi)
       slvr.poisson1D(msh,EM.phi,cnt,bdv,prt,slvr.deltaT,slvr.totalTime);   //..MB Comment out for
+
+      // Calculate the electric field from the potential
       slvr.phitoE(EM.phi,EM.E,msh); //..MB Comment out for
+
+      // set the electric field at the boundary
       bnd.applyEfieldBoundary(msh,EM,bdv); //..MB Comment out for
 #endif
 

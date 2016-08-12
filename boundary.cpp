@@ -1368,7 +1368,7 @@ void boundary::applyEfieldBoundary(mesh &b_msh, fields &b_flds, std::vector<boun
 {
    int i,j,k;
 
-   if(b_msh.philoc==1)
+   if(b_msh.philoc==1) // when phi is defined at the cell corners
    {
       for(i=0;i<b_bdv[0].nbound;i++)
       {
