@@ -100,6 +100,8 @@ void sType::electrostatic1DPIC()
 
    ////////////...............Main loop..........///////////////////////
 
+   std::cout << "\n\tBeginning Main Loop\n";
+
    for(i=1; i<(svar.iter+1); i++)
    {
 #if SIMTYPE==0 || SIMTYPE==3

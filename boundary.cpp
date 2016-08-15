@@ -77,13 +77,13 @@ void boundary::setParticleCounter(std::vector<boundvars> &b_bdv, std::vector<par
 
    std::string name;
 
-   std::cout << "\n\tReading Restart File for particle counter...." ;
-
    name = "restart";
 
    fname <<  name.c_str() << i_rst << ".out";
 
    filename = fname.str();
+
+   std::cout << "\n\tReading Restart File " << filename << " for particle counter...." ;
 
    std::ifstream rdfile(filename.c_str());
 

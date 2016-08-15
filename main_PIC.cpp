@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
          break;
        default:
          rflag = 0;
+         break;
      }
    }*/
 

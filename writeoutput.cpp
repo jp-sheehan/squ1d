@@ -259,6 +259,7 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
    }
    
    wrtfile.close();   
+   std::cout << "\n\t...written to " << filename << std::endl;
    part_fnum[w_part.spflag] = part_fnum[w_part.spflag]+1;
 
 }
@@ -462,12 +463,13 @@ void writeOutput::writeParticles(particles w_part, fields w_flds, mesh w_msh, do
 
    if(procid==0)
    {
-     std::cout << "\n\tWriting Particles...";
      fname << pname.c_str() << "Particles" << part_fnum[w_part.spflag] << ".dat";
 
      filename = fname.str();
-     std::ofstream wrtfile(filename.c_str(),std::ios_base::app | std::ios_base::out);  //MPI 
-     //std::ofstream wrtfile(filename.c_str());
+     std::cout << "\n\tWriting Particles to " << filename << "...";
+     //std::ofstream wrtfile(filename.c_str(),std::ios_base::app | std::ios_base::out);  //MPI 
+     std::ofstream wrtfile(filename.c_str());
+     //
 
      if(w_msh.wrtflag == 0) //Debug Write
      {
@@ -506,6 +508,7 @@ void writeOutput::writeParticles(particles w_part, fields w_flds, mesh w_msh, do
        }
      } 
      wrtfile.close();   
+   std::cout << "\n\t...written to " << filename << std::endl;
    }
    part_fnum[w_part.spflag] = part_fnum[w_part.spflag]+1;
 
@@ -862,6 +865,7 @@ void writeOutput::writePICField(mesh w_msh, contnm w_cont,fields w_EM,double tim
 
    cwrtfile.close();
    pwrtfile.close();
+   std::cout << "\n\t...written to " << pfname.str() << " and " << cfname.str() << std::endl;
 }
 
 //..Write energies output for PIC..//
@@ -1018,6 +1022,7 @@ void writeOutput::writePICField(mesh w_msh, std::vector<contnm> w_cont,fields w_
    totcont_fnum = totcont_fnum+1;
 
    wrtfile.close();
+   std::cout << "\n\t...written to " << filename << std::endl;
    //cwrtfile.close();
    //pwrtfile.close();
 }
@@ -1570,4 +1575,5 @@ void writeOutput::writeRestart(const std::vector<boundvars> &w_boundvars, double
    }
 
    wrtfile.close();   
+   std::cout << "\n\t...written to " << filename << std::endl;
 }

@@ -1492,6 +1492,7 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
    std::vector<double> enE,intE;
    std::vector<double> w_pos;
 
+   char junk[1000];
    std::stringstream fname;
    std::string filename;
 
@@ -1522,18 +1523,24 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
    i_thdist = therm_dist[spec];
    i_pert = dens_pert[spec];
 
-   std::cout << "\n\tReading Particles...";
-   fname << i_part.name.c_str() << "Particles" << rst << ".out";
+   //fname << i_part.name.c_str() << "Particles" << rst << ".out";
+   fname << i_part.name.c_str() << "Particles" << rst << ".dat";
 
    filename = fname.str();
+   std::cout << "\n\tReading Particles from " << filename << "...";
    std::ifstream rdfile(filename.c_str(),std::ios_base::app | std::ios_base::out);  //MPI 
 
    //....NOTE:  CHANGE TO .out AND NEED TO DELETE TECPLOT HEADERS AND REPLACE WITH JUST NUMBER OF PARTICLES
 
-   rdfile >> i_total_particles;
+   //rdfile >> i_total_particles;
+   
 
    if(procid==0)
    {
+   //skip first 3 header lines but get number of particles
+      rdfile.getline(junk,1000);
+      rdfile.getline(junk,1000);
+      rdfile.getline(junk,1000);
       if(i_msh.meshdims==1)
       {
          for(i = 0; i<i_total_particles; i++)
@@ -1550,6 +1557,7 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
             i_part.en.push_back(tempdouble);
          }
       }
+      /*
       else if(i_msh.meshdims==2)
       {
          for(i = 0; i<i_total_particles; i++)
@@ -1567,6 +1575,7 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
             i_part.en.push_back(tempdouble);
          }
       }
+      */
    }
 
    std::cout << "Total " << sname[spec] << " particles:  " <<  i_part.pos.size() << std::endl;
@@ -2217,13 +2226,13 @@ void initializeSolver::initializeRestart(writeOutput &i_wrt, double &i_time, int
 
    std::string name;
 
-   std::cout << "\n\tReading Restart File...." ;
-
    name = "restart";
 
    fname <<  name.c_str() << i_rst << ".out";
 
    filename = fname.str();
+
+   std::cout << "\n\tReading Restart File " << filename << "...." ;
 
    std::ifstream rdfile(filename.c_str());
 

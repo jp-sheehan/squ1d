@@ -4974,6 +4974,7 @@ void solver::redistributeparticles(particles &s_part,int s_vecdims, int s_meshdi
    for(i=0;i<numprocs;i++) pcnt.push_back(0);
 
    numpart = s_part.en.size();
+   std::cout << "\nStarting particles: " << numpart << std::endl;
 
    MPI_Barrier(MPI_COMM_WORLD); // block until all processes have reached this routine
    //MPI_Gather(&numpart,1,MPI_INT,&numpart_array.front(),1,MPI_INT,0,MPI_COMM_WORLD);
