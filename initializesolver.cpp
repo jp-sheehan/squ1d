@@ -1541,6 +1541,13 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
       rdfile.getline(junk,1000);
       rdfile.getline(junk,1000);
       rdfile.getline(junk,1000);
+      std::string junkstr(junk);
+      int nstart, nlen;
+
+      nstart = junkstr.find("I=",0) + 2;
+      nlen = junkstr.find(",",nstart) - nstart;
+      i_total_particles = std::stoi(junkstr.substr(nstart,nlen),nullptr,10);
+
       if(i_msh.meshdims==1)
       {
          for(i = 0; i<i_total_particles; i++)

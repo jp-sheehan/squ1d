@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <regex>
 #include <fstream>
 #include <stdlib.h>
 #include <math.h>
