@@ -44,12 +44,8 @@ if [ "$number" -eq "-1" ]; then
    number=$(ls -t $dir| grep restart | head -1 | grep -o '[0-9]\+') # most recent number
 fi
 
-pusher=$(fgrep "PARTICLE_MOVER" ${dir}SolverType.inp | head -1)
-if [[ "$pusher" == *"SIMPLE"* ]]; then
-   loc="p"
-elif [[ "$pusher" == *"BORIS"* ]]; then
-   loc="p"
-elif [[ "$pusher" == *"Q1D"* ]]; then
+pusher=$(fgrep "FIELD_LOCATION" SolverType.inp | head -1 | grep -o "1" | tr -d '\n')
+if [[ "$pusher" == "11" ]]; then
    loc="p"
 else
    loc="c"

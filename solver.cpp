@@ -744,10 +744,12 @@ void solver::weighContinuumPIC(const std::vector<particles> &s_part, std::vector
 
    //std::cout << "\n\tInterpolating Flow...";
 
+   /* Only 1D for now
    if(s_msh.meshdims==1)
    {
+   */
 
-      if(s_msh.philoc==1)
+      if(s_msh.philoc==1) // at corner
       {
          //std::cout << "\n CF:  " << coulForce << std::endl;
          if(s_msh.intscheme == 0 || coulForce == 1)  //Nearest Cell Interpolation
@@ -784,7 +786,7 @@ void solver::weighContinuumPIC(const std::vector<particles> &s_part, std::vector
                }
                //#pragma omp master //OMP
                //{
-               if(s_msh.perflag==0)
+               if(s_msh.perflag==0) // non-periodic boundary
                {
                   s_cont[k].N[0] += s_cont[k].N[0];
                   s_cont[k].N[s_msh.pmesh.size()-1] += s_cont[k].N[s_msh.pmesh.size()-1];
@@ -797,7 +799,7 @@ void solver::weighContinuumPIC(const std::vector<particles> &s_part, std::vector
                   s_cont[k].En[0] += s_cont[k].En[0];
                   s_cont[k].En[s_msh.pmesh.size()-1] += s_cont[k].En[s_msh.pmesh.size()-1];
                }
-               if(s_msh.perflag==1)
+               if(s_msh.perflag==1) // period boundary
                {
                   s_cont[k].N[0] += s_cont[k].N[s_msh.pmesh.size()-1];
                   s_cont[k].N[s_msh.pmesh.size()-1] = s_cont[k].N[0];
@@ -951,7 +953,7 @@ void solver::weighContinuumPIC(const std::vector<particles> &s_part, std::vector
             //}  //OMP
          }
       }
-      else
+      else // at edge
       {
          if(s_msh.intscheme == 0 || coulForce == 1)  //Nearest Cell Interpolation
          {
@@ -1140,6 +1142,7 @@ void solver::weighContinuumPIC(const std::vector<particles> &s_part, std::vector
             //}  //OMP
          }
       }
+      /*
    }
    else if(s_msh.meshdims==2)  //FIX,GS 2D
    {
@@ -1198,6 +1201,7 @@ void solver::weighContinuumPIC(const std::vector<particles> &s_part, std::vector
          }
       }
    }
+   */
 
 
    int numprocs,procid; //MPI

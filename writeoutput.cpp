@@ -189,8 +189,10 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
 
    if(w_wrtflag == 0)  //Debug Write
    {
+      /* only 1D
      if(w_mesh_dims==1)
      {
+     */
         for(i = 0; i<w_total_particles; i++)
         {
            wrtfile << w_part.pos[w_mesh_dims*i] << "\t" << 0.0 << "\t";
@@ -198,6 +200,7 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
            wrtfile << w_part.en[i] << "\t";
            wrtfile << std::endl;
          }
+     /* only 1D
      }
      else if(w_mesh_dims==2)
      {
@@ -209,11 +212,14 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
            wrtfile << std::endl;
         }
      }
+     */
    }
    else if(w_wrtflag == 1)  //Tecplot Write
    {
+      /* only 1D
      if(w_mesh_dims==1)
      {
+     */
         if(procid==0)  //MPI
         {
           wrtfile << "TITLE=\"" << filename.c_str() << "\""<< std::endl; 
@@ -229,6 +235,7 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
            wrtfile << std::endl;
         }
 
+        /* only 1D
      } 
      else if(w_mesh_dims==2)
      {
@@ -248,6 +255,7 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
         }
 
      } 
+     */
    }
    
    wrtfile.close();   
