@@ -39,4 +39,4 @@ plot filename\
    using xcol:ycol\
    every ::numhead\
    title leglab
-pause -1 "Hit return to quit"
+pause -1 "Hit return to continue"
