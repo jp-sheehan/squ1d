@@ -62,15 +62,16 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
    std::ifstream rdfile(rd_solverfilename.c_str());
    std::ifstream infile(rd_inputfilename.c_str());
 
-   rdfile >> temp >> setype >> sptype;
-   rdfile >> temp >> rd_meshread;
-   rdfile >> temp >> rd_meshwrite;
+   rdfile >> temp >> setype >> sptype; // SOLVER_TYPE
+   rdfile >> temp >> rd_meshread; // MESH_READ
+   rdfile >> temp >> rd_meshwrite; // MESH_WRITE
    //rdfile >> temp >> rd_meshfilename;
    //rdfile >> temp >> rd_meshfileformat;
-   rdfile >> temp >> i_svar.rst;
-   rdfile >> temp >> i_msh.meshdims >> i_msh.sym;
-   rdfile >> temp >> i_msh.vecdims;
+   rdfile >> temp >> i_svar.rst; // RESTART
+   rdfile >> temp >> i_msh.meshdims >> i_msh.sym; // COORDINATE_TYPE
+   rdfile >> temp >> i_msh.vecdims; // VECTOR_SIZE
 
+   // convert strings into numeric flags
    if(rd_meshwrite == "SIMPLE") i_msh.wrtflag = 0; 
    else if(rd_meshwrite == "TECPLOT") i_msh.wrtflag =1; 
    else
@@ -142,7 +143,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
    if (rd_meshread == 0) // Create mesh
    {
-      // Set mesh length
+      // Set mesh length MESH_LENGTH
       rdfile >> temp;
       std::cout << "Length:\t \t";
 
@@ -153,7 +154,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          std::cout << i_msh.meshlength[i] << "\t";
       }
 
-      // Set mesh starting point
+      // Set mesh starting point MESH_START
       rdfile >> temp;
       std::cout << "\nStart Point:\t \t";
 
@@ -164,14 +165,14 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          std::cout << i_msh.meshstart[i] << "\t";
       }
 
-      // Set mesh boundaries (I think)
+      // Set mesh boundary positions
       for(i=0;i<i_msh.meshdims;i++)
       {
          i_msh.meshbd.push_back(i_msh.meshstart[i]);
          i_msh.meshbd.push_back(i_msh.meshlength[i]+i_msh.meshstart[i]);
       }
 
-      // set number of points on mesh
+      // set number of points on mesh MESH_DIMS
       rdfile >> temp;
       std::cout << "\nGrid:\t \t";
 
@@ -182,7 +183,8 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          std::cout << i_msh.numpoints[i] << "\t";
       }
 
-      // Set cell weight
+      // Set cell weight MESH_WEIGHT
+      // WARNING: NOT INCORPORATED
       rdfile >> temp;
       std::cout << std::endl << "Cell Weight:\t";
 
@@ -193,7 +195,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          std::cout << i_msh.cellweight[i] << "\t";
       }
 
-      // Set cell area
+      // Set inlet area AREA/LENGTH
       rdfile >> temp;
       std::cout << std::endl << "Cell Area:\t";
 
@@ -222,15 +224,15 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
         std::cout << std::endl << "\t";
         } */
 
-      // Set number of ghost cells
+      // Set number of ghost cells GHOST_CELLS
       rdfile >> temp >> i_msh.numghost;
 
-      // Set magnetic field location
+      // Set magnetic field location FIELD_LOCATION
       rdfile >> temp >> i_msh.Bloc;
 
       std::cout << std::endl;     
 
-      if(sflag == 0)
+      if(sflag == 0) // ELECTROSTATIC PIC
       {
          // Set electric potential location
          rdfile >> i_msh.philoc;
@@ -243,7 +245,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          else if(i_msh.Bloc ==1)  std::cout << "Magnetic Fields at Cell Corners\n";
       }
       /*
-      else if(sflag==2)
+      else if(sflag==2) // ELECTROMAGNETIC HYBRID
       {
          rdfile >> i_msh.Eloc;
          if (i_msh.Eloc == 0)   std::cout << "Electric Fields at Cell Centers\n";
@@ -251,13 +253,13 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          if (i_msh.Bloc == 0)   std::cout << "Magnetic Fields at Cell Centers\n";
          else if(i_msh.Bloc ==1)  std::cout << "Magnetic Fields at Cell Corners\n";
       }
-      else if(sflag==10)
+      else if(sflag==10) // EULER 1D
       {
          rdfile >> i_msh.Eloc;
          if (i_msh.Eloc == 0)   std::cout << "No Electric or Magnetic Fields\n";
          else if(i_msh.Eloc ==1)  std::cout << "No Electric or Magnetic Fields\n";
       }
-      else if(sflag==11)
+      else if(sflag==11) // EULER 2D
       {
          rdfile >> i_msh.Eloc;
          if (i_msh.Eloc == 0)   std::cout << "No Electric or Magnetic Fields\n";
@@ -265,13 +267,13 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
       }
       */
 
-      // Set particle distribution
+      // Set particle distribution PARTICLE_DIST
       rdfile >> temp >> i_msh.pdist;
 
       if(i_msh.pdist == 0) std::cout << "\nParticles distributed over entire domain\n";
       else if(i_msh.pdist==1) std::cout << "\nParticles distributed cell by cell\n";
 
-      // Set smoothing
+      // Set smoothing SMOOTHING
       rdfile >> temp >> i_msh.smthcnt;
       if(i_msh.pdist == 0) std::cout << "\nSmoothed "<< i_msh.smthcnt << " times\n";
    }
@@ -295,22 +297,22 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
    //......Read solver specific information......//
 
-   rdfile >> temp >> i_svar.lscale;
-   rdfile >> temp >> i_svar.tscale;
-   rdfile >> temp >> i_svar.cfl;
-   rdfile >> temp >> i_svar.dt;
-   rdfile >> temp >> i_svar.iter;
-   rdfile >> temp >> i_svar.p_iter;
+   rdfile >> temp >> i_svar.lscale; // LENGTH_SCALE
+   rdfile >> temp >> i_svar.tscale; // TIME_SCALE
+   rdfile >> temp >> i_svar.cfl; // CFL
+   rdfile >> temp >> i_svar.dt; // TIME_STEP
+   rdfile >> temp >> i_svar.iter; // ITERATIONS
+   rdfile >> temp >> i_svar.p_iter; // PRINT_ITERATION
 
    std::cout << "Length scale:\t" << i_svar.lscale << "\t Time scale:\t " << i_svar.tscale << "\t CFL:\t" << i_svar.cfl << "\t dt:\t" << i_svar.dt << "\t Iterations:\t" << i_svar.iter << std::endl;
 
    if(sflag<10) // if solver is electrostatic (or electromagnetic (not implemented))
    {
-      // Set particle weight
+      // Set particle weight PARTICLE_WEIGHT
       rdfile >> temp >> i_svar.pwght;
       std::cout <<  "Particle Weight:\t" << i_svar.pwght <<  std::endl; 
 
-      // Set interpolation scheme
+      // Set interpolation scheme INTERPOLATION_SCHEME
       rdfile >> temp >> temp;
       std::cout <<  "Interpolation Scheme:\t" << temp <<  std::endl; 
 
@@ -324,7 +326,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          exit(EXIT_FAILURE); 
       }
 
-      // Set particle mover algorithm
+      // Set particle mover algorithm PARTICLE_MOVER
       rdfile >> temp >> temp;
       std::cout <<  "Particle Mover:\t" << temp <<  std::endl; 
 
@@ -341,7 +343,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
       i_svar.mvscheme=i_msh.mvscheme;
 
-      // Set background density charge
+      // Set background charge density GACKGROUND_CHARGE
       rdfile >>  temp >> rhoback;
       std::cout << "Background Density:\t"<< rhoback << std::endl;
 
@@ -363,20 +365,20 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
       std::cout << "Reading input file...\n";
 
-      infile  >>  temp >>  i_svar.nsp; 
-      infile  >> temp >> temp >> temp >> temp; //>> temp;
+      infile  >>  temp >>  i_svar.nsp; // SPECIES  number of species
+      infile  >> temp >> temp >> temp >> temp; //>> temp; // header
 
       nsp = i_svar.nsp; // Number of species
 
       for(i=0;i<i_svar.nsp;i++) // iterate of number of species
       {
-         infile >> temp;
+         infile >> temp; // species name
          sname.push_back(temp);
-         infile >> tempdouble;
+         infile >> tempdouble; // charge
          scharge.push_back(tempdouble);
-         infile >> tempdouble;
+         infile >> tempdouble; // mass
          smass.push_back(tempdouble);
-         infile >> tempbool;
+         infile >> tempbool;  // magnetization flag
          smag.push_back(tempbool);
          //infile >> tempint;
          //scycIT.push_back(tempint);
@@ -384,29 +386,35 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
       //....Read in Coulomb Collisionality Information.....//
 
-      infile  >>  temp >> i_svar.coul;
+      infile  >>  temp >> i_svar.coul; // COULOMB_COLLISIONS   on(1) or off(0)
+
+      if (i_svar.coul) {
+         std::cout << "Coulomb collisions ON" << std::endl;
+      } else {
+         std::cout << "Coulomb collisions OFF" << std::endl;
+      }
 
       //....Read in Collisionality Information.....//
 
-      infile  >>  temp >> i_svar.nct;
+      infile  >>  temp >> i_svar.nct; // COLLISION_TYPES   number of collision types
       nct = i_svar.nct; // Number of collision types
 
       if(i_svar.nct>0)
       {
-         infile >> temp >> temp >> temp;
+         infile >> temp >> temp >> temp; // header
 
          for(i=0;i<i_svar.nct;i++)
          {
-            infile >> temp;
+            infile >> temp; // species name
             scllsnname.push_back(temp);
-            infile >> temp;
+            infile >> temp; // collision type
             scllsntype.push_back(temp);
-            infile >> temp;
+            infile >> temp; // cross section
             scrsstype.push_back(temp);
 
             if(scrsstype[i] == "CONSTANT")
             {
-               infile >> tempdouble;
+               infile >> tempdouble; // constant cross section value
                scrsssctn.push_back(tempdouble);
             }
             else scrsssctn.push_back(0.0);
@@ -415,7 +423,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
             //{
             //}
          }
-         infile >> temp >> neutdens>> temp >> neuttemp;
+         infile >> temp >> neutdens>> temp >> neuttemp; // background neutral density and temperature
 
          std::cout << "\n\nCollisions ON \n";
          for(i=0;i<i_svar.nct;i++) std::cout << "\t" << scllsntype[i] << std::endl;
@@ -423,12 +431,12 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
       //....Read in boundary conditions....//
 
-      infile >> temp >> i_svar.nbound;
-      i_msh.nbound = i_svar.nbound;
+      infile >> temp >> i_svar.nbound; // BOUNDARIES   number of boundaries
+      i_msh.nbound = i_svar.nbound; // number of boundaries
 
       std::cout << "\n\nNumber of Boundaries: \t \n"  <<  i_svar.nbound << std::endl ;
 
-      nbcs = 3*nsp+2;
+      //nbcs = 3*nsp+2; // number of boundary conditions, unused
 
       for(i=0; i<i_svar.nbound; i++)
       {
@@ -436,11 +444,12 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          tempbdv.nDN = 0; // Number of Dirichlet and Neumann boundary conditions
          tempbdv.nbound = i_svar.nbound;
 
-         infile >> temp >> temp;
-         tempbdv.boundname = temp;
+         infile >> temp >> temp; // Name    boundary name
+         tempbdv.boundname = temp; // boundary name
 
          std::cout << std::endl << tempbdv.boundname << ": \n";  //Name of boundary
 
+         /*
          for(k=0; k<i_msh.meshdims; k++)
          {
             infile >> temp;
@@ -450,8 +459,12 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
                tempbdv.boundrange.push_back(tempdouble); //Range of boundary
             }
          }
+         */
+         infile >> temp >> tempdouble; // Range
+         tempbdv.boundrange.push_back(tempdouble); //Range of boundary
+         
 
-         infile >> temp >> temp;
+         infile >> temp >> temp; // Type
          tempbdv.clss = temp;       //Read Boundary classification
 
          if(tempbdv.clss=="PERIODIC") 
@@ -464,7 +477,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          {
             i_msh.perflag=0;
             tempbdv.wallflag = 1;
-            infile >> temp;
+            infile >> temp; // wall type
             tempbdv.walltype = temp;
             if(temp == "FLOATING") 
             {
@@ -512,7 +525,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          else if(tempbdv.clss=="SOURCE") 
          {
             i_msh.perflag=0;
-            infile >> temp;
+            infile >> temp; // source type
             tempbdv.srctype = temp;
             std::cout << std::endl << "Type:  " << tempbdv.clss << " " << tempbdv.srctype  << std::endl;  
          } 
@@ -525,17 +538,17 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
          for(l=0;l<nsp;l++)
          {
-            infile >> temp >> temp;
+            infile >> temp >> temp; // density of a particular specie
             tempbdv.boundtype.push_back(temp);    //Read boundary type
 
             std::cout << sname[l]  <<" Density BC: " << tempbdv.boundtype[3*l] << "\n";
 
             if(tempbdv.boundtype[3*l] == "DIRICHLET" || tempbdv.boundtype[3*l] == "NEUMANN" )  //Read in strings of equations for DIRICHLET BC
             { 
-               infile  >>  temp;
+               infile  >>  temp; // density at boundary
                tempbdv.bddens.push_back(temp);
                tempbdv.bddens_val.push_back(0.0);
-               infile  >>  temp;
+               infile  >>  temp; // distribution at boundary
                tempbdv.bdddist.push_back(temp);
                tempbdv.nDN = tempbdv.nDN + 1;
             }
@@ -544,21 +557,21 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
                tempbdv.bddens_val.push_back(0.0);
             } 
 
-            infile >> temp >> temp;
+            infile >> temp >> temp; // temperature of a particular specie
             tempbdv.boundtype.push_back(temp); 
 
             std::cout << sname[l] << " Temperature BC: " << tempbdv.boundtype[1+3*l] << "\n";
 
             if(tempbdv.boundtype[1+3*l] == "DIRICHLET" || tempbdv.boundtype[1+3*l] == "NEUMANN")
             {  
-               infile  >>  temp;
+               infile  >>  temp; // temperature at boudary
                tempbdv.bdtemp.push_back(temp);
-               infile  >>  temp;
+               infile  >>  temp; // desitribution at boundary
                tempbdv.bdthdist.push_back(temp);
                tempbdv.nDN = tempbdv.nDN + 1;
             }
 
-            infile >> temp >> temp;
+            infile >> temp >> temp; // velocity of a particular specie
             tempbdv.boundtype.push_back(temp); 
 
             std::cout << sname[l] <<" Velocity BC: " << tempbdv.boundtype[2+3*l] << "\n";
@@ -567,7 +580,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
             {  
                for(j=0;j<i_msh.vecdims;j++)
                {
-                  infile  >>  temp;
+                  infile  >>  temp; // velocity in a particular direction
                   tempbdv.bdvel.push_back(temp);
                }
                tempbdv.nDN = tempbdv.nDN + 1;
@@ -575,29 +588,30 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
 
          }
 
-         if(sflag==0)
+         if(sflag==0) // ELECTROSTATIC PIC
          {
-            infile >> temp >> temp;
+            infile >> temp >> temp; // Potential boundary condition
             tempbdv.boundtype.push_back(temp); 
 
             std::cout << "Potential BC: " << tempbdv.boundtype[3*nsp] << "\n";
 
             if(tempbdv.boundtype[3*nsp] == "DIRICHLET" || tempbdv.boundtype[3*nsp] == "NEUMANN")
             {  
-               infile  >>  temp;
+               infile  >>  temp; // potential at boundary
                tempbdv.bdphi = temp;
                tempbdv.bdphi_val = 0.0;
                tempbdv.nDN = tempbdv.nDN + 1;
             }
             else if(tempbdv.boundtype[3*nsp] == "PERIODIC")  
             { 
-               infile  >>  temp;
+               infile  >>  temp; // potential at boundary
                tempbdv.bdphi = temp;
                tempbdv.bdphi_val = 0.0;
                tempbdv.nDN = tempbdv.nDN + 1;
             } 
          }
-         else if(sflag==2)
+         /*
+         else if(sflag==2) // ELECTROMAGNETIC HYBRID
          {
             std::cout << "Efield BC: " << tempbdv.boundtype[3*nsp] << "\n";
 
@@ -611,8 +625,9 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
                tempbdv.nDN = tempbdv.nDN + 1;
             }
          }
+         */
 
-         infile >> temp >> temp;
+         infile >> temp >> temp; // B field boundary condition
          tempbdv.boundtype.push_back(temp); 
          std::cout << "Bfield BC: " << tempbdv.boundtype[3*nsp+1] << "\n";
 
@@ -620,7 +635,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          {  
             for(j=0;j<i_msh.vecdims;j++)
             {
-               infile  >>  temp;
+               infile  >>  temp; // boundary value for each vector quantity
                tempbdv.bdB.push_back(temp);
             }
             tempbdv.nDN = tempbdv.nDN + 1;
@@ -752,46 +767,48 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
    */
 
 
-   if(sflag<10)
+   if(sflag<10) // ELECTROSTATIC PIC (or ELECTROMAGNETIC HYBRID (not implemented))
    {
-      infile  >>  temp;
+      infile  >>  temp; // INITIAL_CONDITIONS
 
       for(i=0;i<nsp;i++)  
       {
-         infile  >>  temp  >>  temp;
+         infile  >>  temp  >>  temp; // Density
          init_dens.push_back(temp);
-         infile >>  temp;
+         infile >>  temp; // density distribution
          dens_dist.push_back(temp);
-         infile >> tempdouble;
+         infile >> tempdouble; // ?
          dens_pert.push_back(tempdouble);
-         infile  >> temp >> temp;
+         infile  >> temp >> temp; // Temperature
          init_Temp.push_back(temp);
-         infile >> temp;
+         infile >> temp; // temperature distribution
          therm_dist.push_back(temp);
-         infile >> temp;
+         infile >> temp; // Velocity
          for(j=0;j<i_msh.vecdims;j++)
          {
-            infile >>  temp;
+            infile >>  temp; // velocity components
             init_U.push_back(temp);
          }
       }     
 
-      infile  >>  temp;
+      infile  >>  temp; // initial condition name
 
-      if(sflag==0)
+      if(sflag==0) // ELECTROSTATIC PIC
       {
-         infile >>  init_phi;
+         infile >>  init_phi; // initial electric potential
       }
+      /*
       else if(sflag==2)
       {
          for(i=0; i<i_msh.vecdims; i++)
          {
-            infile >>  temp;
+            infile >>  temp; // initial electric field
             init_E.push_back(temp);
          }
       }
+      */
 
-      infile  >> temp;
+      infile  >> temp; // MagneticField or CurrentLoop
 
       if(temp == "CurrentLoop") //Read in current loop information to be used for magnetic field
       {
@@ -803,11 +820,12 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          i_svar.flag_CL = false;
          for(i=0; i<i_msh.vecdims; i++)
          {
-            infile >>  temp;
+            infile >>  temp; // Externally applied mangetic field
             init_B.push_back(temp);
          }
       }
 
+      // Display all initial conditions
       std::cout << "\nInitial Conditions: \n";
 
       for(i=0;i<nsp;i++)
@@ -841,6 +859,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          std::cout << "\nPotential: \t" ;
          std::cout <<  init_phi << "\n" ;
       }
+      /*
       else if(sflag==2)
       {
          std::cout << "\nEfield: \t" ;
@@ -849,6 +868,7 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
             std::cout <<  init_E[i] << "\t" ;
          }
       }
+      */
 
       std::cout << std::endl;  
 
@@ -857,38 +877,38 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
       //....Read in special regions....//
 
 
-      infile  >>  temp  >> i_svar.nspcl;
+      infile  >>  temp  >> i_svar.nspcl; // SPECIAL_REGIONS   number of special regions
 
       std::cout << "\n\nNumber of Special Regions: \t"  <<  i_svar.nspcl << std::endl ;
 
       for(i=0;i<i_svar.nspcl;i++)
       {
          tempspclv.nspcl = i_svar.nspcl;
-         infile  >> temp >> tempspclv.spcltype ;
+         infile  >> temp >> tempspclv.spcltype; // Type
 
          if(tempspclv.spcltype=="SOURCE")
          {
 
             for(j=0;j<i_msh.meshdims;j++)
             {
-               infile >> temp >> tempdouble;
+               infile >> temp >> tempdouble; // Range   range start
                tempspclv.spclrange.push_back(tempdouble);
-               infile >> tempdouble;
+               infile >> tempdouble; // range end
                tempspclv.spclrange.push_back(tempdouble);
             }
 
             for(j=0;j<i_svar.nsp;j++)
             {
-               infile >> temp >> temp;
+               infile >> temp >> temp; // specie flux
                tempspclv.spclFlux.push_back(temp);
 
-               infile >> temp;
+               infile >> temp; // specie density distribution
                tempspclv.spclddist.push_back(temp);
 
-               infile >> temp >> temp;
+               infile >> temp >> temp; // specie temperature
                tempspclv.spclT.push_back(temp);
 
-               infile >> temp;
+               infile >> temp; // specie thermal distribution
                tempspclv.spclthdist.push_back(temp);
 
             }
@@ -897,32 +917,32 @@ void initializeSolver::readdata(solverVars & i_svar, mesh & i_msh, std::vector<b
          {
             for(j=0;j<i_msh.meshdims;j++)
             {
-               infile >> temp >> tempdouble;
+               infile >> temp >> tempdouble; // Range    range start
                tempspclv.spclrange.push_back(tempdouble);
-               infile >> tempdouble;
+               infile >> tempdouble; //  range end
                tempspclv.spclrange.push_back(tempdouble);
             }
 
-            infile >> temp >> tempdouble;
+            infile >> temp >> tempdouble; // Current
             tempspclv.spclJ = tempdouble;
 
-            infile >> temp >> tempdouble;
+            infile >> temp >> tempdouble; // Frequency
             tempspclv.spclomega = tempdouble;
          }
          else if(tempspclv.spcltype=="EFIELD")
          {
             for(j=0;j<i_msh.meshdims;j++)
             {
-               infile >> temp >> tempdouble;
+               infile >> temp >> tempdouble; // Range   range start
                tempspclv.spclrange.push_back(tempdouble);
-               infile >> tempdouble;
+               infile >> tempdouble; // range end
                tempspclv.spclrange.push_back(tempdouble);
             }
 
-            infile >> temp >> tempdouble;
+            infile >> temp >> tempdouble; // Electric field
             tempspclv.spclE = tempdouble;
 
-            infile >> temp >> tempdouble;
+            infile >> temp >> tempdouble; // Frequency
             tempspclv.spclomega = tempdouble;
          }
          else
@@ -1533,58 +1553,60 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
    //....NOTE:  CHANGE TO .out AND NEED TO DELETE TECPLOT HEADERS AND REPLACE WITH JUST NUMBER OF PARTICLES
 
    //rdfile >> i_total_particles;
-   
+
 
    if(procid==0)
    {
-   //skip first 3 header lines but get number of particles
-      rdfile.getline(junk,1000);
-      rdfile.getline(junk,1000);
-      rdfile.getline(junk,1000);
-      std::string junkstr(junk);
-      int nstart, nlen;
+      // ONLY VALID FOR TECPLOT
+      if (i_msh.wrtflag == 1) { // TecPlot
+         //skip first 3 header lines but get number of particles
+         rdfile.getline(junk,1000);
+         rdfile.getline(junk,1000);
+         rdfile.getline(junk,1000);
+         std::string junkstr(junk);
+         int nstart, nlen;
 
-      nstart = junkstr.find("I=",0) + 2;
-      nlen = junkstr.find(",",nstart) - nstart;
-      i_total_particles = std::stoi(junkstr.substr(nstart,nlen),nullptr,10);
+         nstart = junkstr.find("I=",0) + 2;
+         nlen = junkstr.find(",",nstart) - nstart;
+         i_total_particles = std::stoi(junkstr.substr(nstart,nlen),nullptr,10);
 
-      if(i_msh.meshdims==1)
-      {
-         for(i = 0; i<i_total_particles; i++)
+         if(i_msh.meshdims==1)
          {
+            for(i = 0; i<i_total_particles; i++)
+            {
+               rdfile >> tempdouble;
+               i_part.pos.push_back(tempdouble);
+               rdfile >> tempdouble;
+               for(j=0;j<i_msh.vecdims; j++) 
+               {  
+                  rdfile >> tempdouble;
+                  i_part.vel.push_back(tempdouble);
+               }
+               rdfile >> tempdouble;
+               i_part.en.push_back(tempdouble);
+            }
+         }
+         /*
+            else if(i_msh.meshdims==2)
+            {
+            for(i = 0; i<i_total_particles; i++)
+            {
             rdfile >> tempdouble;
             i_part.pos.push_back(tempdouble);
             rdfile >> tempdouble;
+            i_part.pos.push_back(tempdouble);
             for(j=0;j<i_msh.vecdims; j++) 
             {  
-               rdfile >> tempdouble;
-               i_part.vel.push_back(tempdouble);
+            rdfile >> tempdouble;
+            i_part.vel.push_back(tempdouble);
             }
             rdfile >> tempdouble;
             i_part.en.push_back(tempdouble);
-         }
-      }
-      /*
-      else if(i_msh.meshdims==2)
-      {
-         for(i = 0; i<i_total_particles; i++)
-         {
-            rdfile >> tempdouble;
-            i_part.pos.push_back(tempdouble);
-            rdfile >> tempdouble;
-            i_part.pos.push_back(tempdouble);
-            for(j=0;j<i_msh.vecdims; j++) 
-            {  
-               rdfile >> tempdouble;
-               i_part.vel.push_back(tempdouble);
             }
-            rdfile >> tempdouble;
-            i_part.en.push_back(tempdouble);
-         }
+            }
+            */
       }
-      */
    }
-
    std::cout << "Total " << sname[spec] << " particles:  " <<  i_part.pos.size() << std::endl;
 }
 
