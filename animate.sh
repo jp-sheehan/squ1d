@@ -3,7 +3,10 @@
 # defaults
 program="gnuplot"
 dir="./"
-ionspec="ARGON"
+
+nspec=$(grep -n "SPECIES" SolverInput.inp | cut -c1)
+linenum=$((${nspec}+3))
+ionspec=$(sed "${linenum}q;d" SolverInput.inp | cut -d" " -f10)
 
 # inputs
 
