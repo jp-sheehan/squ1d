@@ -1334,7 +1334,7 @@ void solver::weighEfield(std::vector<double> &int_E, const particles &s_part, co
          {
             s_index= s_part.cell[s_pindex];
          }
-         else if(s_msh.Eloc==1)
+         else // if(s_msh.Eloc==1)
          {
             s_index= s_part.pt[s_pindex];
          }
@@ -1462,13 +1462,13 @@ void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fi
             {
                s_index= s_part.cell[s_pindex];
             }
-            else if(s_msh.Bloc==1)
+            else // if(s_msh.Bloc==1)
             {
                s_index= s_part.pt[s_pindex];
             }
             for(i=0; i<s_msh.vecdims; i++)  int_B[i] = s_EM.B[s_msh.vecdims*s_index+i];
          }
-         if(s_msh.intscheme == 1)  //Linear Interpolation
+         else // if(s_msh.intscheme == 1)  //Linear Interpolation
          {
             for(i=0;i<s_msh.vecdims;i++) int_B[i] = 0.0;
 
@@ -1489,7 +1489,7 @@ void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fi
                   //else if(i==1) for(j=0;j<s_msh.vecdims;j++) int_B[j] = s_EM.B[s_msh.vecdims*s_neighbors[0]+j];
                }
             }
-            else if(s_msh.Bloc==1)
+            else //if(s_msh.Bloc==1)
             {
                s_index= s_part.cell[s_pindex];
                for(j=0;j<2*s_msh.meshdims;j++) s_neighbors[j] = s_msh.pofcneigh[2*s_index+j];
@@ -1515,7 +1515,7 @@ void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fi
             {
                s_index= s_part.cell[s_pindex];
             }
-            else if(s_msh.Bloc==1)
+            else //if(s_msh.Bloc==1)
             {
                s_index= s_part.pt[s_pindex];
             }
@@ -1523,7 +1523,7 @@ void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fi
             int_B[1] = s_EM.gradBcoef[s_index];
             int_B[2] = 0.0;
          }
-         if(s_msh.intscheme == 1)  //Linear Interpolation
+         else //if(s_msh.intscheme == 1)  //Linear Interpolation
          {
             for(i=0;i<s_msh.vecdims;i++) int_B[i] = 0.0;
 
@@ -1548,7 +1548,7 @@ void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fi
                //std::cout << std::endl << "\tBz: " << int_B[0] << "\tBr: " << int_B[1] << std::endl;
                int_B[2] = 0.0;
             }
-            else if(s_msh.Bloc==1)
+            else //if(s_msh.Bloc==1)
             {
                s_index= s_part.cell[s_pindex];
                for(j=0;j<2*s_msh.meshdims;j++) s_neighbors[j] = s_msh.pofcneigh[2*s_index+j];
@@ -1572,12 +1572,14 @@ void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fi
          }
       }
    } 
+   /*
    else if(s_msh.meshdims==2)
    {
       if(s_msh.intscheme == 0)  //Nearest Cell Interpolation
       {
          if(s_msh.Bloc==0) s_index = s_msh.nearc(s_part, s_pindex);
-         if(s_msh.Bloc==1) s_index = s_msh.nearp(s_part, s_pindex);
+         else s_index = s_msh.nearp(s_part, s_pindex);
+
          for(i=0; i<s_msh.vecdims; i++) int_B[i] = s_EM.B[s_msh.vecdims*s_index+i];
       }
       if(s_msh.intscheme == 1)  //Linear Interpolation
@@ -1632,6 +1634,7 @@ void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fi
          }
       }
    }
+   */
 }
 
 //..Clears all particles..//
@@ -2699,7 +2702,8 @@ void solver::particlefluxsource1D(particles &s_part, const mesh &s_msh, std::str
    //.....Maxwellian set based on "Loading and Injection of Maxwellian Distributions in Particle Simulations" by Cartwright, Verboncoeur, and Birdsall....//
 
    int i,j,k,l;
-   int npctot,npc,npo,npcrem,s_cindex,s_pindex;
+   int npctot,npc,npo,npcrem,s_cindex;
+   int s_pindex = -1;
    long double temp1,temp2,temp3,tempen;
    long double vupper,vlower,vtherm,i_dens,area,dnpc,vlowerf,vlfsq,vupperf,vufsq;
    double tol=0.0e-10;
