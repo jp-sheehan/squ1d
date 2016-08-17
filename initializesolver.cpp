@@ -1267,8 +1267,8 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
       vupper = 5.0;  //Upper velocity limit for distribution
       vlower = -5.0;  //Lower velocity limit for distribution
 
-      temp1 = erf(1.5);
-      temp1 = i_mth.erfinv(temp1);
+      //temp1 = erf(1.5);
+      //temp1 = i_mth.erfinv(temp1);
 
       for(j=0;j<npc;j++)
       {
@@ -1408,8 +1408,8 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
             vupper = 5.0;
             vlower = -5.0;
 
-            temp1 = erf(1.5);
-            temp1 = i_mth.erfinv(temp1);
+            //temp1 = erf(1.5);
+            //temp1 = i_mth.erfinv(temp1);
 
             for(j=0;j<npc;j++)
             {
@@ -1500,7 +1500,7 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
    long double tempdouble;
    bool cflag;
    std::string i_ddist,i_thdist;
-   double i_pert;
+   //double i_pert;
    double tol=0.0e-10;
    int i_total_particles;
    int pindex;
@@ -1541,7 +1541,7 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
 
    i_ddist = dens_dist[spec];
    i_thdist = therm_dist[spec];
-   i_pert = dens_pert[spec];
+   //i_pert = dens_pert[spec];
 
    //fname << i_part.name.c_str() << "Particles" << rst << ".out";
    fname << i_part.name.c_str() << "Particles" << rst << ".dat";
