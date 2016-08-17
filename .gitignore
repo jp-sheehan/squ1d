@@ -15,4 +15,6 @@ SolverInput.inp
 *.eps
 *.pdf
 *.gif
+*.json
+reports/
 results/

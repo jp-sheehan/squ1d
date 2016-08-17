@@ -33,8 +33,8 @@ class boundary
       void setParticleCounter(std::vector<boundvars> &,std::vector<particles>,int); //..Initialize particle counter for those leaving domain
       void findBoundaryCells(mesh &,std::vector<boundvars> &);  //..Find cells on boundary
       void findSpecialRegionCells(mesh &,std::vector<spclvars> &);  //..Find cells in special regions
-      void applyPeriodicBoundaryConditions(mesh,flow &); //..Apply periodic BC (CFD Proj)
-      void applyBoundaryConditionsEuler(mesh,flow &);  //..Apply Euler BC (CFD Proj)
+      //void applyPeriodicBoundaryConditions(mesh,flow &); //..Apply periodic BC (CFD Proj)
+      //void applyBoundaryConditionsEuler(mesh,flow &);  //..Apply Euler BC (CFD Proj)
       void applyContinuumBoundaryConditions(mesh,fields &,std::vector<contnm> &,std::vector<boundvars> &); //..Apply Continuum BC
       void applyBoundaryConditionsPIC(mesh,fields &,flow &); //..
       void applyEfieldBoundary(mesh &, fields &, std::vector<boundvars> &); //..Apply boundary conditions on Electric Field

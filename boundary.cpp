@@ -124,7 +124,8 @@ void boundary::setParticleCounter(std::vector<boundvars> &b_bdv, std::vector<par
 
 void boundary::seedParticles(mesh b_msh, std::vector<contnm> &b_cont, std::vector<particles> &b_part, solverVars b_svar,std::vector<boundvars> &b_bdv)
 {
-   int i,j,k,l,m,nbcs;
+   int i,j,k,l,m; 
+   //int nbcs;
    int bcell;
    int numprocs,procid;  //MPI
    double dens,temp;
@@ -144,7 +145,7 @@ void boundary::seedParticles(mesh b_msh, std::vector<contnm> &b_cont, std::vecto
    double area = 1.0;   
    nsp = b_bdv[0].nsp;
    nbound = b_bdv[0].nbound;
-   nbcs = 3*nsp+2;
+   //nbcs = 3*nsp+2;
 
    //std::cout << "\n\tSeeding Particles......";
 
@@ -534,7 +535,8 @@ double boundary::beqnparser(std::string expression_string, std::vector<double> i
 
 void boundary::applyContinuumBoundaryConditions(mesh b_msh, fields &b_flds, std::vector<contnm> &b_cont,std::vector<boundvars> &b_bdv)
 {
-   int i,j,k,l,m,nbcs;
+   int i,j,k,l,m;
+   //int nbcs;
    int bcell;
 
    //CHG NOTES: Add U and T, Change B
@@ -545,11 +547,11 @@ void boundary::applyContinuumBoundaryConditions(mesh b_msh, fields &b_flds, std:
    for(i=0;i<b_msh.meshdims;i++) meshpt.push_back(0.0);
    for(i=0;i<b_msh.meshdims;i++) meshptin.push_back(0.0);
 
-   double area = 1.0;   
+   //double area = 1.0;   
 
    nsp = b_bdv[0].nsp;
    nbound = b_bdv[0].nbound;
-   nbcs = 3*nsp+2;
+   //nbcs = 3*nsp+2;
 
    //std::cout << "\n\tApplying Continuum BC's...";
 
@@ -868,6 +870,7 @@ void boundary::applyContinuumBoundaryConditions(mesh b_msh, fields &b_flds, std:
 
          //CHG:  Add Other Continuum Variables (U,T)
 
+         /*
          if(b_msh.sflag==2)
          {
             //..............E-field....................//
@@ -894,7 +897,10 @@ void boundary::applyContinuumBoundaryConditions(mesh b_msh, fields &b_flds, std:
             }
             else std::cout << "\n\n ERROR!!  Boundary Condition not supported\n\n";
          }
-         else if(b_msh.sflag==0)
+         else 
+         */
+         
+         if(b_msh.sflag==0)
          {
             //..............Potential....................//
 
@@ -1024,6 +1030,7 @@ void boundary::applyContinuumBoundaryConditions(mesh b_msh, fields &b_flds, std:
 
 //..Apply periodic fluid boundary conditions (CFD Project)..//
 
+/*
 void boundary::applyPeriodicBoundaryConditions(mesh b_mshflow, flow &b_cont) // TEMPORARY
 {
    int i,j,k;
@@ -1058,7 +1065,6 @@ void boundary::applyBoundaryConditionsEuler(mesh b_msh,flow &b_cont)
 {
 
    // Need to Update to New BC implementation
-   /*
       int i,j,k;
       int count = 0;
       int densdcount = 0;
@@ -1136,10 +1142,10 @@ void boundary::applyBoundaryConditionsEuler(mesh b_msh,flow &b_cont)
 else std::cout << "\n\n ERROR!!  Boundary Condition not supported\n\n";
 
 count = std::accumulate(b_msh.cboundnum.begin(),b_msh.cboundnum.begin()+i+1,0);
-}*/
-
 }
 
+}
+*/
 
 //..Find cells for special regions..//
 
@@ -1190,11 +1196,12 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
    int numprocs,procid;  //MPI
 
    double dens,temp,flux;
-   double area,dx,volume;
+   //double area;
+   double dx,volume;
    long double J_cond,J_cond_check,dEperpdt;
    long double total; //MPI
 
-   int spcl_start,spcl_end;
+   //int spcl_start,spcl_end;
 
    J_cond = 0.0;
    J_cond_check = 0.0;
@@ -1218,7 +1225,7 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
 
    solver b_slvr;
 
-   area = 1.0;
+   //area = 1.0;
 
    for(i=0;i<b_nspcl;i++)
    {
@@ -1266,8 +1273,8 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
       else if(b_spclv[i].spcltype == "HEATING")  //..Apply heating region
       {
          for(k=0;k<b_msh.meshdims;k++)  L[k] = b_spclv[i].spclrange[2*k+1]- b_spclv[i].spclrange[2*k];
-         spcl_start = spcllocs[0];
-         spcl_end = spcllocs[spcllocs.size()-1];
+         //spcl_start = spcllocs[0];
+         //spcl_end = spcllocs[spcllocs.size()-1];
 
 
          for(j=0;j<b_nsp;j++)
