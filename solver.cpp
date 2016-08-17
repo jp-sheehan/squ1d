@@ -7,10 +7,12 @@
 void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_msh,int s_mvscheme)
 {
    int i,j,k;
-   double coef,en_temp,fact,dt,deltaTQ1D;
+   double coef,en_temp,dt,deltaTQ1D;
+   //double fact;
    double qom = s_part.wcharge/s_part.wmass;
    double beta,eps;
-   double vzp,vthp,vzm,vthm,vthg,en;
+   double vzp,vthp,vzm,vthm,en;
+   //double vthg;
    //std::vector<double> vel,vminus,vplus,vprime,vupdate,tangent;
    //std::vector<double> int_B,int_gradB,int_E,cvec;
 
@@ -23,7 +25,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
 
    mathFunctions mth;
 
-   fact = 1.0;
+   //fact = 1.0;
 
    dt = deltaT;  //s_part.cycIT*deltaT;
    deltaTQ1D= dt;
@@ -143,7 +145,8 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
       //#pragma omp parallel private(i,j,en_temp)  //OMP
       //{
 
-      long double A,C,vzm,vperpm,vz,vperp;
+      long double A,C,vzm,vperpm,vz;
+      //long double vperp;
       std::vector<double> int_B,int_gradB,int_E,vel;
       double vperp_init,vperp_m,vperp_g,vperp_p;
 
@@ -182,7 +185,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
       for(i=0; i<npg; i++)
       {
 
-         en_temp = 0.0;
+         //en_temp = 0.0;
          //sign = 1.0;
          //std::cout << "\nParticle:  " << i << std::endl;
          weighEfield(int_E,s_part,s_EM,s_msh,i);
@@ -200,7 +203,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
          vperp_m = vperp_init;
          vperp_g = vperp_init;
          vperp_p = vperp_init;
-         vperp = vperp_init;
+         //vperp = vperp_init;
 
          //vthm = vel[2];  // theta velocity   
          //vthg = vel[2];  // Initial guess for theta velocity
@@ -219,7 +222,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
             vzp = vzm-beta*(vperp_g+vperp_m)*(vperp_g+vperp_m);
             vperp_p = vperp_m + beta*(vzp+vzm)*(vperp_g+vperp_m);
 
-            en_temp = vzp*vzp + vperp_p*vperp_p;
+            //en_temp = vzp*vzp + vperp_p*vperp_p;
 
             //std::cout << "vthg: " << vthg << std::endl;
             //std::cout << "vthp: "<<  vthp << std::endl;
@@ -231,7 +234,7 @@ void solver::updatePartVel(particles &s_part, const fields &s_EM,const mesh &s_m
 
             if (fabs(vperp_g-vperp_p)/fabs(vperp_g)<eps) break;  //Check for convergence
 
-            vthg = vthp;  // Set new guess for theta velocity
+            //vthg = vthp;  // Set new guess for theta velocity
             vperp_g = vperp_p;  // Set new guess for theta velocity
          }
 
@@ -1435,7 +1438,8 @@ void solver::weighEfield(std::vector<double> &int_E, const particles &s_part, co
 void solver::weighBfield(std::vector<double> &int_B, particles &s_part, const fields &s_EM,const mesh &s_msh,int s_pindex)
 {
    int i,j,s_index;
-   double moq = fabs(s_part.mass/s_part.charge);  //For rL
+   //double moq = fabs(s_part.mass/s_part.charge);  //For rL
+   double moq;
    double s_gradBcoef = 0.0;
    //std::vector<int> s_neighbors;
    //std::vector<double> s_arearatio;
@@ -1805,9 +1809,10 @@ void solver::poisson1D(mesh m_msh, std::vector<double> &m_phi, const std::vector
          {
             nw = n+1;
             ldb = nw;
-            double J_cond,J_cond_tot,J_tot;
-            J_cond = 0.0;
-            J_cond_tot = 0.0; 
+            //double J_cond,J_cond_tot;
+            double J_tot;
+            //J_cond = 0.0;
+            //J_cond_tot = 0.0; 
             J_tot = 0.0;
 
             if(s_bdv[0].boundtype[3*s_nsp] == "NEUMANN") neumind = 0;  //Set left as NEUMANN BC
@@ -2178,9 +2183,10 @@ void solver::poisson1D(mesh m_msh, std::vector<double> &m_phi, const std::vector
          {
             nw = n+1;
             ldb = nw;
-            double J_cond,J_cond_tot,J_tot;
-            J_cond = 0.0;
-            J_cond_tot = 0.0; 
+            //double J_cond,J_cond_tot;
+            double J_tot;
+            //J_cond = 0.0;
+            //J_cond_tot = 0.0; 
             J_tot = 0.0;
 
             if(s_bdv[0].boundtype[3*s_nsp] == "NEUMANN") neumind = 0;  //Set left as NEUMANN BC
@@ -2932,8 +2938,8 @@ void solver::particlecellsource(particles &s_part, const mesh &s_msh, std::strin
    vupper = 5.0;
    vlower = -5.0;
 
-   temp1 = erf(1.5);
-   temp1 = s_mth.erfinv(temp1);
+   //temp1 = erf(1.5);
+   //temp1 = s_mth.erfinv(temp1);
 
    for(j=0;j<npc;j++)
    {
@@ -3101,7 +3107,8 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
    double maxen,maxvmag,maxneutN,maxneutT;
    long double P1,Pmax;
    long double R1,R2,R3,R4;
-   double vmag_en,vmag;
+  //double vmag_en;
+   double vmag;
    double en_inc,en_ex,en_ej,en_ion,en_eV,delta_en;
    long double tempd;
    long double chi,phi_ang,alpha;
@@ -3175,7 +3182,7 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
                   en_inc = s_prt[id].en[s_ind]; 
                   for(k=0;k<s_msh.vecdims;k++) vel[k] = s_prt[id].vel[s_ind3+k];
 
-                  vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
+                  //vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
 
                   tempd = 0.0;
                   for(k=0;k<s_msh.vecdims;k++)  tempd += vel[k]*vel[k];
@@ -3311,7 +3318,7 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
 
                en_inc = s_prt[id].en[s_ind]; 
                for(k=0;k<s_msh.vecdims;k++) vel[k] = s_prt[id].vel[s_ind3+k];
-               vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
+               //vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
 
                tempd = 0.0;
                for(k=0;k<s_msh.vecdims;k++)  tempd += vel[k]*vel[k];
@@ -3493,7 +3500,7 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
                   else if(s_msh.philoc==0) s_loc = s_cell;
 
                   en_inc = s_prt[id].en[s_ind]; 
-                  vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
+                  //vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
                   for(k=0;k<s_msh.vecdims;k++) vel[k] = s_prt[id].vel[s_ind3+k];
 
                   //..Shift frames...//
@@ -3524,7 +3531,7 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
                   {
 #endif
                      en_inc = vmag*vmag*0.5*s_prt[id].mass;
-                     en_eV = en_inc/qe;
+                     //en_eV = en_inc/qe;
 
                      /*.........Ion Elastic.........*/
 
@@ -3535,7 +3542,7 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
                      phi_ang = 2.0*pi*R3;
 
                      en_ex = en_inc*cos(chi)*cos(chi);
-                     delta_en = en_inc-en_ex;
+                     //delta_en = en_inc-en_ex;
 
                      alpha = sqrt(en_ex/en_inc);
                      scatterParticle(vel,vmag,chi,phi_ang);
@@ -3589,7 +3596,7 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
                else if(s_msh.philoc==0) s_loc = s_cell;
 
                en_inc = s_prt[id].en[s_ind]; 
-               vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
+               //vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
                for(k=0;k<s_msh.vecdims;k++) vel[k] = s_prt[id].vel[s_ind3+k];
 
                //..Shift frames...//
@@ -3652,7 +3659,7 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
                   phi_ang = 2.0*pi*R3;
 
                   en_ex = en_inc*cos(chi)*cos(chi);
-                  delta_en = en_inc-en_ex;
+                  //delta_en = en_inc-en_ex;
                   alpha = sqrt(en_ex/en_inc);
                   scatterParticle(vel,vmag,chi,phi_ang);
 
@@ -4838,7 +4845,7 @@ void solver::seedSingleParticle(particles &s_part, const mesh &s_msh, std::vecto
    //.....Maxwellian set based on "Loading and Injection of Maxwellian Distributions in Particle Simulations" by Cartwright, Verboncoeur, and Birdsall....//
 
    int i,j,k;
-   int index;
+   //int index;
    double temp;
    double vupper,vlower,vtherm;
    double tempen;
@@ -4848,7 +4855,7 @@ void solver::seedSingleParticle(particles &s_part, const mesh &s_msh, std::vecto
    vupper = 6.0;
    vlower = -6.0;
 
-   index = s_part.pos.size()/s_msh.meshdims;
+   //index = s_part.pos.size()/s_msh.meshdims;
 
    tempen = 0.0;
    vtherm = sqrt(s_Temp*kb/(s_part.mass));
