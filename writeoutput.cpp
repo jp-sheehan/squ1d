@@ -519,7 +519,7 @@ void writeOutput::writeParticles(particles w_part, fields w_flds, mesh w_msh, do
 void writeOutput::writeSingleParticle(particles w_part, fields w_flds, mesh w_msh, double time)
 {
    int i,j,k;
-   int w_total_particles = w_part.pos.size()/w_msh.meshdims;
+   //int w_total_particles = w_part.pos.size()/w_msh.meshdims;
    int pindex;
    double enphi,entot;
    std::vector<int> w_neigh;
@@ -1037,7 +1037,8 @@ void writeOutput::findglobalenergy(const std::vector<particles> &s_part, const f
    std::vector<int> s_neighbors;
    std::vector<double> s_arearatio;
    std::vector<double> glob_En,glob_meanKEn,glob_thermEn,glob_U;
-   double glob_En_sum, glob_meanKEn_sum,glob_thermEn_sum,glob_EnTot;
+   double glob_En_sum, glob_meanKEn_sum,glob_thermEn_sum;
+   //double glob_EnTot;
 
    int numprocs,procid; //MPI
 
@@ -1099,7 +1100,7 @@ void writeOutput::findglobalenergy(const std::vector<particles> &s_part, const f
    glob_meanKEn_sum = std::accumulate(glob_meanKEn.begin(),glob_meanKEn.end(),0.0);
    glob_thermEn_sum =  std::accumulate(glob_thermEn.begin(),glob_thermEn.end(),0.0); 
 
-   glob_EnTot = glob_En_sum+glob_EMEn;
+   //glob_EnTot = glob_En_sum+glob_EMEn;
 
    double glob_En_sum_MPI,glob_meanKEn_sum_MPI,glob_thermEn_sum_MPI,glob_EnTot_MPI;
 
@@ -1334,7 +1335,8 @@ void writeOutput::findphasespace(particles s_part, mesh s_msh, int s_index, doub
 {
    int i,j,k;
    double maxvel = *std::max_element(s_part.vel.begin(),s_part.vel.end());
-   double maxen = *std::max_element(s_part.en.begin(),s_part.en.end());
+   //double maxen = *std::max_element(s_part.en.begin(),s_part.en.end());
+   double maxen;
    std::vector<double> ps, velocity;
    std::vector<double> psx, velocityx;
    std::vector<double> psy, velocityy;
