@@ -3596,8 +3596,8 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
                s_ind3 = 3*s_ind;
                s_cell = s_prt[id].cell[s_ind];
                s_pt = s_prt[id].pt[s_ind];
-               if(s_msh.philoc==1) s_loc = s_pt;
-               else if(s_msh.philoc==0) s_loc = s_cell;
+               if(s_msh.philoc==0) s_loc = s_cell;
+               else s_loc = s_pt;
 
                en_inc = s_prt[id].en[s_ind]; 
                //vmag_en = sqrt(2.0*en_inc/s_prt[id].mass);
