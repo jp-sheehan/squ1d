@@ -545,7 +545,8 @@ void writeOutput::writeSingleParticle(particles w_part, fields w_flds, mesh w_ms
       pindex = w_msh.nearc(w_part,0);
       enphi = w_part.charge*w_flds.phi[pindex];  //DC charge
    }
-   else if(w_msh.intscheme == 1)
+   //else if(w_msh.intscheme == 1)
+   else // only other option is linear interpolation
    {
       pindex = w_msh.nearp(w_part,0);
       w_neigh = w_msh.cneighofp(pindex);
@@ -918,8 +919,8 @@ void writeOutput::writePICField(mesh w_msh, std::vector<contnm> w_cont,fields w_
 
    dx = w_msh.cmesh[1]-w_msh.cmesh[0];
 
-   if(w_msh.philoc==1) w_total_cells=w_total_pcells;
-   else if(w_msh.philoc==0) w_total_cells=w_total_ccells;
+   if(w_msh.philoc==0) w_total_cells=w_total_ccells;
+   else w_total_cells=w_total_pcells;
 
    for(i=0;i<w_total_cells;i++)
    {

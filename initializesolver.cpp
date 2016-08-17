@@ -1949,7 +1949,8 @@ void initializeSolver::initializeNeutralBackground(contnm & i_cont, const mesh &
    std::cout << "\nInitializing " << i_cont.name << " continuum....\n";
 
    if(i_mesh.philoc==0 )  i_tot_cells = i_mesh.cmesh.size()/i_mesh.meshdims;
-   else if(i_mesh.philoc==1) i_tot_cells = i_mesh.pmesh.size()/i_mesh.meshdims;
+   //else if(i_mesh.philoc==1) i_tot_cells = i_mesh.pmesh.size()/i_mesh.meshdims;
+   else i_tot_cells = i_mesh.pmesh.size()/i_mesh.meshdims;
 
    for(i=0;i<i_mesh.meshdims;i++) i_pos.push_back(0.0);
 

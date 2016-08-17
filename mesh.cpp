@@ -259,6 +259,7 @@ int mesh::incneighofc(int m_cindex) const   //Find Internal Neighbor
    else if(neighbors[1] == -1) inneigh = neighbors[0];
    else if(neighbors[2] == -1) inneigh = neighbors[3];
    else if(neighbors[3] == -1) inneigh = neighbors[2];
+   else inneigh = -1;
 
    return inneigh;
 }
@@ -581,7 +582,8 @@ int mesh::nearp1Dnew(particles const&  m_part, int m_pindex) const
 
 int mesh::nearp(std::vector<double> temp1) const
 {
-   int i,j,nearestpoint;
+   int i,j;
+   int nearestpoint = -1;
    double tempdist1, tempdist2;
    std::vector<double> temp2;
 
@@ -676,7 +678,8 @@ int mesh::nearc1Dnew(particles const& m_part, int m_pindex) const         //DC
 
 int mesh::nearc(std::vector<double> temp1) const
 {
-   int i,j,nearestcell;
+   int i,j;
+   int nearestcell = -1;
    double tempdist1;
    std::vector<double> temp2;
 
@@ -701,7 +704,8 @@ int mesh::nearc(std::vector<double> temp1) const
 
 int mesh::nearf(particles const& m_part, int m_pindex) const
 {
-   int i,j,nearestcell;
+   int i,j;
+   int nearestcell = -1;
    double tempdist1, tempdist2;
    std::vector<double> temp1,temp2;
 
@@ -1037,7 +1041,7 @@ double mesh::extrascal_p2c(std::vector<double> s_scal, int s_index)
 {
    int i,j;
    std::vector<int> s_neighbors;
-   double s_scalreturn;
+   double s_scalreturn = 0;
 
    for(i=0;i<(meshdims*meshdims);i++) s_neighbors.push_back(0.0);
 

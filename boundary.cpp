@@ -1190,7 +1190,8 @@ void boundary::findSpecialRegionCells(mesh &b_msh, std::vector<spclvars> &b_spcl
 void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, std::vector<particles> &b_part, solverVars b_svar, std::vector<spclvars> &b_spclv,fields &b_flds)
 {
    int i,j,k,m;
-   int scell,spnt;
+   int scell;
+   int spnt = 0;
    int b_nspcl = b_spclv[0].nspcl;
    int b_nsp = b_part[0].nsp;
    int numprocs,procid;  //MPI
@@ -1229,17 +1230,17 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
 
    for(i=0;i<b_nspcl;i++)
    {
-      if(b_msh.philoc==1)
-      {
-         for(j=0;j<b_spclv[i].spclpoints.size();j++) spcllocs.push_back(b_spclv[i].spclpoints[j]);
-         for(j=0;j<b_spclv[i].spclpoints.size();j++) J_cond_vec.push_back(0.0);
-         for(j=0;j<b_spclv[i].spclpoints.size();j++) dEperpdt_vec.push_back(0.0);
-      }
-      else if(b_msh.philoc==0) 
+      if(b_msh.philoc==0) 
       {
          for(j=0;j<b_spclv[i].spclcells.size();j++) spcllocs.push_back(b_spclv[i].spclcells[j]);
          for(j=0;j<b_spclv[i].spclcells.size();j++) J_cond_vec.push_back(0.0);
          for(j=0;j<b_spclv[i].spclcells.size();j++) dEperpdt_vec.push_back(0.0);
+      }
+      else
+      {
+         for(j=0;j<b_spclv[i].spclpoints.size();j++) spcllocs.push_back(b_spclv[i].spclpoints[j]);
+         for(j=0;j<b_spclv[i].spclpoints.size();j++) J_cond_vec.push_back(0.0);
+         for(j=0;j<b_spclv[i].spclpoints.size();j++) dEperpdt_vec.push_back(0.0);
       }
 
       if(b_spclv[i].spcltype == "SOURCE")  //..Apply source region
