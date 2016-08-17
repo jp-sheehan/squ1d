@@ -268,7 +268,7 @@ int mesh::incneighofc(int m_cindex) const   //Find Internal Neighbor
 std::vector<int> mesh::cneighofp(int m_cindex) const
 {
    std::vector<int> neighbors;
-   int counter = m_cindex/(numpoints[0]);
+   //int counter = m_cindex/(numpoints[0]);
 
    if(meshdims ==1 )
    {
@@ -294,7 +294,7 @@ std::vector<int> mesh::pneighofc(int m_cindex) const
 {
    int i;
    std::vector<int> neighbors;
-   int counter = m_cindex/(numpoints[0]-1+2*numghost);
+   //int counter = m_cindex/(numpoints[0]-1+2*numghost);
 
    if(meshdims==1)
    {
@@ -705,7 +705,7 @@ int mesh::nearf(particles const& m_part, int m_pindex) const
    double tempdist1, tempdist2;
    std::vector<double> temp1,temp2;
 
-   tempdist1 = 1E10;
+   //tempdist1 = 1E10;
    tempdist2 = 1E10;
 
    for(i=0;i<meshdims;i++)
