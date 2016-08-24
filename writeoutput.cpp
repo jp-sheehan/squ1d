@@ -1115,7 +1115,7 @@ void writeOutput::findglobalenergy(const std::vector<particles> &s_part, const f
    {
      glob_EnTot_MPI = glob_En_sum_MPI+glob_EMEn;
      //std::ofstream wrtfile("energyhistory.dat",std::ios_base::app | std::ios_base::out); 
-     std::ofstream wrtfile("energyhistory.dat")
+     std::ofstream wrtfile("energyhistory.dat");
      wrtfile << time << "\t";
      wrtfile << glob_En_sum_MPI << "\t" << glob_meanKEn_sum_MPI << "\t" << glob_thermEn_sum_MPI << "\t" << glob_EMEn << "\t" << avg_E << "\t" << glob_EnTot_MPI;
      wrtfile << std::endl;
