@@ -84,8 +84,8 @@ def printreport():
     else:
         es = "s"
 
-    print(str(warn.count), "warning" + ws + ",",\
-            str(err.count), "error" + es)
+    print(str(err.count), "error" + es + ',', \
+            str(warn.count), "warning" + ws)
 
 
 def compileEqn(eqn_str):
@@ -347,17 +347,21 @@ for i in range(x_arr.size):
     x = x_arr[i]
     code_B_x = compileEqn(initial['BField'][0])
     B_x[i] = eval(code_B_x)
-B_min = B_x.min()
-B_max = B_x.max()
-dB_x = abs(np.diff(B_x))
-L_B = B_max / dB_x.max()
+B_mag = np.asarray([B_x.min(), B_x.max()])
+dB_x = np.abs(np.diff(B_x))
+L_B = B_mag.max() / dB_x.max()
+
+A_norm = B_x / B_mag.max()
+A_min = B_mag.min()/B_mag.max()
 
 # basic parameters
 
 T_e = initial['eTemp']['value']
 T_i = initial['iTemp']['value']
-n_e = initial['eDensity']['value']
-n_i = initial['iDensity']['value']
+n_e_max = initial['eDensity']['value']
+n_e = (A_min * n_e_max, n_e_max)
+n_i_max = initial['iDensity']['value']
+n_i = (A_min * n_i_max, n_i_max)
 m_e = species[0]['mass']
 m_i = species[1]['mass']
 q_e = species[0]['charge']
@@ -389,26 +393,22 @@ N_per_cell_i = N_tot_i/mesh_dims
 
 # plasma properties
 
-lambda_de = sqrt(epsilon_0*k*T_e/ (n_e * q_e**2))
-lambda_di = sqrt(epsilon_0*k*T_i/ (n_i * q_i**2))
+lambda_de = np.sqrt(np.divide(epsilon_0 * k * T_e, np.multiply(n_e,q_e**2)))
+lambda_di = np.sqrt(np.divide(epsilon_0 * k * T_i, np.multiply(n_i,q_i**2)))
 
-omega_pe = sqrt(n_e * q_e**2 / (m_e * epsilon_0))
-omega_pi = sqrt(n_i * q_i**2 / (m_i * epsilon_0))
+omega_pe = np.sqrt(np.divide(np.multiply(n_e, q_e**2), m_e * epsilon_0))
+omega_pi = np.sqrt(np.divide(np.multiply(n_i, q_i**2), m_i * epsilon_0))
 
-Lambda = 4/3 * pi * n_e * lambda_de**3
+Lambda = np.multiply(4/3 * pi, np.multiply(n_e, np.power(lambda_de,3)))
 
-omega_ce_min = abs(q_e * B_min / m_e)
-omega_ce_max = abs(q_e * B_max / m_e)
-omega_ci_min = abs(q_i * B_min / m_i)
-omega_ci_max = abs(q_i * B_max / m_i)
+omega_ce = np.abs(np.multiply(B_mag,q_e/m_e))
+omega_ci = np.abs(np.multiply(B_mag,q_i/m_i))
 
-r_Le_min = v_e_th / omega_ce_max
-r_Le_max = v_e_th / omega_ce_min
-r_Li_min = v_i_th / omega_ci_max
-r_Li_max = v_i_th / omega_ci_min
+r_Le = np.divide(v_e_th,omega_ce)
+r_Li = np.divide(v_e_th,omega_ci)
 
-r_L_inertial_max = r_Le_max + r_Li_max * v_i_th/v_e_th
-r_L_hybrid_max = sqrt(r_Le_max*r_Li_max)
+r_L_inertial = np.add(r_Le.max(), np.multiply(r_Li.max(), v_i_th/v_e_th))
+r_L_hybrid = np.sqrt(np.multiply(r_Le.max(), r_Li.max()))
 
 # time scales
 
@@ -497,15 +497,21 @@ lambda_str = u"\u03bb"
 nu_str = u"\u039d"
 
 # time step
-tFactor_e = omega_pe * time_step
+tFactor_e = omega_pe.max() * time_step
 if tFactor_e > 0.2: err("Time step too long  (" + omega_str + "_pe*" + Delta_str + "t=%.2e)" % tFactor_e)
-tFactor_i = omega_pi * time_step
+tFactor_i = omega_pi.max() * time_step
 if tFactor_i > 0.2: err("Time step too long  (" + omega_str + "_pi*" + Delta_str + "t=%.2e)" % tFactor_i)
 
+# simulation time
+TFactor_e = (time_step * iterations) / tau_e_domain # transit time / simulation time
+if TFactor_e < 1: err("Not enough time for electrons to transit entire domain (tau_e/N" + Delta_str + "t=%.2e)" % TFactor_e)
+TFactor_i = (time_step * iterations) / tau_i_domain
+if TFactor_i < 1: warn("Not enough time for ions to transit entire domain (tau_i/N" + Delta_str + "t=%.2e)" % TFactor_i)
+
 # cell size
-xFactor_e = L_cell / lambda_de
+xFactor_e = L_cell / lambda_de.min()
 if xFactor_e > 0.5: err("Cell size too large (" + Delta_str + "x/" + lambda_str + "_de=%.2e)" % xFactor_e)
-xFactor_i = L_cell / lambda_di
+xFactor_i = L_cell / lambda_di.min()
 if xFactor_i > 0.5: err("Cell size too large (" + Delta_str + "x/" + lambda_str + "_di=%.2e)" % xFactor_i)
 
 # particles per cell
@@ -518,11 +524,11 @@ N_we = warn.count + err.count
 
 print("---Checking plasma parameters---")
 
-wFactor_e = nu_en/omega_ce_min
+wFactor_e = nu_en/omega_ce.min()
 if wFactor_e > 1: warn("Neutral collisions will prevent electron confinement (" + nu_str + "_en/" + omega_str + "_ce=%.2e" % wFactor_e)
 
-riFactor = r_L_inertial_max / L_B
-if riFactor > 1e-2: err("Inertial Larmor radius is too large (r_L/L_B = %.2e" % riFactor)
+riFactor = r_L_inertial.max() / L_B
+if riFactor > 1e-2: err("Inertial Larmor radius is too large (r_L/L_B = %.2e)" % riFactor)
 
 if warn.count + err.count == N_we: passed("Passed")
 N_we = warn.count + err.count
