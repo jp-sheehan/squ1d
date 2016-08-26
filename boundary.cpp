@@ -1329,7 +1329,7 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
          dEperpdt = (b_spclv[i].spclJ*sin(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) - J_cond)/eps0;
          //dEperpdt = (b_spclv[i].spclJ - J_cond)/eps0;
 
-         if(procid==0)  std::cout << "\nCurrents:   " << J_cond << "\t" << J_cond_check << "\t" << b_spclv[i].spclJ*cos(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) <<std::endl;
+         // if(procid==0)  std::cout << "\nCurrents:   " << J_cond << "\t" << J_cond_check << "\t" << b_spclv[i].spclJ*cos(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) <<std::endl;
          /*if(std::isnan(J_cond)==true) 
            {
            if(procid==0) std::cout << "\n 1n:\n";
