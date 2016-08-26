@@ -44,7 +44,7 @@ cd lapacke
 make
 ```
 
-Additionally, [python3][python3], [NumPy][numpy], and [gnuplot][gnuplot] are needed for 
+Additionally, [python3][python3], [NumPy][numpy], [gnuplot][gnuplot], and [gifview][gifview] are needed for 
 running supporting scripts.  [Tecplot][tecplot] can also be used for
 visualizing the results.
 
@@ -194,3 +194,4 @@ code. For simulations which utilize species specific cross section data the fold
 [gnuplot]:                         http://www.gnuplot.info/
 [tecplot]:                         http://www.tecplot.com/
 [numpy]:                           http://www.numpy.org/
+[gifview]:                         http://manpages.ubuntu.com/manpages/wily/man1/gifview.1.html
