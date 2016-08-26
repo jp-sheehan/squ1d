@@ -3,13 +3,17 @@
       \__ \/ / / / / / / / / / /
      ___/ / /_/ / /_/ / / /_/ /
     /____/\___\_\__,_/_/_____/
+---
+1. [Introduction](#introduction)
+2. [Installing](#installing)
+3. [Compiling](#compiling)
+4. [Input Files](#input)
+5. [Running](#running)
+6. [References](#references)
 
 ---
 
-TODO: Table of Contents
-
----
-
+<a name="introduction"></a>
 ## 1. Introduction
 
 The Self-consistent Quasi-1D (SQu1D) code is an object-oriented
@@ -18,15 +22,33 @@ parallel on multiple processors. The code is used for simulating
 magnetic field guided plasmas using a quasi-one-dimensional
 fully kinetic approach. The code is a variant of Particle-In-Cell (PIC) technique.
 
+<a name="installing"></a>
 ## 2. Installing
 
-This section describes generally how to install the code on a Linux machine. MPICH2 and LAPACK
-libraries are needed for message passing and linear algebra, respectively.  Other
-C++ or MPI libraries (such as OpenMPI) can also be used. The types listed
-here were those used to run the code originally. Intel compilers are optional,
-but recommended due to the increased speed of the code.
-NOTE:  Update with different options
+SQu1D requires Message Passing Interface (MPI) and linear algebra libraries.
+It is preferrable to use the [Intel Performance Libraries][intel-libs], which is
+free for academic research.  These libraries give SQu1D the best perforamnce.
+Download and install the MPI and MKL libraries.
 
+Alternatively, [MPICH2][mpich2] and [LAPACK][lapack] libraries can be used.
+To install MPICH2 on a Debian Linux system, such as Ubuntu, run
+```sh
+sudo apt-get install libcr-dev mpich2 mpich2-doc
+```
+To install LAPACK, download the latest tar ball and unpack it.  Copy
+`make.inc.example` to `make.inc`.  Run the following commands
+```sh
+make blaslib
+make
+cd lapacke
+make
+```
+
+Additionally, [python3][python3] and [gnuplot][gnuplot] are needed for 
+running supporting scripts.  [Tecplot][tecplot] can also be used for
+visualizing the results.
+
+<a name="compiling"></a>
 ## 3. Compiling
 
 ### 3.1. Clone this project to a local folder.
@@ -65,8 +87,8 @@ echo $LD LIBRARY PATH
 
 ### 3.4. Change the relevant makefile as needed to link to the correct libraries
  
-Three makefiles are included to serve as examples for compiling the code.
-The default makefile (`makefile`) is an example of a makefile used to compile
+Three makefiles are included in `makefiles\` to serve as examples for compiling the code.
+The default makefile (`makefile_default`) is an example of a makefile used to compile
 with Intel MKL Compilers. The makefile `makefile LP` is an example of
 a makefile used to compile using g++ and LAPACK libraries. The makefile
 `makefile_FLUX` is an example of a makefile used to compile on a supercomputer
@@ -107,7 +129,7 @@ be resolved or if the code is giving unexpectedly strange results. The command
 directory.
 
 
-
+<a name="input"></a>
 ## 4. Input Files
 
 ### 4.1. SolverType.inp
@@ -135,12 +157,15 @@ below. Note that profiles can be given for many of the parameters according to
 the parser. More details can be found online. For the parser the parameter x is
 used as the axial direction.
 
+<a name="running"></a>
 ## 5. Running the code
 
 The code is run by typing either of the following commands, the first being for a
 non-parallel version and the second for the parallel version with, for example, four processors:
-    `./PIC.exe`
-    `mpirun -n 4 ./PIC.exe`
+
+1. `./PIC.exe` 
+2. `mpirun -n 4 ./PIC.exe` 
+
 The code should try to run and will be successful if the input files are included
 correctly. If any of the libraries are linked incorrectly an error may appear. If
 this is the case make sure that paths are declared correctly by the environment
@@ -153,4 +178,18 @@ a EOF to signify the end of the file which should catch some errors in the input
 but not all. The inputs typically include text describing the variable to
 be read in which is followed by a INT, DOUBLE, or STRING read into the
 code. For simulations which utilize species specific cross section data the folder
-`CrossSectionData` is also necessary with the desired cross sections.
+`CrossSectionData/` is also necessary with the desired cross sections.
+
+<a name="references"></a>
+## 6. References
+
+1. F. H. Ebersohn, J. P. Sheehan, A. D. Gallimore, and J. V. Shebalin, “Quasi-one-dimensional particle-in-cell simulation of magnetic nozzles,” in International Electric Propulsion Conference, 2015, pp. IEPC–2015–357. [pdf][IEPC-2015-357]
+2. F. H. Ebersohn, “Kinetic Method for Quasi-One-Dimensional Simulation of Magnetic Nozzle Plasmadynamics,” University of Michigan, 2016. [pdf][ebersohn-dissertation]
+
+
+[IEPC-2015-357]:                   http://pepl.engin.umich.edu/pdf/IEPC-2015-357.pdf
+[ebersohn-dissertation]:           http://pepl.engin.umich.edu/pdf/2016_Ebersohn_Thesis.pdf
+[intel-libs]:                      https://software.intel.com/en-us/qualify-for-free-software/academicresearcher
+[python3]:                         https://www.python.org/
+[gnuplot]:                         http://www.gnuplot.info/
+[tecplot]:                         http://www.tecplot.com/
