@@ -30,7 +30,7 @@ class boundary
         void initializeBoundary(mesh &,std::vector<boundvars> &,std::vector<particles> &); //..Initializes boundary functions
         void initializeSpecialRegions(mesh &,std::vector<spclvars> &,std::vector<particles> &); //..Initializes special regions
         void initializeParticleCounter(std::vector<boundvars> &,std::vector<particles>); //..Initialize particle counter for those leaving domain
-        void setParticleCounter(std::vector<boundvars> &,std::vector<particles>,int); //..Initialize particle counter for those leaving domain
+        void setRestartVariables(std::vector<boundvars> &,std::vector<spclvars> &, std::vector<particles>,int,int); //..Initialize particle counter for those leaving domain
         void findBoundaryCells(mesh &,std::vector<boundvars> &);  //..Find cells on boundary
         void findSpecialRegionCells(mesh &,std::vector<spclvars> &);  //..Find cells in special regions
         void applyPeriodicBoundaryConditions(mesh,flow &); //..Apply periodic BC (CFD Proj)

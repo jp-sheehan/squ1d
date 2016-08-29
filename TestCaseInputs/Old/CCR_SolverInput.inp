@@ -1,0 +1,51 @@
+LengthScale	     1.0
+TimeScale	     1.0
+
+cfl        	     1.0
+TimeStep	     1e-7
+Iterations	     100
+Print_Iteration      1
+
+ParticleWeight       1
+
+InterpolationScheme  FIRST
+ParticleMover        BORIS
+
+GAS
+AtomicWeight         1.0
+
+SPECIES	             1
+                     ARGON              1.0e0        6.626e-26
+
+COLLISION_TYPES      1
+                     ARGON                  NEUTRAL      CONSTANT     1.0
+                     neutral_background     Density      1.0e0        TEMPERATURE    1.0e1
+
+BOUNDARIES           2
+left                 xrange      0.0      
+                     type        PERIODIC
+                     eDensity    PERIODIC  
+                     eTemp       DIRICHLET   0.0     MAXWELLIAN 
+                     eVel        DIRICHLET   1.0     0.0    0.0  
+                     Phi         PERIODIC    
+                     BField      DIRICHLET   0.0     0.0    0.0  
+right                xrange      1.0       
+                     type        PERIODIC
+                     edensity    PERIODIC
+                     eTemp       DIRICHLET   0.0     MAXWELLIAN
+                     eVel        DIRICHLET   1.0     0.0    0.0
+                     Phi         PERIODIC       
+                     BField      DIRICHLET   0.0     0.0    0.0  
+
+INITIAL_CONDITIONS
+ElecDensity1         1e5          PERTURBATION     0.0
+ElecTemperature1     0.0e1          MAXWELLIAN       
+ElecVelocity1        1.0e3       0.0        0.0
+Phi                  0.0
+MagneticField        0.0          0.0        0.0
+
+SPECIAL_REGIONS      0
+
+
+EOF
+

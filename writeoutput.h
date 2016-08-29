@@ -33,7 +33,7 @@ class writeOutput
         void writeFlowEuler(mesh, flow); //..Write Euler (CFD)
         void writePICField(mesh, contnm, fields,double);  //..Write continuum and field for PIC
         void writePICField(mesh, std::vector<contnm>, fields,double);  //..Write energies for PIC
-        void writeRestart(const std::vector<boundvars> &, double,int,int);  //..Write restart file
+        void writeRestart(const std::vector<boundvars> &, const std::vector<spclvars> &, double,int,int,int);  //..Write restart file
 
         void findvdf(particles,mesh, int, double);  //..Find vdf
         void findphasespace(particles,mesh, int, double);  //..Find x-vx phasespace

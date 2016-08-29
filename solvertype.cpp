@@ -76,7 +76,7 @@ void sType::electrostatic1DPIC()
 
    //for(j=0;j<svar.nsp;j++) slvr.findseedproc(prt[j]);
    bnd.seedParticles(msh,cnt,prt,svar,bdv);  
-   if(svar.nspcl>0) bnd.applySpecialRegionsPIC(msh,cnt,prt,svar,spclv,EM);
+   if(svar.nspcl>0&&svar.rst==0) bnd.applySpecialRegionsPIC(msh,cnt,prt,svar,spclv,EM);
 
    /*for(j=0;j<svar.nsp;j++) 
    {
@@ -178,8 +178,8 @@ void sType::electrostatic1DPIC()
         }
       }
 
-      if((i-1)%svar.p_iter == 0 && procid==0 && svar.outrst==1)  wrt.writeRestart(bdv,slvr.totalTime,i,svar.nsp);  
-      else if(i%svar.outfinalskip == 0 && i > (svar.iter-svar.outfinal) && svar.outrst==1) wrt.writeRestart(bdv,slvr.totalTime,i,svar.nsp);  
+      if((i-1)%svar.p_iter == 0 && procid==0 && svar.outrst==1)  wrt.writeRestart(bdv,spclv,slvr.totalTime,i,svar.nsp,svar.nspcl);  
+      else if(i%svar.outfinalskip == 0 && i > (svar.iter-svar.outfinal) && svar.outrst==1) wrt.writeRestart(bdv,spclv,slvr.totalTime,i,svar.nsp,svar.nspcl);  
 
       #if SIMTYPE==3
       for(j=0;j<prt[0].nsp;j++) wrt.writeSingleParticle(prt[j],EM,msh,slvr.totalTime);

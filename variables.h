@@ -208,6 +208,8 @@ struct spclvars
 	std::vector<int> spclcells;   //..Cells for special region
 	std::vector<int> spclpoints;   //..Points for special region
 
+        double spclEperp;  //..Special region Efield
+
 };
 
 

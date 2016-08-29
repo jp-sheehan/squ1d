@@ -33,6 +33,8 @@ void boundary::initializeSpecialRegions(mesh &b_msh,std::vector<spclvars> &b_spc
 
    findSpecialRegionCells(b_msh,b_spclv);  //Find special region cells
 
+   for(i=0;i<b_spclv[0].nspcl;i++) b_spclv[i].spclEperp = 0.0;
+
    //std::cout << "x";
 }
 
@@ -67,7 +69,7 @@ void boundary::initializeParticleCounter(std::vector<boundvars> &b_bdv, std::vec
 }
 
 
-void boundary::setParticleCounter(std::vector<boundvars> &b_bdv, std::vector<particles> b_part, int i_rst)
+void boundary::setRestartVariables(std::vector<boundvars> &b_bdv,std::vector<spclvars> &b_spclv, std::vector<particles> b_part, int b_nspcl, int i_rst)
 {
    int i,j,k;
    int i_iter,temp;
@@ -114,6 +116,12 @@ void boundary::setParticleCounter(std::vector<boundvars> &b_bdv, std::vector<par
          b_bdv[i].Ebd = 0.0;
       //}
    }   
+
+   for(i=0;i<b_nspcl;i++) 
+   {
+     rdfile >> tempdouble;
+     b_spclv[i].spclEperp = tempdouble;
+   }
 
    rdfile.close();
 
@@ -1318,7 +1326,7 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
         dEperpdt = (b_spclv[i].spclJ*sin(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) - J_cond)/eps0;
         //dEperpdt = (b_spclv[i].spclJ - J_cond)/eps0;
 
-        if(procid==0)  std::cout << "\nCurrents:   " << J_cond << "\t" << J_cond_check << "\t" << b_spclv[i].spclJ*cos(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) <<std::endl;
+        if(procid==0)  std::cout << "\nCurrents:   " << J_cond << "\t" << J_cond_check << "\t" << b_spclv[i].spclJ*cos(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) << "\t" << b_spclv[i].spclEperp << std::endl;
         /*if(std::isnan(J_cond)==true) 
         {
           if(procid==0) std::cout << "\n 1n:\n";
@@ -1337,9 +1345,11 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
         {
           //dEperpdt_vec[k] = (b_spclv[i].spclJ*sin(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) - J_cond_vec[k])/eps0;
           spnt = b_spclv[i].spclpoints[k];
-          b_flds.E[spnt*b_msh.vecdims+2] += dEperpdt*b_svar.dt;
+          b_flds.E[spnt*b_msh.vecdims+2] = b_spclv[i].spclEperp+dEperpdt*b_svar.dt;
+          //b_spclv[i].spclEperp = b_flds.E[spnt*b_msh.vecdims+2];
           //b_flds.E[spnt*b_msh.vecdims+2] += dEperpdt_vec[k]*b_svar.dt;
         }
+        b_spclv[i].spclEperp = b_flds.E[spnt*b_msh.vecdims+2];
         //std::cout << "\nEfield:  " << dEperpdt << "\t" << b_flds.E[spnt*b_msh.vecdims+2] << "\t";
       }
       else if(b_spclv[i].spcltype == "EFIELD")

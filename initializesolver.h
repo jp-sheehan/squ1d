@@ -48,6 +48,7 @@ class initializeSolver
         void initializeQ1D(std::vector<particles> &, fields &, mesh &,std::vector<boundvars> &); //..Initialize quasi-1D algorithms
         void initializephi(std::vector<double> &, const mesh &);  //..Initialized electric potential
         void initializephitoE(std::vector<double> &, std::vector<double> &, const mesh &); //..Initialized electric potential and electric field
+        void initializeEperp(std::vector<double> &, const mesh &,std::vector<spclvars> &); //..Initialized electric potential and electric field
         void initializeFluid(flow &, std::vector<double>,int,int); //..Initializes fluid properties
         void initializeFlow(flow &, std::vector<double>,int,int); //..Initializes flow properties
         void initializeFlowPIC(flow &, std::vector<double>,int,int);  //..Initializes flow properties for PIC simulation

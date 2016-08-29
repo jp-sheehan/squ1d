@@ -1516,7 +1516,7 @@ void writeOutput::findphasespace(particles s_part, mesh s_msh, int s_index, doub
 
 //...Write information used to restart simulation...//
 
-void writeOutput::writeRestart(const std::vector<boundvars> &w_boundvars, double w_time, int w_iter, int w_nsp)
+void writeOutput::writeRestart(const std::vector<boundvars> &w_boundvars, const std::vector<spclvars> &w_spclvars, double w_time, int w_iter, int w_nsp, int w_nspcl)
 {
    int i,j;
    std::stringstream fname;
@@ -1559,6 +1559,12 @@ void writeOutput::writeRestart(const std::vector<boundvars> &w_boundvars, double
      }
      wrtfile << std::endl;
      wrtfile << w_boundvars[i].sigma << "\n";
+   }
+
+   for(i=0;i<w_nspcl;i++)
+   {
+     wrtfile << std::endl;
+     wrtfile << w_spclvars[i].spclEperp << std::endl;
    }
 
    wrtfile.close();   

@@ -1,0 +1,64 @@
+
+SPECIES			2
+			Name		Charge		Mass		Magnetization
+			electron	-1.602e-19	9.109e-31	1
+			proton		1.602e-19	1.67e-27	1
+
+
+COULOMB_COLLISIONS	0
+
+
+COLLISION_TYPES		0
+
+BOUNDARIES		2
+
+			Name		left                 
+			Range		0.0      
+			Type		SOURCE		FLUX
+			eDensity	DIRICHLET	1.0e15		UNIFORM 
+			eTemp		DIRICHLET	5.8e4		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0  
+			iDensity	DIRICHLET	1.0e15		UNIFORM
+			iTemp		DIRICHLET	3.0e2		MAXWELLIAN 
+			iVel		DIRICHLET	0.0		0.0		0.0  
+			Phi		DIRICHLET	0.0
+			BField		DIRICHLET	2*3.14e-7*1e3*0.075^2/(0.075^2+(x+0.04)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x+0.02)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.02)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.04)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.36)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-.38)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.42)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-.44)^2)^1.5            0.0              0.0
+
+			Name		right                
+			Range		1.0       
+			Type		WALL		FLOATING
+			edensity	DIRICHLET	3.0e15		UNIFORM
+			eTemp		DIRICHLET	0.0e0		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0
+			idensity	DIRICHLET	3.0e15		UNIFORM
+			ionTemp		DIRICHLET	0.0e10		MAXWELLIAN
+			ionVel		DIRICHLET	0.0		0.0		0.0
+			Phi		NEUMANN		0.0 
+			BField		DIRICHLET	2*3.14e-7*1e3*0.075^2/(0.075^2+(x+0.04)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x+0.02)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.02)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.04)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.36)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-.38)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.42)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-.44)^2)^1.5            0.0              0.0
+
+
+
+INITIAL_CONDITIONS
+			ElecDensity		0.0e1		PERTURBATION		0.0
+			ElecTemperature		5.0e4		MAXWELLIAN        
+			ElecVelocity		0.0		0.0		0.0
+			IonDensity		0.0e1		PERTURBATION		0.0
+			IonTemperature		3.0e2		MAXWELLIAN
+			IonVelocity		0.0		0.0		0.0
+			Phi			0.0
+			MagneticField		2*3.14e-7*1e3*0.075^2/(0.075^2+(x+0.04)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x+0.02)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.02)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.04)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.36)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-.38)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-0.42)^2)^1.5+2*3.14e-7*1e3*0.075^2/(0.075^2+(x-.44)^2)^1.5            0.0              0.0
+
+
+SPECIAL_REGIONS		0
+
+
+EOF
+
+............................Description.................................
+
+Boundary source in a diverging magnetic field for comparison with XOOPIC.
+Collector boundaries.  Set up similar to Schwager simulations but with no re-injection.
+Must comment "npc+=extrapart" in solver.cpp
+
+........................................................................
+

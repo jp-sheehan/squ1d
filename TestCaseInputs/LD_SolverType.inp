@@ -1,55 +1,67 @@
-SOLVER_TYPE          ELECTROSTATIC   PIC
-MESH_READ            0
-FILE_WRITE           TECPLOT
-MESH_FILENAME        mesh.neu 
-MESH_FILE_FORMAT     CUSTOM
-RESTART              0
-COORDINATE_TYPE      1          PLANAR
-VECTOR_SIZE          3 
-MESH_LENGTH          6.28318    
-MESH_START           0.0   
-MESH_DIMS            257 
-MESH_WEIGHT          1.0   
-AREA/LENGTH          1.0 
-GHOST_CELLS          1  
-FIELD_LOCATION	     1      1
-PARTICLE_DIST	     1
-SMOOTHING            0
+SOLVER_TYPE		ELECTROSTATIC		PIC
+MESH_READ		0
+MESH_WRITE		TECPLOT
+RESTART			0
+COORDINATE_TYPE		1		PLANAR
+VECTOR_SIZE		3 
+MESH_LENGTH		6.28318    
+MESH_START		0.0   
+MESH_DIMS		257 
+MESH_WEIGHT		1.0   
+AREA/LENGTH		1.0 
+GHOST_CELLS		1  
+FIELD_LOCATION		1	1
+PARTICLE_DIST		1
+SMOOTHING		0
 
-OUTPUT_AVGS          1
-OUTPUT_CONT          1
-OUTPUT_PART          1
-OUTPUT_VDF           1      -1
-OUTPUT_RST           1     
-OUTPUT_FINAL         0   1 
+OUTPUT_AVGS		1
+OUTPUT_CONTINUUM	1
+OUTPUT_PARTICLE		1
+OUTPUT_VDF		1	-1
+OUTPUT_RST		1
+OUTPUT_FINAL		0	1
+
+LENGTH_SCALE		1.0
+TIME_SCALE		1.0
+CFL			1.0
+TIME_STEP		0.1
+ITERATIONS		501
+PRINT_ITERATION		500
+PARTICLE_WEIGHT		1.0
+INTERPOLATION_SCHEME	FIRST
+PARTICLE_MOVER		BORIS
+BACKGROUND_CHARGE	0.0
 
 EOF
 
-//....................Definition of Variables....................//
+   _____ ____       _______ 
+  / ___// __ \__  _<  / __ \
+  \__ \/ / / / / / / / / / /
+ ___/ / /_/ / /_/ / / /_/ / 
+/____/\___\_\__,_/_/_____/  
+                            
 
+//...............................Definition of Variables....................................//
 
 //SOLVER_TYPE...........Currently.....Option 1: ELECTROSTATIC.....Option 2:PIC
 //MESH_READ.............0 = Solver makes simple Cartesian mesh, 1 = Solver reads mesh
 //FILE_WRITE............DEBUG(no headers) or TECPLOT
-//MESH_FILENAME.........String with name of mesh input file from mesher
-//MESH_FILE_FORMAT......Currently only supports CUSTOM = mesh created by solver
-//RESTART...............Reads from Restart File Number
-//COORDINATE_TYPE.......Option 1:  1 = 1D, 2 = 2D Cartesian, 3 = 3D Cartesian; Option 2: Planar, Axisymmetric
+//RESTART...............Sets restart file number to read from, 0=No restart file
+//COORDINATE_TYPE.......Option 1: 1=1D, 2=2D Cartesian, 3=3D Cartesian; Option 2: Planar, Axisymmetric
 //VECTOR_SIZE...........Dimension of Vectors
+//MESH_START............Starting point for mesh
 //MESH_LENGTH...........Length of domain (scaled by other factor)
 //MESH_DIMS.............Mesh dimension (ie. 128   32   64  corresponds to 128x32x64 cells)
-//MESH_WEIGHT...........Weighting of cell sizes (0.9 makes smaller to left, 1.1 makes smaller to right)
+//MESH_WEIGHT...........Weighting of cell sizes (0.9 makes smaller to left, 1.1 makes smaller to right) (NOT INCORPORATED)
+//AREA/LENGTH...........Inlet area or length at boundary
 //GHOST_CELLS...........Number of ghost cells
 //FIELD_LOCATION........BField,Efield, and/or Phi   (0 = center, 1 = corner)
+//SMOOTHING.............Number of cells to smooth continuum properties over
 //PARTICLE_DIST.........Reads in how particles are distributed (0 = entire domain, 1 = cell by cell)
-//OUTPUT_AVG............Print averages for energy, (0 = no , 1 = yes)
+
+//OUTPUT_AVGS...........Print averages for energy, (0 = no , 1 = yes)
 //OUTPUT_CONTINUUM......Print continuum quantities for volume (0=no, 1=yes)
 //OUTPUT_PARTICLE.......Print particles for volume (0 = no, 1 = yes)
-//OUTPUT_PARTICLE.......Print vdf of particles (0 = no, 1 = yes) (-1 = whole domain, other numbers = cell)
+//OUTPUT_VDF............Print vdf of particles (0 = no, 1 = yes) (-1 = whole domain, other numbers = cell)
 //OUTPUT_RST............Print Restart File Data
 //OUTPUT_FINAL..........Print final (x) time steps, skipping every (y).  (x    y) 
-
-//......Somewhat Incorporated
-//PMESH_NUMBER         1
-//PMESH_SHIFT          0.0    0.0
-

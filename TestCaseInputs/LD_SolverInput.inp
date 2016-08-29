@@ -1,60 +1,63 @@
-LengthScale	     1.0
-TimeScale	     1.0
 
-cfl        	     1.0
-TimeStep	     0.1
-Iterations	     501
-Print_Iteration      500
+SPECIES			2
+			Name		Charge		Mass		Magnetization
+			electron	-6.2832e-6	6.2832e-6	0
+			ion		6.2832e-6	62832.0		0
 
-ParticleWeight       1
 
-InterpolationScheme  FIRST
-ParticleMover        BORIS
+COULOMB_COLLISIONS	0
 
-GAS
-BackgroundDensity    0.0
 
-SPECIES	             2
-                     Name            Charge            Mass          Magnetization   
-                     elec           -6.2832e-6         6.2832e-6     0
-                     ion             6.2832e-6         62832.0       0
+COLLISION_TYPES		0
 
-COULOMB_COLLISION    0
 
-COLLISION_TYPES      0
+BOUNDARIES		2
 
-BOUNDARIES           2
-left                 xrange      0.0   
-                     type        PERIODIC   
-                     eDensity    PERIODIC  
-                     eTemp       DIRICHLET   0.0     MAXWELLIAN 
-                     eVel        DIRICHLET   0.0     0.0    0.0  
-                     iDensity    PERIODIC  
-                     iTemp       DIRICHLET   0.0     MAXWELLIAN
-                     iVel        DIRICHLET   0.0     0.0    0.0  
-                     Phi         PERIODIC    0.0
-                     BField      DIRICHLET   0.0     0.0    0.0  
-right                xrange      1.0      
-                     type        PERIODIC 
-                     edensity    PERIODIC 
-                     eTemp       DIRICHLET   0.0     MAXWELLIAN
-                     eVel        DIRICHLET   0.0     0.0    0.0
-                     idensity    PERIODIC
-                     ionTemp     DIRICHLET   0.0     MAXWELLIAN
-                     ionVel      DIRICHLET   0.0     0.0    0.0
-                     Phi         PERIODIC    0.0   
-                     BField      DIRICHLET   0.0     0.0    0.0  
+			Name		left                 
+			Range		0.0      
+			Type		PERIODIC
+			eDensity	PERIODIC 
+			eTemp		DIRICHLET	0.0e4		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0  
+			iDensity	PERIODIC
+			iTemp		DIRICHLET	0.0e4		MAXWELLIAN 
+			iVel		DIRICHLET	0.0		0.0		0.0  
+			Phi		PERIODIC		0.0
+			BField    	DIRICHLET	0.0		0.0		0.0  
+
+			Name		right                
+			Range		1.0       
+			Type		PERIODIC
+			edensity	PERIODIC
+			eTemp		DIRICHLET	0.0e0		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0
+			iDensity	PERIODIC
+			ionTemp		DIRICHLET	0.0e10		MAXWELLIAN
+			ionVel		DIRICHLET	0.0		0.0		0.0
+			Phi		PERIODIC	0.0 
+			BField		DIRICHLET	0.0		0.0		0.0  
+
 
 INITIAL_CONDITIONS
-ElecDensity          159154.9      PERTURBATION     0.02 
-IonDensity           159154.9      PERTURBATION     0.0
-ElecTemperature      1.57e-6       QUIET      
-IonTemperature       0.0           MAXWELLIAN  
-ElecVelocity         0.0           0.0        0.0
-IonVelocity          0.0           0.0        0.0
-Phi                  0.0
-MagneticField        0.0           0.0        0.0
+			ElecDensity		159154.9	PERTURBATION		0.02
+			ElecTemperature		1.57e-6		QUIET        
+			ElecVelocity		0.0		0.0		0.0
+			IonDensity		159154.9	PERTURBATION		0.0
+			IonTemperature		0.0e0		MAXWELLIAN
+			IonVelocity		0.0		0.0		0.0
+			Phi			0.0
+			MagneticField		0.0		0.0		0.0
 
-SOURCE_TYPES         0
+
+SPECIAL_REGIONS		0
 
 EOF
+
+............................Description.................................
+
+Simulation of Landau Damping based on Denavit and Birdsall. Compile with eps=kb=1.0
+
+........................................................................
+
+
+
