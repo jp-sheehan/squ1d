@@ -385,11 +385,15 @@ tau_en = 1/nu_en
 
 # simulation size
 
-N_tot_e = initial['iDensity']['value']/particle_weight
-N_tot_i = initial['eDensity']['value']/particle_weight
+N_tot_i = initial['iDensity']['value']/particle_weight
+print(initial['iDensity']['value'],particle_weight)
+N_tot_e = initial['eDensity']['value']/particle_weight
+print(N_tot_e)
 
 N_per_cell_e = N_tot_e/mesh_dims
 N_per_cell_i = N_tot_i/mesh_dims
+
+T_tot = 0.01 * iterations * N_tot_e
 
 # plasma properties
 
@@ -440,16 +444,20 @@ if output_vdf_region == -1:
 else:
     vdf_frac = 1/mesh_dims
 
+print(bpl_cpField*lpf_cpField)
+print(bpl_particles*lpf_particles)
+print(bpl_phasespace*lpf_phasespace)
+print(bpl_vdf * lpf_vdf)
 
 sizePerWrite = num_species * (bpl_cpField * lpf_cpField + \
         output_particle * bpl_particles * lpf_particles + \
         output_continuum * bpl_phasespace * lpf_phasespace + \
         output_vdf * vdf_frac * bpl_vdf * lpf_vdf) + \
-        output_continuum * bpl_outField * lpf_outField + \
-        output_avgs * bpl_energy * lpf_energy
+        output_continuum * bpl_outField * lpf_outField
+print(sizePerWrite)
 N_writes = iterations//print_iterations + \
         output_final_numsteps//output_final_skipping
-writeSizeTot = sizePerWrite * N_writes
+writeSizeTot = sizePerWrite * N_writes + output_avgs * bpl_energy * lpf_energy
 
 
 ##### CHECK PARAMETERS #####
@@ -518,6 +526,9 @@ if xFactor_i > 0.5: err("Cell size too large (" + Delta_str + "x/" + lambda_str 
 ppc_e = N_tot_e // (mesh_dims-1)
 ppc_i = N_tot_i // (mesh_dims-1)
 if (ppc_e < 400) | (ppc_i < 400): err("Too few particles per cell (%d electrons, %d ions)" % (ppc_e, ppc_i))
+
+T_days = T_tot / (1000*60*60*24)
+if T_days > 1: warn("Simulation will take ~%d days on a single processor" % T_days)
 
 if warn.count + err.count == N_we: passed("Passed")
 N_we = warn.count + err.count
