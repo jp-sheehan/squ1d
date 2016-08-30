@@ -1107,9 +1107,11 @@ void initializeSolver::initializePIC(std::vector<particles> &i_prt, fields & i_E
    }
 
    tmp_bound.initializeBoundary(i_mesh,i_bdv,i_prt); //Initialize boundary
-   if(i_svar.rst>0)  tmp_bound.setParticleCounter(i_bdv,i_prt,i_svar.rst);   //Set particle count from restart file
 
    if(i_svar.nspcl>0) tmp_bound.initializeSpecialRegions(i_mesh,i_spclv,i_prt); //Initialize regions
+
+   if(i_svar.rst>0)  tmp_bound.setRestartVariables(i_bdv,i_spclv,i_prt,i_svar.nspcl,i_svar.rst);   //Set particle count and perpendicular Efield from restart file
+   if(i_svar.rst>0 && i_svar.nspcl>0)  initializeEperp(i_EM.E,i_mesh,i_spclv);   //Set particle count and perpendicular Efield from restart file
 
    for(i=0;i<nsp;i++) i_mesh.connectpartandmesh(i_prt[i]); //Connect particles and mesh
 
@@ -1742,6 +1744,27 @@ void initializeSolver::initializephitoE(std::vector<double> &i_EM_phi, std::vect
    } 
 
 }
+
+
+//.....Set initial perpdicular Electric field.....//
+
+void initializeSolver::initializeEperp(std::vector<double> &i_EM_E, const mesh &i_mesh,std::vector<spclvars> &i_spclv)
+{
+   int i,j,k;
+   int pt;
+
+   std::cout << "\t\nSetting Eperp....";
+
+   for(j=0;j<i_spclv[0].nspcl;j++)
+   {
+     for(k=0;k<i_spclv[j].spclpoints.size();k++) //1D
+     {
+       pt = i_spclv[j].spclpoints[k];
+       i_EM_E[3*pt+2] += i_spclv[j].spclEperp;
+     }
+   }
+}
+
 
 //....Initialize quasi 1D mode....//
 

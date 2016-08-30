@@ -1,5 +1,5 @@
 #
-#   makefile for solver
+#   makefile for umich FLUX
 #
 OBJ = main_PIC.o solver.o mathfunctions.o mesh.o initializesolver.o writeoutput.o boundary.o solvertype.o   #..Objects to compile
 CC = mpiCC #g++                 #..Compiler

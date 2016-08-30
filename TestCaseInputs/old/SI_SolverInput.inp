@@ -1,88 +1,84 @@
-LengthScale	     1.0
-TimeScale	     1.0
 
-cfl        	     1.0
-TimeStep	     0.1
-Iterations	     1001
-Print_Iteration      5
+SPECIES			4
+			Name		Charge		Mass		Magnetization
+			electron1	-0.001534	0.001534	0
+			ion1		0.001534	1534.00		0
+			electron2	-0.001534	0.001534	0
+			ion2		0.001534	1534.00		0
 
-ParticleWeight       1
 
-InterpolationScheme  FIRST
-ParticleMover        BORIS
+COULOMB_COLLISIONS	0
 
-GAS
-BackgroundDensity    0.0
 
-SPECIES	             4
-                     Name           Charge             Mass            Magnetization
-                     elec1         -0.001534          0.001534       0
-                     ion1           0.001534          1534.00         0
-                     elec2         -0.001534          0.001534       0
-                     ion2           0.001534          1534.00         0
+COLLISION_TYPES		0
 
-COULOMB_COLLISION    0
 
-COLLISION_TYPES      0
+BOUNDARIES		2
 
-BOUNDARIES           2
-left                 xrange      0.0      
-                     type        PERIODIC
-                     eDensity    PERIODIC  
-                     eTemp       DIRICHLET   0.0     MAXWELLIAN 
-                     eVel        DIRICHLET   1.0     0.0    0.0  
-                     iDensity    PERIODIC  
-                     iTemp       DIRICHLET   0.0     MAXWELLIAN
-                     iVel        DIRICHLET   0.0     0.0    0.0  
-                     eDensity    PERIODIC  
-                     eTemp       DIRICHLET   0.0     MAXWELLIAN 
-                     eVel        DIRICHLET   -1.0    0.0    0.0  
-                     iDensity    PERIODIC  
-                     iTemp       DIRICHLET   0.0     MAXWELLIAN
-                     iVel        DIRICHLET   0.0     0.0    0.0  
-                     Phi         PERIODIC    0.0
-                     BField      DIRICHLET   0.0     0.0    0.0  
-right                xrange      1.0       
-                     type        PERIODIC
-                     edensity    PERIODIC
-                     eTemp       DIRICHLET   0.0     MAXWELLIAN
-                     eVel        DIRICHLET   1.0     0.0    0.0
-                     idensity    PERIODIC
-                     ionTemp     DIRICHLET   0.0     MAXWELLIAN
-                     ionVel      DIRICHLET   0.0     0.0    0.0
-                     edensity    PERIODIC
-                     eTemp       DIRICHLET   0.0     MAXWELLIAN
-                     eVel        DIRICHLET   -1.0     0.0    0.0
-                     idensity    PERIODIC
-                     ionTemp     DIRICHLET   0.0     MAXWELLIAN
-                     ionVel      DIRICHLET   0.0     0.0    0.0
-                     Phi         PERIODIC    0.0   
-                     BField      DIRICHLET   0.0     0.0    0.0  
+			Name		left                 
+			Range		0.0      
+			Type		PERIODIC
+			eDensity	PERIODIC 
+			eTemp		DIRICHLET	0.0e4		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0  
+			iDensity	PERIODIC
+			iTemp		DIRICHLET	0.0e4		MAXWELLIAN 
+			iVel		DIRICHLET	0.0		0.0		0.0  
+			eDensity	PERIODIC 
+			eTemp		DIRICHLET	0.0e4		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0  
+			iDensity	PERIODIC
+			iTemp		DIRICHLET	0.0e4		MAXWELLIAN 
+			iVel		DIRICHLET	0.0		0.0		0.0  
+			Phi		PERIODIC		0.0
+			BField    	DIRICHLET	0.0		0.0		0.0  
+
+			Name		right                
+			Range		1.0       
+			Type		PERIODIC
+			edensity	PERIODIC
+			eTemp		DIRICHLET	0.0e0		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0
+			iDensity	PERIODIC
+			ionTemp		DIRICHLET	0.0e10		MAXWELLIAN
+			ionVel		DIRICHLET	0.0		0.0		0.0
+			edensity	PERIODIC
+			eTemp		DIRICHLET	0.0e0		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0
+			iDensity	PERIODIC
+			ionTemp		DIRICHLET	0.0e10		MAXWELLIAN
+			ionVel		DIRICHLET	0.0		0.0		0.0
+			Phi		PERIODIC	0.0 
+			BField		DIRICHLET	0.0		0.0		0.0  
+
 
 INITIAL_CONDITIONS
-ElecDensity1         651.899      PERTURBATION     0.001
-IonDensity1          651.899      PERTURBATION     0.0
-ElecDensity2         651.899      PERTURBATION     0.001
-IonDensity2          651.899      PERTURBATION     0.0
-ElecTemperature1     0.0          MAXWELLIAN       
-IonTemperature1      0.0          MAXWELLIAN  
-ElecTemperature2     0.0          MAXWELLIAN
-IonTemperature2      0.0          MAXWELLIAN
-ElecVelocity1        1.0          0.0        0.0
-IonVelocity1         0.0          0.0        0.0
-ElecVelocity2        -1.0         0.0        0.0
-IonVelocity2         0.0          0.0        0.0
-Phi                  0.0
-MagneticField        0.0          0.0        0.0
+			ElecDensity		651.899		PERTURBATION		0.001
+			ElecTemperature		0.0		QUIET        
+			ElecVelocity		1.0		0.0		0.0
+			IonDensity		651.899		PERTURBATION		0.001
+			IonTemperature		0.0e0		MAXWELLIAN
+			IonVelocity		0.0		0.0		0.0
+			ElecDensity		651.899		PERTURBATION		0.001
+			ElecTemperature		0.0		QUIET        
+			ElecVelocity		-1.0		0.0		0.0
+			IonDensity		651.899		PERTURBATION		0.001
+			IonTemperature		0.0e0		MAXWELLIAN
+			IonVelocity		0.0		0.0		0.0
+			Phi			0.0
+			MagneticField		0.0		0.0		0.0
 
 
-SOURCE_TYPES         0
-
+SPECIAL_REGIONS		0
 
 EOF
 
+............................Description.................................
 
-Phi       PERIODIC    10.0*(1.0+cos(2*3.14158*x))
-Phi                  10.0*(1.0+cos(2*3.14158*x))
-Phi                  10.0*x*cos(1.8939e6*t)  
-CurrentLoop          1.0        0.0       -0.1       0.5      0.0 
+Simulation of two-stream instability from Birdsall. Compile with eps=kb=1.0
+Alternatively can be performed with only electrons and a background charge density.
+
+........................................................................
+
+
+

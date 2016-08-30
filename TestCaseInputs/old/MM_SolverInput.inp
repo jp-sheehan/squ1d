@@ -1,50 +1,52 @@
-LengthScale	     1.0
-TimeScale	     1.0
 
-cfl        	     1.0
-TimeStep	     0.2
-Iterations	     10000
-Print_Iteration      100
-
-ParticleWeight       1
-
-InterpolationScheme  FIRST
-ParticleMover        Q1D
-
-GAS
-BackgroundDensity    0.0
-
-SPECIES	             1
-                     Name          Charge       Mass       Magnetization
-                     elec1         -1.0e0       1.0e0      1
-
-COLLISION_TYPE       0
+SPECIES			1
+			Name		Charge		Mass		Magnetization
+			elec1		-1.0e0		1.0e0		1
 
 
-BOUNDARIES           2
-left                 xrange      0.0      
-                     type        DIRICHLET      
-                     eDensity    DIRICHLET     0.0         UNIFORM      
-                     eTemp       DIRICHLET     0.0         MAXWELLIAN
-                     eVel        DIRICHLET     1.0         0.0         0.0  
-                     Phi         DIRICHLET     0.0002*sqrt(x*x)
-                     BField      DIRICHLET     1.0+4.0*x*x       0.0         0.0  
-right                xrange      1.0       
-                     type        DIRICHLET
-                     edensity    DIRICHLET     0.0         UNIFORM
-                     eTemp       DIRICHLET     0.0         MAXWELLIAN
-                     eVel        DIRICHLET     1.0         0.0         0.0
-                     Phi         DIRICHLET     0.0002*sqrt(x*x)   
-                     BField      DIRICHLET     1.0+4.0*x*x       0.0         0.0  
+COULOMB_COLLISIONS	0
 
-INITIAL_CONDITIONS 
-ElecDensity1         1.0e4        PERTURBATION      0.0 
-ElecTemperature1     1.0e-4       QUIET      
-ElecVelocity1        0.0          0.0               0.0
-Phi                  0.0002*sqrt(x*x)
-MagneticField        1.0+4.0*x*x         0.0        0.0
 
-SOURCE_REGION        0
+COLLISION_TYPES		0
 
+BOUNDARIES		2
+
+			Name		left                 
+			Range		0.0      
+			Type		DIRICHLET
+			eDensity	DIRICHLET	0.0		UNIFORM 
+			eTemp		DIRICHLET	0.0		MAXWELLIAN
+			eVel		DIRICHLET	1.0		0.0		0.0  
+			Phi		DIRICHLET	-0.000*x*x
+			BField    	DIRICHLET	1.0+4.0*x*x		0.0		0.0  
+
+			Name		right                
+			Range		1.0       
+			Type		DIRICHLET
+			edensity	DIRICHLET	0.0		UNIFORM
+			eTemp		DIRICHLET	0.0		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0
+			Phi		DIRICHLET	-0.000*x*x 
+			BField		DIRICHLET	1.0+4.0*x*x		0.0		0.0  
+
+
+INITIAL_CONDITIONS
+			ElecDensity		1.e4		PERTURBATION		0.0
+			ElecTemperature		1.0e-4		MAXWELLIAN        
+			ElecVelocity		0.0		0.0		0.0
+			Phi			-0.000*x*x
+			MagneticField		1.0+4.0*x*x		0.0		0.0
+
+
+SPECIAL_REGIONS		0
 
 EOF
+
+............................Description.................................
+
+Simulation of particles trapped in a magnetic mirror.  Requires SIMTYPE 1 and eps=kb=1.
+
+........................................................................
+
+
+

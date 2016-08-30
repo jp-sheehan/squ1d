@@ -33,6 +33,8 @@ void boundary::initializeSpecialRegions(mesh &b_msh,std::vector<spclvars> &b_spc
 
    findSpecialRegionCells(b_msh,b_spclv);  //Find special region cells
 
+   for(i=0;i<b_spclv[0].nspcl;i++) b_spclv[i].spclEperp = 0.0;
+
    //std::cout << "x";
 }
 
@@ -67,7 +69,7 @@ void boundary::initializeParticleCounter(std::vector<boundvars> &b_bdv, std::vec
 }
 
 
-void boundary::setParticleCounter(std::vector<boundvars> &b_bdv, std::vector<particles> b_part, int i_rst)
+void boundary::setRestartVariables(std::vector<boundvars> &b_bdv,std::vector<spclvars> &b_spclv, std::vector<particles> b_part, int b_nspcl, int i_rst)
 {
    int i,j,k;
    int i_iter,temp;
@@ -114,6 +116,12 @@ void boundary::setParticleCounter(std::vector<boundvars> &b_bdv, std::vector<par
       b_bdv[i].Ebd = 0.0;
       //}
    }   
+
+   for(i=0;i<b_nspcl;i++) 
+   {
+     rdfile >> tempdouble;
+     b_spclv[i].spclEperp = tempdouble;
+   }
 
    rdfile.close();
 
@@ -1309,49 +1317,51 @@ void boundary::applySpecialRegionsPIC(mesh b_msh, std::vector<contnm> &b_cont, s
                   }
                }
             }
-         }
+        }
 
-         J_cond = J_cond/spcllocs.size();
-         J_cond_check = J_cond_check/L[0];
-         //J_cond = J_cond/spcllocs.size();
+        J_cond = J_cond/spcllocs.size();
+        J_cond_check = J_cond_check/L[0];
+        //J_cond = J_cond/spcllocs.size();
 
-         if(numprocs>1)
-         {
-            total = 0.0; //MPI
-            MPI_Allreduce(&J_cond_check,&total,1, MPI_LONG_DOUBLE,MPI_SUM,MPI_COMM_WORLD); //MPI
-            J_cond_check = total; //MPI
+        if(numprocs>1)
+        {
+          total = 0.0; //MPI
+          MPI_Allreduce(&J_cond_check,&total,1, MPI_LONG_DOUBLE,MPI_SUM,MPI_COMM_WORLD); //MPI
+          J_cond_check = total; //MPI
 
-            //total = 0.0; //MPI NOT USED!
-            //MPI_Allreduce(&J_cond,&total,1, MPI_LONG_DOUBLE,MPI_SUM,MPI_COMM_WORLD); //MPI
-            //J_cond = total; //MPI
-         }
+          //total = 0.0; //MPI NOT USED!
+          //MPI_Allreduce(&J_cond,&total,1, MPI_LONG_DOUBLE,MPI_SUM,MPI_COMM_WORLD); //MPI
+          //J_cond = total; //MPI
+        }
 
-         dEperpdt = (b_spclv[i].spclJ*sin(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) - J_cond)/eps0;
-         //dEperpdt = (b_spclv[i].spclJ - J_cond)/eps0;
+        dEperpdt = (b_spclv[i].spclJ*sin(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) - J_cond)/eps0;
+        //dEperpdt = (b_spclv[i].spclJ - J_cond)/eps0;
 
-         // if(procid==0)  std::cout << "\nCurrents:   " << J_cond << "\t" << J_cond_check << "\t" << b_spclv[i].spclJ*cos(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) <<std::endl;
-         /*if(std::isnan(J_cond)==true) 
-           {
-           if(procid==0) std::cout << "\n 1n:\n";
-           if(procid==0) for(k=0;k<b_cont[0].N.size();k++) std::cout << "\t" << b_cont[0].N[k]; //1D,CHG: Current, not current density.
-           if(procid==0) std::cout << "\n 1U:\n";
-           if(procid==0) for(k=0;k<b_cont[0].N.size();k++) std::cout << "\t" << b_cont[0].U[b_msh.vecdims*k+2]; //1D,CHG: Current, not current density.
-           if(procid==0) std::cout << "\n 2n:\n";
-           if(procid==0) for(k=0;k<b_cont[1].N.size();k++) std::cout << "\t" << b_cont[1].N[k]; //1D,CHG: Current, not current density.
-           if(procid==0) std::cout << "\n 2U:\n";
-           if(procid==0) for(k=0;k<b_cont[1].N.size();k++) std::cout << "\t" << b_cont[1].U[b_msh.vecdims*k+2]; //1D,CHG: Current, not current density.
-           exit(EXIT_FAILURE);
-           }*/
-         //std::cout << "\nst:   " << spcl_start << "\t" << spcl_end << "\t" << std::endl;
+        //if(procid==0)  std::cout << "\nCurrents:   " << J_cond << "\t" << J_cond_check << "\t" << b_spclv[i].spclJ*cos(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) << "\t" << b_spclv[i].spclEperp << std::endl;
+        /*if(std::isnan(J_cond)==true) 
+        {
+          if(procid==0) std::cout << "\n 1n:\n";
+          if(procid==0) for(k=0;k<b_cont[0].N.size();k++) std::cout << "\t" << b_cont[0].N[k]; //1D,CHG: Current, not current density.
+          if(procid==0) std::cout << "\n 1U:\n";
+          if(procid==0) for(k=0;k<b_cont[0].N.size();k++) std::cout << "\t" << b_cont[0].U[b_msh.vecdims*k+2]; //1D,CHG: Current, not current density.
+          if(procid==0) std::cout << "\n 2n:\n";
+          if(procid==0) for(k=0;k<b_cont[1].N.size();k++) std::cout << "\t" << b_cont[1].N[k]; //1D,CHG: Current, not current density.
+          if(procid==0) std::cout << "\n 2U:\n";
+          if(procid==0) for(k=0;k<b_cont[1].N.size();k++) std::cout << "\t" << b_cont[1].U[b_msh.vecdims*k+2]; //1D,CHG: Current, not current density.
+          exit(EXIT_FAILURE);
+        }*/
+        //std::cout << "\nst:   " << spcl_start << "\t" << spcl_end << "\t" << std::endl;
 
-         for(k=0;k<b_spclv[i].spclpoints.size();k++) //1D
-         {
-            //dEperpdt_vec[k] = (b_spclv[i].spclJ*sin(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) - J_cond_vec[k])/eps0;
-            spnt = b_spclv[i].spclpoints[k];
-            b_flds.E[spnt*b_msh.vecdims+2] += dEperpdt*b_svar.dt;
-            //b_flds.E[spnt*b_msh.vecdims+2] += dEperpdt_vec[k]*b_svar.dt;
-         }
-         //std::cout << "\nEfield:  " << dEperpdt << "\t" << b_flds.E[spnt*b_msh.vecdims+2] << "\t";
+        for(k=0;k<b_spclv[i].spclpoints.size();k++) //1D
+        {
+          //dEperpdt_vec[k] = (b_spclv[i].spclJ*sin(2.0*3.14*b_spclv[i].spclomega*b_svar.totalTime) - J_cond_vec[k])/eps0;
+          spnt = b_spclv[i].spclpoints[k];
+          b_flds.E[spnt*b_msh.vecdims+2] = b_spclv[i].spclEperp+dEperpdt*b_svar.dt;
+          //b_spclv[i].spclEperp = b_flds.E[spnt*b_msh.vecdims+2];
+          //b_flds.E[spnt*b_msh.vecdims+2] += dEperpdt_vec[k]*b_svar.dt;
+        }
+        b_spclv[i].spclEperp = b_flds.E[spnt*b_msh.vecdims+2];
+        //std::cout << "\nEfield:  " << dEperpdt << "\t" << b_flds.E[spnt*b_msh.vecdims+2] << "\t";
       }
       else if(b_spclv[i].spcltype == "EFIELD")
       {

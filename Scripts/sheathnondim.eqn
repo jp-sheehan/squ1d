@@ -1,0 +1,8 @@
+#!MC 1400
+# Created by Tecplot 360 build 14.0.2.35002
+$!ALTERDATA 
+  EQUATION = '{phind} = {phi}*1.6E-19/(1.38E-23*2.1)'
+$!ALTERDATA 
+  EQUATION = '{dens} = {N}/18701'
+$!ALTERDATA 
+  EQUATION = '{xnd} = {X}/22'

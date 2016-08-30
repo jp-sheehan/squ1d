@@ -1,0 +1,51 @@
+LengthScale	     1.0
+TimeScale	     1.0
+
+cfl        	     1.0
+TimeStep	     1.0e-10
+Iterations	     4001
+Print_Iteration      10
+
+ParticleWeight       2.5e10
+
+InterpolationScheme  FIRST
+ParticleMover        SIMPLE
+
+GAS
+BackgroundDensity    0.0
+
+SPECIES	             1
+                     Name             Charge         Mass            Magnetization
+                     ion1             1.6e-19        9.1e-31         0
+
+
+COULOMB_COLLISIONS   0
+
+COLLISION_TYPES      0
+
+BOUNDARIES           2
+left                 xrange      0.0   
+                     type        PERIODIC   
+                     iDensity    PERIODIC  
+                     iTemp       DIRICHLET   0.0     MAXWELLIAN
+                     iVel        DIRICHLET   0.0     0.0    0.0  
+                     Phi         PERIODIC    0.0
+                     BField      DIRICHLET   0.0     0.0    0.0  
+right                xrange      1.0      
+                     type        PERIODIC 
+                     idensity    PERIODIC
+                     ionTemp     DIRICHLET   0.0     MAXWELLIAN
+                     ionVel      DIRICHLET   0.0     0.0    0.0
+                     Phi         PERIODIC    0.0   
+                     BField      DIRICHLET   0.0     0.0    0.0  
+
+INITIAL_CONDITIONS
+IonDensity           1.0e18        UNIFORM     0
+IonTemperature       2.32e4        RANDOM  
+IonVelocity          0e0           0.0        0.0
+Phi                  0.0
+MagneticField        0.0           0.0        0.0
+
+SOURCE_TYPES         0
+
+EOF

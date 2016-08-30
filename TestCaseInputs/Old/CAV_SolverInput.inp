@@ -1,0 +1,57 @@
+LengthScale	     1.0
+TimeScale	     1.0
+
+cfl        	     1.0
+TimeStep	     0.01
+Iterations	     1000
+Print_Iteration      1
+
+ParticleWeight       1
+
+InterpolationScheme  FIRST
+ParticleMover        SIMPLE
+
+GAS
+AtomicWeight         1.0
+
+SPECIES	             2
+                     elec          1.0       1.0      
+                     ion           1.0       1.0      
+
+COLLISION_TYPE       0
+
+BOUNDARIES           2
+left                 xrange      0.0      
+                     type        DIRICHLET      
+                     eDensity    DIRICHLET     0.0         UNIFORM      
+                     eTemp       DIRICHLET     0.0         MAXWELLIAN
+                     eVel        DIRICHLET     1.0         0.0         0.0  
+                     iDensity    DIRICHLET     0.0         UNIFORM      
+                     iTemp       DIRICHLET     0.0         MAXWELLIAN
+                     iVel        DIRICHLET     1.0         0.0         0.0  
+                     Phi         DIRICHLET     0.0000*sqrt(x*x)
+                     BField      DIRICHLET     10.0-abs(8.0*x)      0.0         0.0  
+right                xrange      1.0       
+                     type        DIRICHLET
+                     edensity    DIRICHLET     0.0         UNIFORM
+                     eTemp       DIRICHLET     0.0         MAXWELLIAN
+                     eVel        DIRICHLET     1.0         0.0         0.0
+                     idensity    DIRICHLET     0.0         UNIFORM
+                     iTemp       DIRICHLET     0.0         MAXWELLIAN
+                     iVel        DIRICHLET     1.0         0.0         0.0
+                     Phi         DIRICHLET     0.0000*sqrt(x*x)   
+                     BField      DIRICHLET     10.0-abs(8.0*x)       0.0         0.0  
+
+INITIAL_CONDITIONS 
+ElecDensity1         1.0e4        PERTURBATION      -1.0 
+IonDensity1          1.0e4        PERTURBATION       1.0 
+ElecTemperature1     1.0          QUIET      
+IonTemperature1      1.0          QUIET      
+ElecVelocity1        0.8660254         0.0               0.0
+IonVelocity1         -0.8660254          0.0               0.0
+Phi                  0.0000*sqrt(x*x)
+MagneticField        10.0-abs(8.0*x)         0.0        0.0
+
+SOURCE_REGION        0
+
+EOF

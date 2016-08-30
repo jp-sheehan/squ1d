@@ -1,0 +1,6 @@
+#!MC 1400
+# Created by Tecplot 360 build 14.0.2.35002
+$!ALTERDATA 
+  EQUATION = '{max} = 2.0*sqrt(0.049087/(6.28*1.38E-3))*exp(-.049087*{Vx}*{Vx}/(2*1.38E-3))'
+$!ALTERDATA 
+  EQUATION = '{biased} = 0.049087/(1.38E-3)*{Vx}*exp(-0.049087*{Vx}*{Vx}/(2*1.38E-3))'

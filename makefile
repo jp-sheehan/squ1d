@@ -1,5 +1,5 @@
 #
-#   makefile for solver
+#   makefile for Personal Computer w/ MKL
 #
 OBJ = main_PIC.o solver.o mathfunctions.o mesh.o initializesolver.o writeoutput.o boundary.o solvertype.o   #..Objects to compile
 CC = mpic++ #g++ #..Select the Compiler

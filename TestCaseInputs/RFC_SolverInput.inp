@@ -1,0 +1,68 @@
+
+SPECIES			2
+			Name		Charge		Mass		Magnetization
+			electron	-1.602e-19	9.109e-31	0
+			ARGON		1.602e-19	6.626e-26	0
+
+
+COULOMB_COLLISIONS	0
+
+
+COLLISION_TYPES		2
+			Name			Type		CrossSection
+			electron		NEUTRAL		ARGON
+			ARGON			NEUTRAL		ARGON
+			NeutralDensity		3.22e21        
+			NeutralTemperature	3.0e2        
+
+
+BOUNDARIES		2
+
+			Name		left                 
+			Range		0.0      
+			Type		WALL		CURRENT		1.356e7
+			eDensity	DIRICHLET	3.0e15		UNIFORM 
+			eTemp		DIRICHLET	0.0e4		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0  
+			iDensity	DIRICHLET	3.0e15		UNIFORM
+			iTemp		DIRICHLET	0.0e4		MAXWELLIAN 
+			iVel		DIRICHLET	0.0		0.0		0.0  
+			Phi		NEUMANN		25.6
+			BField    	DIRICHLET	0.0		0.0		0.0  
+
+			Name		right                
+			Range		1.0       
+			Type		WALL		OTHER
+			edensity	DIRICHLET	3.0e15		UNIFORM
+			eTemp		DIRICHLET	0.0e0		MAXWELLIAN
+			eVel		DIRICHLET	0.0		0.0		0.0
+			idensity	DIRICHLET	3.0e15		UNIFORM
+			ionTemp		DIRICHLET	0.0e10		MAXWELLIAN
+			ionVel		DIRICHLET	0.0		0.0		0.0
+			Phi		DIRICHLET	0.0 
+			BField		DIRICHLET	0.0		0.0		0.0  
+
+
+INITIAL_CONDITIONS
+			ElecDensity		1.e15		PERTURBATION		0.0
+			ElecTemperature		1.16e5		MAXWELLIAN        
+			ElecVelocity		0.0		0.0		0.0
+			IonDensity		1.e15		PERTURBATION		0.0
+			IonTemperature		1.16e5		MAXWELLIAN
+			IonVelocity		0.0		0.0		0.0
+			Phi			0.0
+			MagneticField		0.0		0.0		0.0
+
+
+SPECIAL_REGIONS		0
+
+EOF
+
+............................Description.................................
+
+Simulation of Current Driven ARGON discharge based on Vahedi's work.
+
+........................................................................
+
+
+

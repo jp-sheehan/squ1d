@@ -1,0 +1,44 @@
+LengthScale	     1.0
+TimeScale	     1.0
+
+cfl        	     1.0
+TimeStep	     0.2
+Iterations	     40000
+Print_Iteration      20
+
+ParticleWeight       1
+
+InterpolationScheme  FIRST
+ParticleMover        Q1D
+
+GAS
+AtomicWeight         1.0
+
+SPECIES	             1
+                     elec1         -1.6e-19       1.6e-19
+
+
+BOUNDARIES           2
+left                 xrange      0.0      
+                     type        DIRICHLET      
+                     eDensity    DIRICHLET     0.0         UNIFORM      
+                     eTemp       DIRICHLET     0.0         MAXWELLIAN
+                     eVel        DIRICHLET     1.0         0.0         0.0  
+                     Phi         DIRICHLET     0.0
+                     BField      DIRICHLET     1.0+1.0*(x-2.0)*(x-2.0)       0.0         0.0  
+right                xrange      1.0       
+                     type        DIRICHLET
+                     edensity    DIRICHLET     0.0         UNIFORM
+                     eTemp       DIRICHLET     0.0         MAXWELLIAN
+                     eVel        DIRICHLET     1.0         0.0         0.0
+                     Phi         DIRICHLET     0.0   
+                     BField      DIRICHLET     1.0+1.0*(x-2.0)*(x-2.0)       0.0         0.0  
+
+INITIAL_CONDITIONS 
+ElecDensity1         0.0          PERTURBATION     0.001 
+ElecTemperature1     0.0          QUIET      
+ElecVelocity1        1.0e-2       0.0        1.0e-2
+Phi                  0.0
+MagneticField        1.0+1.0*(x-2.0)*(x-2.0)        0.0        0.0
+
+EOF

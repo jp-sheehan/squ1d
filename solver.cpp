@@ -2754,7 +2754,7 @@ void solver::particlefluxsource1D(particles &s_part, const mesh &s_msh, std::str
 
    s_part.gp = 0; 
 
-   //npc += extrapart; 
+   npc += extrapart;  //..USE FOR SCHWAGER SIMULATIONS & COMMENT FOR VERIFICATION WITH XOOPIC
 
    npctot = npc;
    npc = npctot/numprocs;
@@ -3693,9 +3693,11 @@ void solver::collideParticles(std::vector<particles> &s_prt,const mesh &s_msh, c
             }
          }
       }
-      //std::cout << "\nParticle: "   << id << "   Elastic:  " << s_prt[id].elcount*s_prt[0].pwght/s_time << "\t" << "Inelastic: " << s_prt[id].exccount*s_prt[0].pwght/s_time << "\tIonization: "<< s_prt[id].ioncount*s_prt[0].pwght/s_time  << std::endl; //CV
-   }
 
+#if SIMTYPE==2
+      std::cout << "\nParticle: "   << id << "   Elastic:  " << s_prt[id].elcount*s_prt[0].pwght/s_time/s_prt[id].en.size() << "\t" << "Inelastic: " << s_prt[id].exccount*s_prt[0].pwght/s_time/s_prt[id].en.size() << "\tIonization: "<< s_prt[id].ioncount*s_prt[0].pwght/s_time/s_prt[id].en.size()  << std::endl; //CV
+#endif
+   }
    //std::cout << "\nION Elastic: "   << s_prt[1].elcount*s_prt[1].pwght/s_time << "\t" << "Inelastic: "  << s_prt[1].exccount*s_prt[1].pwght/s_time << std::endl; //CV
 
 }
