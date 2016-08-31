@@ -433,7 +433,7 @@ bpl_energy = 75
 # lines per file, approximate
 lpf_cpField = mesh_dims
 lpf_particles = N_tot_e
-lpf_phasespace = N_tot_e * mesh_dims / 10
+lpf_phasespace = 100 * mesh_dims
 lpf_vdf = 100
 lpf_outField = mesh_dims
 lpf_energy = iterations
@@ -443,14 +443,22 @@ if output_vdf_region == -1:
 else:
     vdf_frac = 1/mesh_dims
 
+print(bpl_cpField * lpf_cpField)
+print(bpl_particles * lpf_particles)
+print(bpl_phasespace * lpf_phasespace)
+print(bpl_vdf * lpf_vdf)
+print(bpl_outField * lpf_outField)
+
 sizePerWrite = num_species * (bpl_cpField * lpf_cpField + \
         output_particle * bpl_particles * lpf_particles + \
         output_continuum * bpl_phasespace * lpf_phasespace + \
         output_vdf * vdf_frac * bpl_vdf * lpf_vdf) + \
         output_continuum * bpl_outField * lpf_outField
+print(sizePerWrite)
 N_writes = iterations//print_iterations + \
         output_final_numsteps//output_final_skipping
 writeSizeTot = sizePerWrite * N_writes + output_avgs * bpl_energy * lpf_energy
+
 
 
 ##### CHECK PARAMETERS #####
