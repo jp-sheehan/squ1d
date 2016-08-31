@@ -385,10 +385,9 @@ tau_en = 1/nu_en
 
 # simulation size
 
-N_tot_i = initial['iDensity']['value']/particle_weight
-print(initial['iDensity']['value'],particle_weight)
-N_tot_e = initial['eDensity']['value']/particle_weight
-print(N_tot_e)
+vol = 1 * 1 * mesh_length
+N_tot_i = initial['iDensity']['value']/particle_weight * vol
+N_tot_e = initial['eDensity']['value']/particle_weight * vol
 
 N_per_cell_e = N_tot_e/mesh_dims
 N_per_cell_i = N_tot_i/mesh_dims
@@ -444,17 +443,11 @@ if output_vdf_region == -1:
 else:
     vdf_frac = 1/mesh_dims
 
-print(bpl_cpField*lpf_cpField)
-print(bpl_particles*lpf_particles)
-print(bpl_phasespace*lpf_phasespace)
-print(bpl_vdf * lpf_vdf)
-
 sizePerWrite = num_species * (bpl_cpField * lpf_cpField + \
         output_particle * bpl_particles * lpf_particles + \
         output_continuum * bpl_phasespace * lpf_phasespace + \
         output_vdf * vdf_frac * bpl_vdf * lpf_vdf) + \
         output_continuum * bpl_outField * lpf_outField
-print(sizePerWrite)
 N_writes = iterations//print_iterations + \
         output_final_numsteps//output_final_skipping
 writeSizeTot = sizePerWrite * N_writes + output_avgs * bpl_energy * lpf_energy

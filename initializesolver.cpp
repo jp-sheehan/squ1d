@@ -1488,7 +1488,9 @@ void initializeSolver::initializeParticles(particles &i_part,mesh i_msh,solverVa
       }
    }
 
-   std::cout << "Total " << sname[spec] << " particles:  " <<  i_part.pos.size()/i_msh.meshdims << std::endl;
+   //std::cout << "Total " << sname[spec] << " particles:  " <<  i_part.pos.size()/i_msh.meshdims << std::endl;
+   std::cout << "Total " << sname[spec] << " particles:  " <<  npc << std::endl;
+
 }
 
 
