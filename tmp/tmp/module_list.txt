@@ -1,5 +1,0 @@
-
-Currently Loaded Modules:
-  1) gcc/5.4.0                 3) intel/14.0.2                 5) mkl/11.3.3
-  2) openmpi/1.6.5/gcc/4.8.5   4) openmpi/1.6.5/intel/14.0.2
-
