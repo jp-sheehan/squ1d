@@ -1,23 +1,26 @@
 #
-#   makefile for umich FLUX
+#   makefile for Flux
 #
 OBJ = main_PIC.o solver.o mathfunctions.o mesh.o initializesolver.o writeoutput.o boundary.o solvertype.o   #..Objects to compile
-CC = mpiCC #g++                 #..Compiler
-LOADER = mpiCC #g++ #gfortran   #..Loader
-IFLAGS = -I/home/software/rhel6/intel-14.0/mkl/include #..Include flags for MKL
-FLIB = /home/software/rhel6/intel-14.0/mkl/lib/intel64     #..Library location for MKL
-LFLAGS = -L/home/software/rhel6/intel-14.0/mkl/lib/intel64:/usr/cac/rhel6/intel-14.0/lib/intel64:/home/software/rhel6/intel-2013.1.046/lib/intel64:/opt/intel/mic/coi/host-linux-release/lib:/opt/intel/mic/myo/lib:/usr/local/torque/lib:/usr/cac/rhel6/openmpi/1.6.5-intel-14.0.2/lib:/usr/cac/rhel6/openmpi/1.6.5-intel-14.0.2/lib/openmpi:/opt/mellanox/mxm/lib -lpthread -lm -std=gnu++0x -lstdc++ -Wall -Wextra -Wformat=2 -O2 -lmpi -Wl,--start-group $(MKL_LINK)/libmkl_intel_ilp64.a $(MKL_LINK)/libmkl_core.a $(MKL_LINK)/libmkl_sequential.a -Wl,--end-group#..Compiler flags
+CC = mpic++ #g++ #..Select the Compiler
+LOADER = mpic++ #g++ #gfortran   #..Select the Loader
+IFLAGS = -I"/opt/intel/mkl/include/"#..Include flags for MKL
+FLIB = /opt/intel/mkl/lib/intel64#..Library location for MKL
+LFLAGS = -L/opt/intel/mkl/lib/intel64/ -lmkl_intel_ilp64 -lmkl_core -lpthread -lmkl_sequential -lm -std=gnu++0x -lstdc++ -Wall -O2 -Wextra -Wformat=2 -lmpi -g -pg #..Compiler flag for MKL
+CFLAGS = 
 
-
-PIC.exe:  $(OBJ) $(LIBRARIES)
-        $(LOADER) -m64 -w -DMKL_ILP64 $(OBJ) $(LFLAGS) -o PIC.exe 
-        export LD_LIBRARY_PATH="$(FLIB)":$(LD_LIBRARY_PATH);
+PIC.exe:    $(OBJ) $(LIBRARIES)
+	$(LOADER) $(CFLAGS) -m64 -w -DMKL_ILP64 $(OBJ) $(LFLAGS) -o PIC.exe 
+	export LD_LIBRARY_PATH="$(FLIB)":$(LD_LIBRARY_PATH);
 
 .cpp.o:
-	$(CC) -c -m64 -w -DMKL_ILP64 $< $(IFLAGS) $(LIBRARIES)  $(LFLAGS) -o $@ 
+	$(CC) -c -m64 -w -DMKL_ILP64 $(CFLAGS) $< $(IFLAGS) $(LIBRARIES)  $(LFLAGS) -o $@ 
 
 clean:  
 	rm *.o *.exe 
 
 cleandat: 
-	rm *.dat *.out     
+	rm *.dat *.out *.gif *.png *.jpg
+
+cleanjunk:
+	rm *~ .*~ .*.swp .*.swo

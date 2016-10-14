@@ -56,7 +56,7 @@ visualizing the results.
 git clone https://github.com/jp-sheehan/squ1d
 ```
 
-### 3.2. Modify `solverdefs.h` to the desired compiler/code settingns
+### 3.2. Modify `solverdefs.h` to the desired compiler/code settings
 
 There are two types of compiler settings in the file `solverdefs.h` that must
 be set before compiling. First the type of compiler/libraries which will be used
@@ -97,6 +97,15 @@ such as the University of Michigan Flux Supercomputer. The makefile
 Stampede supercomputer which is part of XSEDE. These makefiles should be
 altered so that the libraries are correctly linked to their location on the local
 computer.
+
+#### 3.4.1 Flux
+
+To compile SQu1D on [Flux][flux-homepage], the folowing modules need to be loaded, in order:
+1.  gcc/4.8.5
+2.  intel/16.0.3
+3.  openmpi/1.10.2/intel/16.0.3
+4.  mkl/11.3.3
+Use the makefile_FLUX makefile.
 
 ### 3.5. Type the command: `make -f \name of makefile`
 
@@ -195,3 +204,4 @@ code. For simulations which utilize species specific cross section data the fold
 [tecplot]:                         http://www.tecplot.com/
 [numpy]:                           http://www.numpy.org/
 [gifview]:                         http://manpages.ubuntu.com/manpages/wily/man1/gifview.1.html
+[flux-homepage]:                   http://arc-ts.umich.edu/systems-and-services/flux/
