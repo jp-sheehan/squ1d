@@ -1,0 +1,587 @@
+mpiCC  -c -m64 -w -DMKL_ILP64 solver.cpp -I"/home/software/rhel6/intel-14.0/mkl/include"    -L"/home/software/rhel6/intel-14.0/mkl/lib/intel64" -L"/usr/cac/rhel6/intel-14.0/lib/intel64" -L"/home/software/rhel6/intel-2013.1.046/lib/intel64" -L"/opt/intel/mic/coi/host-linux-release/lib" -L"/opt/intel/mic/myo/lib" -L"/usr/local/torque/lib" -L"/usr/cac/rhel6/openmpi/1.6.5-intel-14.0.2/lib" -L"/usr/cac/rhel6/openmpi/1.6.5-intel-14.0.2/lib/openmpi" -L"/opt/mellanox/mxm/lib" -lpthread -lm -std=gnu++0x -lstdc++ -Wall -Wextra -Wformat=2 -O2 -lmpi -Wl,--start-group /sw/arcts/centos7/intel/16.0.3/compilers_and_libraries_2016.3.210/linux/mkl/lib/intel64/libmkl_intel_ilp64.a /sw/arcts/centos7/intel/16.0.3/compilers_and_libraries_2016.3.210/linux/mkl/lib/intel64/libmkl_core.a /sw/arcts/centos7/intel/16.0.3/compilers_and_libraries_2016.3.210/linux/mkl/lib/intel64/libmkl_sequential.a -Wl,--end-group -o solver.o 
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/alloc_traits.h(251): error: expected a ">"
+  	  = typename __construct_helper<_Tp, _Args...>::type;
+  	                                          ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+          detected during instantiation of type "std::allocator_traits<_Alloc>::__has_construct<_Tp, _Args...>" at line 254
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/type_traits(133): error: not a class or struct name
+      : public _B1
+               ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+          detected during:
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+            instantiation of class "std::__and_<_B1> [with _B1=<error-type>]" at line 2108
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+            instantiation of type "std::_Require<<error-type>>" at line 254 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/alloc_traits.h"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/type_traits(2108): error: class "std::__and_<<error-type>>" has no member "value"
+      using _Require = typename enable_if<__and_<_Cond...>::value>::type;
+                                                            ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+          detected during instantiation of type "std::_Require<<error-type>>" at line 254 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/alloc_traits.h"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/type_traits(2108): error: class "std::enable_if<<error-constant>, void>" has no member "type"
+      using _Require = typename enable_if<__and_<_Cond...>::value>::type;
+                                                                    ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+          detected during instantiation of type "std::_Require<<error-type>>" at line 254 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/alloc_traits.h"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/alloc_traits.h(36),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/basic_string.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/string(52),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/locale_classes.h(40),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/ios_base.h(41),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ios(42),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ostream(38),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/iostream(39),
+                 from solver.h(2),
+                 from solver.cpp(1):
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h(69),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/map(60),
+                 from solver.h(4),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/aligned_buffer.h(54): error: expected a type specifier
+        alignas(__alignof__(_Tp2::_M_t)) unsigned char _M_storage[sizeof(_Tp)];
+                ^
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h(69),
+                 from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/map(60),
+                 from solver.h(4),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/aligned_buffer.h(54): error: expected a ";"
+        alignas(__alignof__(_Tp2::_M_t)) unsigned char _M_storage[sizeof(_Tp)];
+                                         ^
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+          detected during:
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>]" at line 163
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>]" at line 348 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::__cxx11::basic_stringbuf<_CharT, _Traits, _Alloc> [with _CharT=char, _Traits=std::char_traits<char>, _Alloc=std::allocator<char>]" at line 272 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/sstream.tcc"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/type_traits(1492): error: class "std::__is_convertible_helper<<error-type>, std::input_iterator_tag, false>" has no member class "type"
+      : public __is_convertible_helper<_From, _To>::type
+                                                    ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+          detected during:
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::is_convertible<_From, _To> [with _From=<error-type>, _To=std::input_iterator_tag]" at line 348 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::__cxx11::basic_stringbuf<_CharT, _Traits, _Alloc> [with _CharT=char, _Traits=std::char_traits<char>, _Alloc=std::allocator<char>]" at line 272 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/sstream.tcc"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/type_traits(1492): error: not a class or struct name
+      : public __is_convertible_helper<_From, _To>::type
+               ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+          detected during:
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::is_convertible<_From, _To> [with _From=<error-type>, _To=std::input_iterator_tag]" at line 348 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::__cxx11::basic_stringbuf<_CharT, _Traits, _Alloc> [with _CharT=char, _Traits=std::char_traits<char>, _Alloc=std::allocator<char>]" at line 272 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/sstream.tcc"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::__cxx11::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+          detected during:
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::__cxx11::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>]" at line 163
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::__cxx11::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>]" at line 348 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+            instantiation of class "std::__cxx11::basic_stringbuf<_CharT, _Traits, _Alloc> [with _CharT=wchar_t, _Traits=std::char_traits<wchar_t>, _Alloc=std::allocator<wchar_t>]" at line 278 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/sstream.tcc"
+In file included from /sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/sstream(813),
+                 from solver.h(9),
+                 from solver.cpp(1):
+
+In file included from solver.h(12),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::vector<double, std::allocator<double>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(12),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(12),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::vector<double, std::allocator<double>>]" at line 163
+In file included from solver.h(12),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::vector<double, std::allocator<double>>]" at line 70 of "variables.h"
+In file included from solver.h(12),
+                 from solver.cpp(1):
+
+In file included from solver.h(12),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::vector<int, std::allocator<int>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(12),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(12),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::vector<int, std::allocator<int>>]" at line 163
+In file included from solver.h(12),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::vector<int, std::allocator<int>>]" at line 70 of "variables.h"
+In file included from solver.h(12),
+                 from solver.cpp(1):
+
+In file included from solver.h(12),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::vector<std::__cxx11::string, std::allocator<std::__cxx11::string>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(12),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(12),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::vector<std::__cxx11::string, std::allocator<std::__cxx11::string>>]" at line 163
+In file included from solver.h(12),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::vector<std::__cxx11::string, std::allocator<std::__cxx11::string>>]" at line 70 of "variables.h"
+In file included from solver.h(12),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<exprtk::lexer::generator::token_t, std::allocator<exprtk::lexer::generator::token_t>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<exprtk::lexer::generator::token_t, std::allocator<exprtk::lexer::generator::token_t>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<exprtk::lexer::generator::token_t, std::allocator<exprtk::lexer::generator::token_t>>]" at line 1921 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<char, std::allocator<char>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<char, std::allocator<char>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<char, std::allocator<char>>]" at line 230 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_stack.h"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::stack<_Tp, _Sequence> [with _Tp=char, _Sequence=std::deque<char, std::allocator<char>>]" at line 2337 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<std::size_t={unsigned long}, std::allocator<std::size_t={unsigned long}>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<std::size_t={unsigned long}, std::allocator<std::size_t={unsigned long}>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<std::size_t={unsigned long}, std::allocator<std::size_t={unsigned long}>>]" at line 2392 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<std::pair<exprtk::lexer::token, exprtk::lexer::token>, std::allocator<std::pair<exprtk::lexer::token, exprtk::lexer::token>>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<std::pair<exprtk::lexer::token, exprtk::lexer::token>, std::allocator<std::pair<exprtk::lexer::token, exprtk::lexer::token>>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<std::pair<exprtk::lexer::token, exprtk::lexer::token>, std::allocator<std::pair<exprtk::lexer::token, exprtk::lexer::token>>>]" at line 2614 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<exprtk::lexer::token_scanner *, std::allocator<exprtk::lexer::token_scanner *>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<exprtk::lexer::token_scanner *, std::allocator<exprtk::lexer::token_scanner *>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<exprtk::lexer::token_scanner *, std::allocator<exprtk::lexer::token_scanner *>>]" at line 2747 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<exprtk::lexer::token_modifier *, std::allocator<exprtk::lexer::token_modifier *>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<exprtk::lexer::token_modifier *, std::allocator<exprtk::lexer::token_modifier *>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<exprtk::lexer::token_modifier *, std::allocator<exprtk::lexer::token_modifier *>>]" at line 2747 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<exprtk::lexer::token_joiner *, std::allocator<exprtk::lexer::token_joiner *>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<exprtk::lexer::token_joiner *, std::allocator<exprtk::lexer::token_joiner *>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<exprtk::lexer::token_joiner *, std::allocator<exprtk::lexer::token_joiner *>>]" at line 2747 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+In file included from solver.h(22),
+                 from solver.cpp(1):
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<exprtk::lexer::token_inserter *, std::allocator<exprtk::lexer::token_inserter *>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+In file included from solver.h(22),
+                 from solver.cpp(1):
+          detected during:
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<exprtk::lexer::token_inserter *, std::allocator<exprtk::lexer::token_inserter *>>]" at line 163
+In file included from solver.h(22),
+                 from solver.cpp(1):
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<exprtk::lexer::token_inserter *, std::allocator<exprtk::lexer::token_inserter *>>]" at line 2747 of "exprtk.hpp"
+In file included from solver.h(22),
+                 from solver.cpp(1):
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<std::__cxx11::string, std::allocator<std::__cxx11::string>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+          detected during:
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<std::__cxx11::string, std::allocator<std::__cxx11::string>>]" at line 163
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<std::__cxx11::string, std::allocator<std::__cxx11::string>>]" at line 16444 of "exprtk.hpp"
+            instantiation of class "exprtk::parser<T> [with T=double]" at line 2691 of "solver.cpp"
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::deque<exprtk::parser_error::type, std::allocator<exprtk::parser_error::type>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+          detected during:
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::deque<exprtk::parser_error::type, std::allocator<exprtk::parser_error::type>>]" at line 163
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::deque<exprtk::parser_error::type, std::allocator<exprtk::parser_error::type>>]" at line 16444 of "exprtk.hpp"
+            instantiation of class "exprtk::parser<T> [with T=double]" at line 2691 of "solver.cpp"
+
+solver.cpp(2773): error: namespace "std" has no member "default_random_engine"
+        std::shuffle(s_R.begin(),s_R.end(),std::default_random_engine(seed));
+                                                ^
+
+solver.cpp(2776): error: namespace "std" has no member "default_random_engine"
+     std::shuffle(s_R.begin(),s_R.end(),std::default_random_engine(seed));
+                                             ^
+
+solver.cpp(2938): error: namespace "std" has no member "default_random_engine"
+        std::shuffle(s_R.begin(),s_R.end(),std::default_random_engine(seed));
+                                                ^
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/aligned_buffer.h(63): error: identifier "_M_storage" is undefined
+        { return static_cast<void*>(&_M_storage); }
+                                     ^
+          detected during:
+            instantiation of "_Tp *__gnu_cxx::__aligned_membuf<_Tp>::_M_ptr() [with _Tp=std::__cxx11::string]" at line 153 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "_Val *std::_Rb_tree_node<_Val>::_M_valptr() [with _Val=std::__cxx11::string]" at line 553 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "void std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_destroy_node(std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_Link_type) [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 561 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "void std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_drop_node(std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_Link_type) [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 1614 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "void std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_erase(std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_Link_type) [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 858 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::~_Rb_tree() [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 90 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_set.h"
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/ext/aligned_buffer.h(67): error: identifier "_M_storage" is undefined
+        { return static_cast<const void*>(&_M_storage); }
+                                           ^
+          detected during:
+            instantiation of "const _Tp *__gnu_cxx::__aligned_membuf<_Tp>::_M_ptr() const [with _Tp=std::__cxx11::string]" at line 157 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "const _Val *std::_Rb_tree_node<_Val>::_M_valptr() const [with _Val=std::__cxx11::string]" at line 671 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::const_reference std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_S_value(std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_Const_Link_type) [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 675 of
+                      "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "const _Key &std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_S_key(std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_Const_Link_type) [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 1810 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "std::pair<std::_Rb_tree_node_base *, std::_Rb_tree_node_base *> std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_get_insert_unique_pos(const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::key_type &) [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 1863 of
+                      "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_tree.h"
+            instantiation of "std::pair<std::_Rb_tree_iterator<_Val>, bool> std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_insert_unique(_Arg &&) [with _Key=std::__cxx11::string, _Val=std::__cxx11::string, _KeyOfValue=std::_Identity<std::__cxx11::string>, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>, _Arg=const std::__cxx11::string &]" at line 485 of "/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_set.h"
+            instantiation of "std::pair<std::_Rb_tree<_Key, _Key, std::_Identity<_Key>, _Compare, __gnu_cxx::__alloc_traits<_Alloc>::rebind<_Key>::other>::const_iterator, bool> std::set<_Key, _Compare, _Alloc>::insert(const std::set<_Key, _Compare, _Alloc>::value_type &) [with _Key=std::__cxx11::string, _Compare=exprtk::details::ilesscompare, _Alloc=std::allocator<std::__cxx11::string>]" at line 2167 of "exprtk.hpp"
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::__cxx11::list<double, std::allocator<double>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+          detected during:
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::__cxx11::list<double, std::allocator<double>>]" at line 163
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::__cxx11::list<double, std::allocator<double>>]" at line 9379 of "exprtk.hpp"
+            instantiation of class "exprtk::symbol_table<T>::st_holder::st_data [with T=double]" at line 8820 of "exprtk.hpp"
+            instantiation of "exprtk::symbol_table<T>::st_holder::st_holder() [with T=double]" at line 8844 of "exprtk.hpp"
+            instantiation of "exprtk::symbol_table<T>::symbol_table() [with T=double]" at line 2661 of "solver.cpp"
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::__cxx11::list<std::__cxx11::string, std::allocator<std::__cxx11::string>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+          detected during:
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::__cxx11::list<std::__cxx11::string, std::allocator<std::__cxx11::string>>]" at line 163
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::__cxx11::list<std::__cxx11::string, std::allocator<std::__cxx11::string>>]" at line 9379 of "exprtk.hpp"
+            instantiation of class "exprtk::symbol_table<T>::st_holder::st_data [with T=double]" at line 8820 of "exprtk.hpp"
+            instantiation of "exprtk::symbol_table<T>::st_holder::st_holder() [with T=double]" at line 8844 of "exprtk.hpp"
+            instantiation of "exprtk::symbol_table<T>::symbol_table() [with T=double]" at line 2661 of "solver.cpp"
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::vector<exprtk::details::expression_node<double> *, std::allocator<exprtk::details::expression_node<double> *>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+          detected during:
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::vector<exprtk::details::expression_node<double> *, std::allocator<exprtk::details::expression_node<double> *>>]" at line 163
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::vector<exprtk::details::expression_node<double> *, std::allocator<exprtk::details::expression_node<double> *>>]" at line 4425 of "exprtk.hpp"
+            instantiation of class "exprtk::details::vararg_node<T, VarArgFunction> [with T=double, VarArgFunction=exprtk::details::vararg_add_op<double>]" at line 12712 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_generator<Type>::expression_node_ptr exprtk::parser<T>::expression_generator<Type>::const_optimize_varargfunc(const exprtk::details::operator_type &, Sequence<exprtk::details::expression_node<Type> *, Allocator> &) [with T=double, Type=double, Allocator=std::allocator<exprtk::details::expression_node<double> *>, Sequence=std::deque]" at line 12758 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_generator<Type>::expression_node_ptr exprtk::parser<T>::expression_generator<Type>::vararg_function(const exprtk::details::operator_type &, Sequence<exprtk::details::expression_node<Type> *, Allocator> &) [with T=double, Type=double, Allocator=std::allocator<exprtk::details::expression_node<double> *>, Sequence=std::deque]" at line 10995 of "exprtk.hpp"
+            [ 3 instantiation contexts not shown ]
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_symbol() [with T=double]" at line 11639 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_branch() [with T=double]" at line 10223 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_expression(exprtk::parser<T>::precedence_level) [with T=double]" at line 10174 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_corpus() [with T=double]" at line 9883 of "exprtk.hpp"
+            instantiation of "bool exprtk::parser<T>::compile(const std::__cxx11::string &, exprtk::expression<T> &) [with T=double]" at line 2692 of "solver.cpp"
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::vector<unsigned char, std::allocator<unsigned char>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+          detected during:
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::vector<unsigned char, std::allocator<unsigned char>>]" at line 163
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::vector<unsigned char, std::allocator<unsigned char>>]" at line 4425 of "exprtk.hpp"
+            instantiation of class "exprtk::details::vararg_node<T, VarArgFunction> [with T=double, VarArgFunction=exprtk::details::vararg_add_op<double>]" at line 12712 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_generator<Type>::expression_node_ptr exprtk::parser<T>::expression_generator<Type>::const_optimize_varargfunc(const exprtk::details::operator_type &, Sequence<exprtk::details::expression_node<Type> *, Allocator> &) [with T=double, Type=double, Allocator=std::allocator<exprtk::details::expression_node<double> *>, Sequence=std::deque]" at line 12758 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_generator<Type>::expression_node_ptr exprtk::parser<T>::expression_generator<Type>::vararg_function(const exprtk::details::operator_type &, Sequence<exprtk::details::expression_node<Type> *, Allocator> &) [with T=double, Type=double, Allocator=std::allocator<exprtk::details::expression_node<double> *>, Sequence=std::deque]" at line 10995 of "exprtk.hpp"
+            [ 3 instantiation contexts not shown ]
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_symbol() [with T=double]" at line 11639 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_branch() [with T=double]" at line 10223 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_expression(exprtk::parser<T>::precedence_level) [with T=double]" at line 10174 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_corpus() [with T=double]" at line 9883 of "exprtk.hpp"
+            instantiation of "bool exprtk::parser<T>::compile(const std::__cxx11::string &, exprtk::expression<T> &) [with T=double]" at line 2692 of "solver.cpp"
+
+/sw/arcts/centos7/gcc/5.4.0/include/c++/5.4.0/bits/stl_iterator_base_types.h(154): error: class "std::vector<const double *, std::allocator<const double *>>" has no member "iterator_category"
+        typedef typename _Iterator::iterator_category iterator_category;
+                                    ^
+          detected during:
+            instantiation of class "std::__iterator_traits<_Iterator, void> [with _Iterator=std::vector<const double *, std::allocator<const double *>>]" at line 163
+            instantiation of class "std::iterator_traits<_Iterator> [with _Iterator=std::vector<const double *, std::allocator<const double *>>]" at line 4470 of "exprtk.hpp"
+            instantiation of class "exprtk::details::vararg_varnode<T, VarArgFunction> [with T=double, VarArgFunction=exprtk::details::vararg_add_op<double>]" at line 12735 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_generator<Type>::expression_node_ptr exprtk::parser<T>::expression_generator<Type>::varnode_optimize_varargfunc(const exprtk::details::operator_type &, Sequence<exprtk::details::expression_node<Type> *, Allocator> &) [with T=double, Type=double, Allocator=std::allocator<exprtk::details::expression_node<double> *>, Sequence=std::deque]" at line 12760 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_generator<Type>::expression_node_ptr exprtk::parser<T>::expression_generator<Type>::vararg_function(const exprtk::details::operator_type &, Sequence<exprtk::details::expression_node<Type> *, Allocator> &) [with T=double, Type=double, Allocator=std::allocator<exprtk::details::expression_node<double> *>, Sequence=std::deque]" at line 10995 of "exprtk.hpp"
+            [ 3 instantiation contexts not shown ]
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_symbol() [with T=double]" at line 11639 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_branch() [with T=double]" at line 10223 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_expression(exprtk::parser<T>::precedence_level) [with T=double]" at line 10174 of "exprtk.hpp"
+            instantiation of "exprtk::parser<T>::expression_node_ptr exprtk::parser<T>::parse_corpus() [with T=double]" at line 9883 of "exprtk.hpp"
+            instantiation of "bool exprtk::parser<T>::compile(const std::__cxx11::string &, exprtk::expression<T> &) [with T=double]" at line 2692 of "solver.cpp"
+
+make: *** [solver.o] Error 2
