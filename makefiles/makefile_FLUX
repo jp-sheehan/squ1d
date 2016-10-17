@@ -20,7 +20,8 @@ clean:
 	rm *.o *.exe 
 
 cleandat: 
-	rm *.dat *.out *.gif *.png *.jpg
+	-@rm *.dat *.out *.gif *.png *.jpg
+	ls | grep -P ".*\.o[0-9]+$$" | xargs -d"\n" rm
 
 cleanjunk:
 	rm *~ .*~ .*.swp .*.swo

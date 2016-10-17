@@ -3,8 +3,11 @@
 .*.swo
 *.dat
 *.log
-SolverType.inp
-SolverInput.inp
+*.inp
+!SolverType_default.inp
+!SolverInput_default.inp
+.pbs
+!runPIC_flux_default.pbs
 *.o
 *.out
 *.exe

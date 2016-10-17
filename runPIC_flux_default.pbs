@@ -5,15 +5,15 @@
 ### required PBS info
 
 ### account
-#PBS -A hpc101_flux
+#PBS -A sheehanj_fluxod
 
 ### queue
-#PBS -q flux
+#PBS -q fluxod
 
 ### optional PBS info
 
 ### job name
-#PBS -N 001name
+#PBS -N squ1d001
 
 ### email
 #PBS -M sheehanj@umich.edu
@@ -51,3 +51,11 @@ fi
 echo "I ran from $(pwd)"
 
 ### job commands below
+
+# load modules (in case they haven't been loaded)
+module load intel/16.0.3
+module load openmpi/1.10.2/intel/16.0.3
+module load mkl/11.3.3
+
+# ~/squ1d/PIC.exe
+mpirun -n 1 ./PIC.exe

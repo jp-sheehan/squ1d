@@ -1,5 +1,5 @@
 #
-#   makefile for solver
+#   makefile for Flux
 #
 OBJ = main_PIC.o solver.o mathfunctions.o mesh.o initializesolver.o writeoutput.o boundary.o solvertype.o   #..Objects to compile
 CC = mpic++ #g++ #..Select the Compiler
@@ -20,7 +20,8 @@ clean:
 	rm *.o *.exe 
 
 cleandat: 
-	rm *.dat *.out *.gif *.png *.jpg
+	-@rm *.dat *.out *.gif *.png *.jpg
+	ls | grep -P ".*\.o[0-9]+$$" | xargs -d"\n" rm
 
 cleanjunk:
 	rm *~ .*~ .*.swp .*.swo
