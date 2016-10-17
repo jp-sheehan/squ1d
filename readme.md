@@ -147,7 +147,7 @@ The `SolverType.inp` file specifies the type of solver used by the code. The
 variables used, what they represent, and the options are summarized in the
 table below. All variables use MKS units. The text describing the variable is
 just a placeholder used to help arrange the input file. The parameters must be
-input in this format in the order listed.
+input in this format in the order listed.  A default example has been provided.
 
 
 
@@ -164,7 +164,7 @@ conditions. Finally a section is included for applying special regions such as
 heating and particle sources. More details for each of these sections is given
 below. Note that profiles can be given for many of the parameters according to
 the parser. More details can be found online. For the parser the parameter x is
-used as the axial direction.
+used as the axial direction.  A default example has been provided.
 
 <a name="running"></a>
 ## 5. Running the code
@@ -189,6 +189,16 @@ be read in which is followed by a INT, DOUBLE, or STRING read into the
 code. For simulations which utilize species specific cross section data the folder
 `CrossSectionData/` is also necessary with the desired cross sections.
 
+### 6.1. Flux
+To run SQu1D from a batch script, use a [Torque][flux-torque] PBS file.
+An example as been provided in
+runPIC_flux_default.pbs.  Be sure to change the default information.
+The following modules are required to run the binary:
+1.  intel/16.0.3
+2.  openmpi/1.10.2/intel/16.0.3
+3.  mkl/11.3.3
+
+
 <a name="references"></a>
 ## 6. References
 
@@ -205,3 +215,4 @@ code. For simulations which utilize species specific cross section data the fold
 [numpy]:                           http://www.numpy.org/
 [gifview]:                         http://manpages.ubuntu.com/manpages/wily/man1/gifview.1.html
 [flux-homepage]:                   http://arc-ts.umich.edu/systems-and-services/flux/
+[flux-torque]:                     http://arc-ts.umich.edu/flux-user-guide/
