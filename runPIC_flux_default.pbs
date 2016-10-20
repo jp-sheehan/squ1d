@@ -29,12 +29,13 @@
 #PBS -V
 
 ### What to tell the job manager about the job
-### machine ppn's: 12 (lots), 16 (lots), 20 (some), 24 (few)
+### machine ppn's: 12 (lots of machines), 16 (lots), 20 (some), 24 (few)
 ### make sure that there are no spaces before or after punctuation
 ### for mem, use mb, gb.  Must be a little less than the machine (for the os)
 ### mem: total memory; pmem: memory per processor
 ### each piece of information (separated by comma) can get it's own line with #PBS -l to begin
-### walltime written right to left, i.e. 15=15seconds, 15:00=15minutes, 15:00:00=15hours, 15:00:00:00=15days; max time is 28 days; use 15 min increments
+### walltime written right to left, i.e. 15=15seconds, 15:00=15minutes, 15:00:00=15hours, 
+###       15:00:00:00=15days; max time is 28 days; use 15 min increments
 #PBS -l nodes=1:ppn=1,mem=1gb,walltime=15:00
 
 ### end PBS preamble
