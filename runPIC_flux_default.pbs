@@ -16,7 +16,7 @@
 #PBS -N squ1d001
 
 ### email
-#PBS -M sheehanj@umich.edu
+#PBS -M uniqname@umich.edu
 
 ### what consistitutes important events that generate email
 ### b: begin, e:end, a:abort
