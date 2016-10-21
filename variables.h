@@ -210,6 +210,8 @@ struct spclvars
 
         double spclEperp;  //..Special region Efield
 
+        double spclEperp;  //..Special region Efield
+
 };
 
 
