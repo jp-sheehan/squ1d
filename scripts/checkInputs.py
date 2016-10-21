@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 from math import *
 import parser
 import numpy as np
@@ -47,7 +47,8 @@ class bcolors:
 
 def passed(message):
     greencheck = bcolors.OKGREEN + u'\u2713' + bcolors.ENDC
-    print(greencheck, message)
+    printline = greencheck + ' ' + message
+    print(printline)
     passed.count += 1
     return passed.count
 
@@ -55,7 +56,8 @@ passed.count = 0
 
 def warn(message):
     orangecirc = bcolors.WARNING + '!' + bcolors.ENDC
-    print(orangecirc, message)
+    printline = orangecirc + ' ' + message
+    print(printline)
     warn.count += 1
     return warn.count
 
@@ -63,7 +65,8 @@ warn.count = 0
 
 def err(message):
     redx = bcolors.FAIL + 'X' + bcolors.ENDC
-    print(redx, message)
+    printline = redx + ' ' + message
+    print(printline)
     err.count += 1
     return err.count
 
@@ -84,8 +87,9 @@ def printreport():
     else:
         es = "s"
 
-    print(str(err.count), "error" + es + ',', \
-            str(warn.count), "warning" + ws)
+    printline = str(err.count) + " error" + es + ',' + \
+            str(warn.count) +  " warning" + ws
+    print(printline)
 
 
 def compileEqn(eqn_str):
