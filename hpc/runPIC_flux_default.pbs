@@ -1,0 +1,62 @@
+#!/bin/bash
+
+### begin PBS preamble
+
+### required PBS info
+
+### account
+#PBS -A sheehanj_fluxod
+
+### queue
+#PBS -q fluxod
+
+### optional PBS info
+
+### job name
+#PBS -N squ1d001
+
+### email
+#PBS -M uniqname@umich.edu
+
+### what consistitutes important events that generate email
+### b: begin, e:end, a:abort
+#PBS -m ea
+
+### join output and errors
+### first letter: main output file, next letters: what else goes in the the main file
+#PBS -j oe 
+
+#PBS -V
+
+### What to tell the job manager about the job
+### machine ppn's: 12 (lots of machines), 16 (lots), 20 (some), 24 (few)
+### make sure that there are no spaces before or after punctuation
+### for mem, use mb, gb.  Must be a little less than the machine (for the os)
+### mem: total memory; pmem: memory per processor
+### each piece of information (separated by comma) can get it's own line with #PBS -l to begin
+### walltime written right to left, i.e. 15=15seconds, 15:00=15minutes, 15:00:00=15hours, 
+###       15:00:00:00=15days; max time is 28 days; use 15 min increments
+#PBS -l nodes=1:ppn=1,mem=1gb,walltime=15:00
+
+### end PBS preamble
+
+### show information about what machines the script runs on
+if [ -e "$PBS_NODEFILE" ] ; then
+   uniq -c "$PBS_NODEFILE"
+fi
+
+### change to the directory from which the job script was run
+if [ -d "$PBS_O_WORKDIR" ] ; then
+   cd "$PBS_O_WORKDIR"
+fi
+echo "I ran from $(pwd)"
+
+### job commands below
+
+# load modules (in case they haven't been loaded)
+module load intel/16.0.3
+module load openmpi/1.10.2/intel/16.0.3
+module load mkl/11.3.3
+
+# ~/squ1d/PIC.exe
+mpirun -n 1 ./PIC.exe

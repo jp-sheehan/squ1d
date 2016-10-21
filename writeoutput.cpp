@@ -189,8 +189,10 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
 
    if(w_wrtflag == 0)  //Debug Write
    {
+      /* only 1D
      if(w_mesh_dims==1)
      {
+     */
         for(i = 0; i<w_total_particles; i++)
         {
            wrtfile << w_part.pos[w_mesh_dims*i] << "\t" << 0.0 << "\t";
@@ -198,6 +200,7 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
            wrtfile << w_part.en[i] << "\t";
            wrtfile << std::endl;
          }
+     /* only 1D
      }
      else if(w_mesh_dims==2)
      {
@@ -209,11 +212,14 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
            wrtfile << std::endl;
         }
      }
+     */
    }
    else if(w_wrtflag == 1)  //Tecplot Write
    {
+      /* only 1D
      if(w_mesh_dims==1)
      {
+     */
         if(procid==0)  //MPI
         {
           wrtfile << "TITLE=\"" << filename.c_str() << "\""<< std::endl; 
@@ -229,6 +235,7 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
            wrtfile << std::endl;
         }
 
+        /* only 1D
      } 
      else if(w_mesh_dims==2)
      {
@@ -248,9 +255,11 @@ void writeOutput::writeParticles(particles w_part, std::vector<int> w_numpoints,
         }
 
      } 
+     */
    }
    
    wrtfile.close();   
+   std::cout << "\n\t...written to " << filename << std::endl;
    part_fnum[w_part.spflag] = part_fnum[w_part.spflag]+1;
 
 }
@@ -454,12 +463,13 @@ void writeOutput::writeParticles(particles w_part, fields w_flds, mesh w_msh, do
 
    if(procid==0)
    {
-     std::cout << "\n\tWriting Particles...";
      fname << pname.c_str() << "Particles" << part_fnum[w_part.spflag] << ".dat";
 
      filename = fname.str();
-     std::ofstream wrtfile(filename.c_str(),std::ios_base::app | std::ios_base::out);  //MPI 
-     //std::ofstream wrtfile(filename.c_str());
+     std::cout << "\n\tWriting Particles to " << filename << "...";
+     //std::ofstream wrtfile(filename.c_str(),std::ios_base::app | std::ios_base::out);  //MPI 
+     std::ofstream wrtfile(filename.c_str());
+     //
 
      if(w_msh.wrtflag == 0) //Debug Write
      {
@@ -498,6 +508,7 @@ void writeOutput::writeParticles(particles w_part, fields w_flds, mesh w_msh, do
        }
      } 
      wrtfile.close();   
+   std::cout << "\n\t...written to " << filename << std::endl;
    }
    part_fnum[w_part.spflag] = part_fnum[w_part.spflag]+1;
 
@@ -508,7 +519,7 @@ void writeOutput::writeParticles(particles w_part, fields w_flds, mesh w_msh, do
 void writeOutput::writeSingleParticle(particles w_part, fields w_flds, mesh w_msh, double time)
 {
    int i,j,k;
-   int w_total_particles = w_part.pos.size()/w_msh.meshdims;
+   //int w_total_particles = w_part.pos.size()/w_msh.meshdims;
    int pindex;
    double enphi,entot;
    std::vector<int> w_neigh;
@@ -534,7 +545,8 @@ void writeOutput::writeSingleParticle(particles w_part, fields w_flds, mesh w_ms
       pindex = w_msh.nearc(w_part,0);
       enphi = w_part.charge*w_flds.phi[pindex];  //DC charge
    }
-   else if(w_msh.intscheme == 1)
+   //else if(w_msh.intscheme == 1)
+   else // only other option is linear interpolation
    {
       pindex = w_msh.nearp(w_part,0);
       w_neigh = w_msh.cneighofp(pindex);
@@ -854,6 +866,7 @@ void writeOutput::writePICField(mesh w_msh, contnm w_cont,fields w_EM,double tim
 
    cwrtfile.close();
    pwrtfile.close();
+   std::cout << "\n\t...written to " << pfname.str() << " and " << cfname.str() << std::endl;
 }
 
 //..Write energies output for PIC..//
@@ -906,8 +919,8 @@ void writeOutput::writePICField(mesh w_msh, std::vector<contnm> w_cont,fields w_
 
    dx = w_msh.cmesh[1]-w_msh.cmesh[0];
 
-   if(w_msh.philoc==1) w_total_cells=w_total_pcells;
-   else if(w_msh.philoc==0) w_total_cells=w_total_ccells;
+   if(w_msh.philoc==0) w_total_cells=w_total_ccells;
+   else w_total_cells=w_total_pcells;
 
    for(i=0;i<w_total_cells;i++)
    {
@@ -1010,6 +1023,7 @@ void writeOutput::writePICField(mesh w_msh, std::vector<contnm> w_cont,fields w_
    totcont_fnum = totcont_fnum+1;
 
    wrtfile.close();
+   std::cout << "\n\t...written to " << filename << std::endl;
    //cwrtfile.close();
    //pwrtfile.close();
 }
@@ -1024,7 +1038,8 @@ void writeOutput::findglobalenergy(const std::vector<particles> &s_part, const f
    std::vector<int> s_neighbors;
    std::vector<double> s_arearatio;
    std::vector<double> glob_En,glob_meanKEn,glob_thermEn,glob_U;
-   double glob_En_sum, glob_meanKEn_sum,glob_thermEn_sum,glob_EnTot;
+   double glob_En_sum, glob_meanKEn_sum,glob_thermEn_sum;
+   //double glob_EnTot;
 
    int numprocs,procid; //MPI
 
@@ -1086,7 +1101,7 @@ void writeOutput::findglobalenergy(const std::vector<particles> &s_part, const f
    glob_meanKEn_sum = std::accumulate(glob_meanKEn.begin(),glob_meanKEn.end(),0.0);
    glob_thermEn_sum =  std::accumulate(glob_thermEn.begin(),glob_thermEn.end(),0.0); 
 
-   glob_EnTot = glob_En_sum+glob_EMEn;
+   //glob_EnTot = glob_En_sum+glob_EMEn;
 
    double glob_En_sum_MPI,glob_meanKEn_sum_MPI,glob_thermEn_sum_MPI,glob_EnTot_MPI;
 
@@ -1099,7 +1114,8 @@ void writeOutput::findglobalenergy(const std::vector<particles> &s_part, const f
    if(procid==0)
    {
      glob_EnTot_MPI = glob_En_sum_MPI+glob_EMEn;
-     std::ofstream wrtfile("energyhistory.dat",std::ios_base::app | std::ios_base::out); 
+     //std::ofstream wrtfile("energyhistory.dat",std::ios_base::app | std::ios_base::out); 
+     std::ofstream wrtfile("energyhistory.dat");
      wrtfile << time << "\t";
      wrtfile << glob_En_sum_MPI << "\t" << glob_meanKEn_sum_MPI << "\t" << glob_thermEn_sum_MPI << "\t" << glob_EMEn << "\t" << avg_E << "\t" << glob_EnTot_MPI;
      wrtfile << std::endl;
@@ -1321,7 +1337,8 @@ void writeOutput::findphasespace(particles s_part, mesh s_msh, int s_index, doub
 {
    int i,j,k;
    double maxvel = *std::max_element(s_part.vel.begin(),s_part.vel.end());
-   double maxen = *std::max_element(s_part.en.begin(),s_part.en.end());
+   //double maxen = *std::max_element(s_part.en.begin(),s_part.en.end());
+   double maxen;
    std::vector<double> ps, velocity;
    std::vector<double> psx, velocityx;
    std::vector<double> psy, velocityy;
@@ -1568,4 +1585,5 @@ void writeOutput::writeRestart(const std::vector<boundvars> &w_boundvars, const 
    }
 
    wrtfile.close();   
+   std::cout << "\n\t...written to " << filename << std::endl;
 }

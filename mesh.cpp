@@ -9,7 +9,7 @@ void mesh::generateEulermesh(double m_lscale)
 
    for(i=0;i<meshdims; i++) offset.push_back(0.0); 
 
-// Offset not fully coded in but left here....
+   // Offset not fully coded in but left here....
 
    meshPoint(pmesh,offset,m_lscale); 
    meshCenter(cmesh,offset,m_lscale); 
@@ -24,20 +24,20 @@ void mesh::generatePICmesh(double m_lscale)
 
    for(i=0;i<meshdims; i++) offset.push_back(0.0); 
 
-// Offset not fully coded in but left here....
+   // Offset not fully coded in but left here....
 
    meshPoint(pmesh,offset,m_lscale); 
    meshCenter(cmesh,offset,m_lscale); 
 
-//..Find neighbors of cells and points..//  
+   //..Find neighbors of cells and points..//  
    meshPointNeighbors(pofpneigh,cofpneigh);
    //meshPointNeighbors();
    meshCenterNeighbors(cofcneigh,pofcneigh);
 
-// Not setup for 2D
-    
+   // Not setup for 2D
+
    deltax = (meshlength[0])/(numpoints[0]-1);
-   hdeltax  = 0.5*deltax;
+   hdeltax  = 0.5*deltax;// half delta x?
    //std::cout << "\nDelta:\t" << deltax << "\t" << hdeltax << std::endl;
 
 }
@@ -57,15 +57,16 @@ void mesh::meshPoint(std::vector<double> & m_mesh, std::vector<double> m_offset,
    for (i=0; i<meshdims; i++) m_totalcells = m_totalcells*numpoints[i];
 
    std::cout << "Total Points:\t"  << m_totalcells << std::endl;
- 
+
    if(meshdims == 1)
    {
       for(i=0; i<numpoints[0] ;i++)
       {
          temp1 = i*m_lscale*meshlength[0]/(numpoints[0]-1)+m_offset[0]+m_lscale*meshstart[0];
-         m_mesh.push_back(temp1+tol);
+         m_mesh.push_back(temp1+tol); // when called from generatePICmesh, m_mesh = pmesh
       }
    }
+   /*
    else if (meshdims == 2)
    {
       for(j=0; j<numpoints[1]; j++)
@@ -89,7 +90,7 @@ void mesh::meshPoint(std::vector<double> & m_mesh, std::vector<double> m_offset,
          for(j=0; j<numpoints[1]; j++) 
          {
             temp2 = j*m_lscale*meshlength[1]/(numpoints[1]-1) + m_offset[1] + m_lscale*meshstart[1];
-            
+
             for(i=0; i<numpoints[0]; i++)
             {  
                temp1 = i*m_lscale*meshlength[0]/(numpoints[0]-1) + m_offset[0] + m_lscale*meshstart[0];
@@ -98,8 +99,9 @@ void mesh::meshPoint(std::vector<double> & m_mesh, std::vector<double> m_offset,
                m_mesh.push_back(temp3+tol);
             }
          } 
-       }
+      }
    } 
+   */
 }
 
 //..Generate mesh for cell centers..//
@@ -116,15 +118,16 @@ void mesh::meshCenter(std::vector<double> & m_mesh, std::vector<double> m_offset
    for (i=0; i<meshdims; i++) m_totalcells = m_totalcells*(numpoints[i]+2*numghost-1);
 
    std::cout << "Total Cells:\t"  << m_totalcells << std::endl;
- 
+
    if(meshdims == 1)
    {
       for(i=0; i<(numpoints[0]+2*numghost-1) ;i++)
       {
          temp1 = (i-numghost+0.5)*m_lscale*meshlength[0]/(numpoints[0]-1) + m_offset[0] + m_lscale*meshstart[0];
-         m_mesh.push_back(temp1+tol);
+         m_mesh.push_back(temp1+tol); // when called from generatePICmesh, m_mesh = cmesh
       }
    }
+   /*
    else if (meshdims == 2)
    {
       for(j=0; j<(numpoints[1]+2*numghost-1); j++)
@@ -148,7 +151,7 @@ void mesh::meshCenter(std::vector<double> & m_mesh, std::vector<double> m_offset
          for(j=0; j<(numpoints[1]+2*numghost-1); j++) 
          {
             temp2 = (0.5)*(2*j-numghost-1)*m_lscale*meshlength[1]/(numpoints[1]-1) + m_offset[1] + m_lscale*meshstart[1];
-            
+
             for(i=0; i<(numpoints[0]+2*numghost-1); i++)
             {  
                temp3 = (0.5)*(2*i-numghost-1)*m_lscale*meshlength[0]/(numpoints[0]-1) + m_offset[0] + m_lscale*meshstart[0];
@@ -157,8 +160,9 @@ void mesh::meshCenter(std::vector<double> & m_mesh, std::vector<double> m_offset
                m_mesh.push_back(temp3+tol);
             }
          } 
-       }
+      }
    } 
+   */
 }
 
 //..Generate mesh for cell faces..//
@@ -174,7 +178,7 @@ void mesh::meshFace(double m_lscale)
    for (i=0; i<meshdims; i++) m_totalcells = m_totalcells*(numpoints[i]-1);
 
    std::cout << "Total Cells:\t"  << m_totalcells << std::endl;
- 
+
    if(meshdims == 1)
    {
       for(i=0; i<(numpoints[0]) ;i++)
@@ -183,6 +187,7 @@ void mesh::meshFace(double m_lscale)
          fmesh.push_back(temp1);
       }
    }
+   /*
    else if (meshdims == 2)
    {
       for(j=0; j<(numpoints[1]); j++)
@@ -218,7 +223,7 @@ void mesh::meshFace(double m_lscale)
          for(j=0; j<(numpoints[1]-1); j++) 
          {
             temp2 = (0.5)*(2*j+1)*m_lscale*meshlength[1]/(numpoints[1]-1);
-            
+
             for(i=0; i<(numpoints[0]-1); i++)
             {  
                temp3 = (0.5)*(2*i+1)*m_lscale*meshlength[0]/(numpoints[0]-1);
@@ -227,8 +232,9 @@ void mesh::meshFace(double m_lscale)
                fmesh.push_back(temp3);
             }
          } 
-       }
+      }
    } 
+   */
 }
 
 //..Find size of mesh..//
@@ -253,6 +259,7 @@ int mesh::incneighofc(int m_cindex) const   //Find Internal Neighbor
    else if(neighbors[1] == -1) inneigh = neighbors[0];
    else if(neighbors[2] == -1) inneigh = neighbors[3];
    else if(neighbors[3] == -1) inneigh = neighbors[2];
+   else inneigh = -1;
 
    return inneigh;
 }
@@ -262,13 +269,14 @@ int mesh::incneighofc(int m_cindex) const   //Find Internal Neighbor
 std::vector<int> mesh::cneighofp(int m_cindex) const
 {
    std::vector<int> neighbors;
-   int counter = m_cindex/(numpoints[0]);
+   //int counter = m_cindex/(numpoints[0]);
 
    if(meshdims ==1 )
    {
       neighbors.push_back(m_cindex);
       neighbors.push_back(m_cindex+1);
    }
+   /*
    else if(meshdims == 2)
    {
       neighbors.push_back(m_cindex+counter);
@@ -276,6 +284,7 @@ std::vector<int> mesh::cneighofp(int m_cindex) const
       neighbors.push_back(m_cindex+numpoints[0]-1+2*numghost+counter);
       neighbors.push_back(m_cindex+numpoints[0]+2*numghost+counter);
    }
+   */
 
    return neighbors;
 }
@@ -286,14 +295,15 @@ std::vector<int> mesh::pneighofc(int m_cindex) const
 {
    int i;
    std::vector<int> neighbors;
-   int counter = m_cindex/(numpoints[0]-1+2*numghost);
- 
+   //int counter = m_cindex/(numpoints[0]-1+2*numghost);
+
    if(meshdims==1)
    {
       neighbors.push_back(m_cindex-1);
       neighbors.push_back(m_cindex);
       if(m_cindex == (numpoints[0]-1+2*numghost))     neighbors[1] = -1; 
    }
+   /*
    else if(meshdims==2)
    {
       neighbors.push_back(m_cindex-(numpoints[0]-1+2*numghost)-counter);
@@ -318,13 +328,14 @@ std::vector<int> mesh::pneighofc(int m_cindex) const
          neighbors[0] = -1;
          neighbors[1] = -1;
       }
-   
+
       if(m_cindex >= (numpoints[0]-1+2*numghost)*(numpoints[1]-2+2*numghost))
       {
          neighbors[2] = -1;
          neighbors[3] = -1;
       }   
    }
+   */
 
    return neighbors;
 }
@@ -334,7 +345,7 @@ std::vector<int> mesh::pneighofc(int m_cindex) const
 std::vector<int> mesh::cneighofc(int m_cindex) const
 {
    std::vector<int> neighbors;
- 
+
    if(meshdims==1)
    {
       neighbors.push_back(m_cindex-1);
@@ -342,6 +353,7 @@ std::vector<int> mesh::cneighofc(int m_cindex) const
 
       if( (m_cindex+1) == (numpoints[0]-1+2*numghost)) neighbors[1] =-1;
    }
+   /*
    else if(meshdims==2)
    {
       neighbors.push_back(m_cindex-1);
@@ -354,6 +366,7 @@ std::vector<int> mesh::cneighofc(int m_cindex) const
       if(m_cindex < (numpoints[0])-1+2*numghost)  neighbors[2] = -1;
       if(m_cindex >= ((numpoints[0]-1+2*numghost)*(numpoints[1]-2+2*numghost))) neighbors[3] = -1;
    }
+   */
 
    return neighbors;
 }
@@ -374,6 +387,7 @@ std::vector<int> mesh::pneighofp(int m_cindex) const
       if(perflag==1 && neighbors[0]==-1 && philoc==1) neighbors[0] = numpoints[0]-2; 
       else if(perflag==1 && neighbors[1]==-1 && philoc==1) neighbors[1] = 1; 
    }
+   /*
    else if(meshdims==2)   //FIX,GS
    { 
       neighbors.push_back(m_cindex-1);
@@ -386,6 +400,7 @@ std::vector<int> mesh::pneighofp(int m_cindex) const
       if(m_cindex != 0 && m_cindex % (numpoints[0]) == 0)  neighbors[0] = -1;
       if((m_cindex+1) % (numpoints[0]) == 0) neighbors[1] =-1;
    }  
+   */
 
    return neighbors;
 }
@@ -414,7 +429,7 @@ std::vector<int> mesh::pneighofp(std::vector<double> m_mesh_shift, int m_neigh,i
    if(m_cindex >= ((numpoints[0])*(numpoints[1]-1))) neighbors[3] = -1;
    if((m_cindex+1) % (numpoints[0]) == 0) neighbors[2] =-1;
    if(m_cindex < numpoints[0])  neighbors[0] = -1;
-  
+
    return neighbors;
 }
 
@@ -424,7 +439,7 @@ std::vector<int> mesh::fneighofc(int m_cindex) const
 {
    std::vector<int> neighbors;
    int counter = m_cindex/(numpoints[0]-1);
- 
+
    neighbors.push_back(m_cindex);
    neighbors.push_back(m_cindex+numpoints[0]);
    neighbors.push_back(m_cindex+numpoints[0]*(numpoints[1]+1)+counter);
@@ -438,7 +453,7 @@ std::vector<int> mesh::fneighofc(int m_cindex) const
 std::vector<int> mesh::cneighoff(int m_cindex) const
 {
    std::vector<int> neighbors;
-   
+
    if(m_cindex < numpoints[0])
    {  
       neighbors.push_back(-1);
@@ -458,7 +473,7 @@ std::vector<int> mesh::cneighoff(int m_cindex) const
    {
       if((m_cindex % numpoints[0])==0)  neighbors.push_back(-1);
       else  neighbors.push_back(m_cindex-numpoints[0]*(numpoints[1]+1));
-     
+
       if(((m_cindex+1) % numpoints[0])==0)  neighbors.push_back(-1);
       else  neighbors.push_back(m_cindex-numpoints[0]*(numpoints[1]+1)-1);
    }
@@ -492,31 +507,31 @@ std::vector<int> mesh::pneighoff(int m_cindex) const
 
 int mesh::nearp(particles const&  m_part, int m_pindex) const
 {
-    int i,j,nearestpoint;
-    double tempdist1, tempdist2;
-    std::vector<double> temp1,temp2;
- 
-    nearestpoint = 8675309;
-    for(i=0;i<meshdims;i++)
-    {  
-       temp1.push_back(m_part.pos[m_pindex*meshdims+i]);
-       temp2.push_back(0.0);
-    }
+   int i,j,nearestpoint;
+   double tempdist1, tempdist2;
+   std::vector<double> temp1,temp2;
 
-    for(i=0;i<(pmesh.size()/meshdims); i++)
-    {
-       for(j=0;j<meshdims;j++) temp2[j] = pmesh[i*meshdims+j];
+   nearestpoint = 8675309;
+   for(i=0;i<meshdims;i++)
+   {  
+      temp1.push_back(m_part.pos[m_pindex*meshdims+i]);
+      temp2.push_back(0.0);
+   }
 
-       tempdist1 = dist(temp1, temp2);
-       //std::cout << tempdist1 << "\t" << tempdist1-hdeltax << "\t";
-       if((tempdist1-hdeltax) < 1.0e-14)
-       {
-          //std::cout << ".....FOUND!.......";
-          nearestpoint = i;
-          break;
-       }
-    }
-    return nearestpoint; 
+   for(i=0;i<(pmesh.size()/meshdims); i++)
+   {
+      for(j=0;j<meshdims;j++) temp2[j] = pmesh[i*meshdims+j];
+
+      tempdist1 = dist(temp1, temp2);
+      //std::cout << tempdist1 << "\t" << tempdist1-hdeltax << "\t";
+      if((tempdist1-hdeltax) < 1.0e-14)
+      {
+         //std::cout << ".....FOUND!.......";
+         nearestpoint = i;
+         break;
+      }
+   }
+   return nearestpoint; 
 }
 
 
@@ -525,26 +540,26 @@ int mesh::nearp(particles const&  m_part, int m_pindex) const
 
 int mesh::nearp1D(particles const&  m_part, int m_pindex) const
 {
-    int i,j,nearestpoint;
-    double tempdist1, tempdist2;
-    double temp1,temp2;
+   int i,j,nearestpoint;
+   double tempdist1, tempdist2;
+   double temp1,temp2;
 
-    temp1 = m_part.pos[m_pindex];
-    nearestpoint = 8675309;
-    
-    for(i=0;i<pmesh.size(); i++)
-    {
-       tempdist1 = dist1D(temp1, pmesh[i]);
-       //std::cout << tempdist1 << "\t" << hdeltax << "\t" << tempdist1-hdeltax << "\t";
+   temp1 = m_part.pos[m_pindex];
+   nearestpoint = 8675309;
 
-       if((tempdist1-hdeltax) < 1.0e-14)
-       {
-          //std::cout << ".....FOUND!.......";
-          nearestpoint = i;
-          break;
-       }
-    }
-    return nearestpoint; 
+   for(i=0;i<pmesh.size(); i++)
+   {
+      tempdist1 = dist1D(temp1, pmesh[i]);
+      //std::cout << tempdist1 << "\t" << hdeltax << "\t" << tempdist1-hdeltax << "\t";
+
+      if((tempdist1-hdeltax) < 1.0e-14)
+      {
+         //std::cout << ".....FOUND!.......";
+         nearestpoint = i;
+         break;
+      }
+   }
+   return nearestpoint; 
 }
 
 
@@ -552,13 +567,13 @@ int mesh::nearp1D(particles const&  m_part, int m_pindex) const
 
 int mesh::nearp1Dnew(particles const&  m_part, int m_pindex) const
 {
-    int i,j,nearestpoint;
-    double temp;
+   int i,j,nearestpoint;
+   double temp;
 
-    temp = (m_part.pos[m_pindex*meshdims]+hdeltax-meshstart[0])/deltax;    //Forced rounding using truncation
-    nearestpoint = temp;
+   temp = (m_part.pos[m_pindex*meshdims]+hdeltax-meshstart[0])/deltax;    //Forced rounding using truncation
+   nearestpoint = temp;
 
-    return nearestpoint; 
+   return nearestpoint; 
 }
 
 
@@ -567,78 +582,79 @@ int mesh::nearp1Dnew(particles const&  m_part, int m_pindex) const
 
 int mesh::nearp(std::vector<double> temp1) const
 {
-    int i,j,nearestpoint;
-    double tempdist1, tempdist2;
-    std::vector<double> temp2;
- 
-    for(i=0;i<meshdims;i++)  temp2.push_back(0.0);
+   int i,j;
+   int nearestpoint = -1;
+   double tempdist1, tempdist2;
+   std::vector<double> temp2;
 
-    for(i=0;i<(pmesh.size()/meshdims); i++)
-    {
-       for(j=0;j<meshdims;j++)  temp2[j] = pmesh[i*meshdims+j];
+   for(i=0;i<meshdims;i++)  temp2.push_back(0.0);
 
-       tempdist1 = dist(temp1, temp2);
-       if((tempdist1-hdeltax) < 1.0e-14)
-       {
-          nearestpoint = i;
-          break;
-       }
-    }
-    return nearestpoint; 
+   for(i=0;i<(pmesh.size()/meshdims); i++)
+   {
+      for(j=0;j<meshdims;j++)  temp2[j] = pmesh[i*meshdims+j];
+
+      tempdist1 = dist(temp1, temp2);
+      if((tempdist1-hdeltax) < 1.0e-14)
+      {
+         nearestpoint = i;
+         break;
+      }
+   }
+   return nearestpoint; 
 }
 
 //..Find nearest cell center to particle..//
 
 int mesh::nearc(particles const& m_part, int m_pindex) const
 {
-    int i,j,nearestcell;
-    double tempdist1, tempdist2;
-    std::vector<double> temp1,temp2;
-    nearestcell = 8675309;
-    
-    for(i=0;i<meshdims;i++)
-    {  
-       temp1.push_back(m_part.pos[m_pindex*meshdims+i]);
-       temp2.push_back(0.0);
-    }
+   int i,j,nearestcell;
+   double tempdist1, tempdist2;
+   std::vector<double> temp1,temp2;
+   nearestcell = 8675309;
 
-    for(i=0;i<(cmesh.size()/meshdims); i++)
-    {
-       for(j=0;j<meshdims;j++) temp2[j] = cmesh[i*meshdims+j];
-       tempdist1 = dist(temp1, temp2);
+   for(i=0;i<meshdims;i++)
+   {  
+      temp1.push_back(m_part.pos[m_pindex*meshdims+i]);
+      temp2.push_back(0.0);
+   }
 
-       if((tempdist1-hdeltax) < 1.0e-14)
-       {
-          nearestcell = i;
-          break;
-       }
-    }
-    return nearestcell; 
+   for(i=0;i<(cmesh.size()/meshdims); i++)
+   {
+      for(j=0;j<meshdims;j++) temp2[j] = cmesh[i*meshdims+j];
+      tempdist1 = dist(temp1, temp2);
+
+      if((tempdist1-hdeltax) < 1.0e-14)
+      {
+         nearestcell = i;
+         break;
+      }
+   }
+   return nearestcell; 
 }
 
 //..Find nearest cell center to particle (1D)..//
 
 int mesh::nearc1D(particles const& m_part, int m_pindex) const
 {
-    int i,j,nearestcell;
-    double tempdist1, tempdist2;
-    double temp1,temp2;
-    
-    temp1 = (m_part.pos[m_pindex]);
-    nearestcell = 8675309;
+   int i,j,nearestcell;
+   double tempdist1, tempdist2;
+   double temp1,temp2;
 
-    for(i=0;i<cmesh.size(); i++)
-    {
-       tempdist1 = dist1D(temp1,cmesh[i]);
-       //std::cout << tempdist1 << "\t" << hdeltax << "\t" << tempdist1-hdeltax << "\t";
-       if((tempdist1-hdeltax) < 1.0e-14)
-       {
-          //std::cout << ".....FOUND!.......";
-          nearestcell = i;
-          break;
-       }
-    }
-    return nearestcell; 
+   temp1 = (m_part.pos[m_pindex]);
+   nearestcell = 8675309;
+
+   for(i=0;i<cmesh.size(); i++)
+   {
+      tempdist1 = dist1D(temp1,cmesh[i]);
+      //std::cout << tempdist1 << "\t" << hdeltax << "\t" << tempdist1-hdeltax << "\t";
+      if((tempdist1-hdeltax) < 1.0e-14)
+      {
+         //std::cout << ".....FOUND!.......";
+         nearestcell = i;
+         break;
+      }
+   }
+   return nearestcell; 
 }
 
 
@@ -646,13 +662,13 @@ int mesh::nearc1D(particles const& m_part, int m_pindex) const
 
 int mesh::nearc1Dnew(particles const& m_part, int m_pindex) const         //DC
 {
-    int i,j,nearestcell;
-    double temp;
+   int i,j,nearestcell;
+   double temp;
 
-    temp = (m_part.pos[m_pindex*meshdims]+deltax-meshstart[0])/deltax;    //Forced rounding using truncation
-    nearestcell = temp;
+   temp = (m_part.pos[m_pindex*meshdims]+deltax-meshstart[0])/deltax;    //Forced rounding using truncation
+   nearestcell = temp;
 
-    return nearestcell; 
+   return nearestcell; 
 }
 
 
@@ -662,24 +678,25 @@ int mesh::nearc1Dnew(particles const& m_part, int m_pindex) const         //DC
 
 int mesh::nearc(std::vector<double> temp1) const
 {
-    int i,j,nearestcell;
-    double tempdist1;
-    std::vector<double> temp2;
-    
-    for(i=0;i<meshdims;i++)  temp2.push_back(0.0);
+   int i,j;
+   int nearestcell = -1;
+   double tempdist1;
+   std::vector<double> temp2;
 
-    for(i=0;i<(cmesh.size()/meshdims); i++)
-    {
-       for(j=0;j<meshdims;j++) temp2[j] = cmesh[i*meshdims+j];
+   for(i=0;i<meshdims;i++)  temp2.push_back(0.0);
 
-       tempdist1 = dist(temp1, temp2);
-       if((tempdist1-hdeltax) < 1.0e-14)
-       {
-          nearestcell = i;
-          break;
-       }
-    }
-    return nearestcell; 
+   for(i=0;i<(cmesh.size()/meshdims); i++)
+   {
+      for(j=0;j<meshdims;j++) temp2[j] = cmesh[i*meshdims+j];
+
+      tempdist1 = dist(temp1, temp2);
+      if((tempdist1-hdeltax) < 1.0e-14)
+      {
+         nearestcell = i;
+         break;
+      }
+   }
+   return nearestcell; 
 }
 
 
@@ -687,35 +704,36 @@ int mesh::nearc(std::vector<double> temp1) const
 
 int mesh::nearf(particles const& m_part, int m_pindex) const
 {
-    int i,j,nearestcell;
-    double tempdist1, tempdist2;
-    std::vector<double> temp1,temp2;
-   
-    tempdist1 = 1E10;
-    tempdist2 = 1E10;
- 
-    for(i=0;i<meshdims;i++)
-    {  
-       temp1.push_back(m_part.pos[m_pindex*meshdims+i]);
-       temp2.push_back(0);
-    }
+   int i,j;
+   int nearestcell = -1;
+   double tempdist1, tempdist2;
+   std::vector<double> temp1,temp2;
 
-    for(i=0;i<(fmesh.size()/meshdims); i++)
-    {
-       for(j=0;j<meshdims;j++)
-       {
-          temp2[j] = fmesh[i*meshdims+j];
-       }
+   //tempdist1 = 1E10;
+   tempdist2 = 1E10;
 
-       tempdist1 = dist(temp1, temp2);
+   for(i=0;i<meshdims;i++)
+   {  
+      temp1.push_back(m_part.pos[m_pindex*meshdims+i]);
+      temp2.push_back(0);
+   }
 
-       if(tempdist1<tempdist2)
-       {
-          tempdist2 = tempdist1;
-          nearestcell = i;
-       }
-    }
-    return nearestcell; 
+   for(i=0;i<(fmesh.size()/meshdims); i++)
+   {
+      for(j=0;j<meshdims;j++)
+      {
+         temp2[j] = fmesh[i*meshdims+j];
+      }
+
+      tempdist1 = dist(temp1, temp2);
+
+      if(tempdist1<tempdist2)
+      {
+         tempdist2 = tempdist1;
+         nearestcell = i;
+      }
+   }
+   return nearestcell; 
 }
 
 //..Distance between two points..//
@@ -740,21 +758,21 @@ double mesh::dist1D(double m_pt1,double m_pt2) const
 //..Cell volume..//
 
 /*double mesh::cellvolume(int m_cindex) const 
-{
-   int i;
-   std::vector<int> neighbors;
-   double volume; 
-   volume = 1.0;    
+  {
+  int i;
+  std::vector<int> neighbors;
+  double volume; 
+  volume = 1.0;    
 
-   for(i=0;i<2*meshdims; i++) neighbors.push_back(0);
+  for(i=0;i<2*meshdims; i++) neighbors.push_back(0);
 
-   //neighbors = pneighofc(m_cindex);
-   for(i=0;i<2*meshdims;i++) neighbors[i] = pofcneigh[2*m_cindex+i];   
-   
-   if (meshdims==1) volume = (pmesh[neighbors[0]]-pmesh[neighbors[1]])*area[m_cindex];
-   else if(meshdims==2) volume = squarearea(pmesh[meshdims*neighbors[0]],pmesh[meshdims*neighbors[0]+1],pmesh[meshdims*neighbors[3]],pmesh[meshdims*neighbors[3]+1]);
-   
-   return fabs(volume);
+//neighbors = pneighofc(m_cindex);
+for(i=0;i<2*meshdims;i++) neighbors[i] = pofcneigh[2*m_cindex+i];   
+
+if (meshdims==1) volume = (pmesh[neighbors[0]]-pmesh[neighbors[1]])*area[m_cindex];
+else if(meshdims==2) volume = squarearea(pmesh[meshdims*neighbors[0]],pmesh[meshdims*neighbors[0]+1],pmesh[meshdims*neighbors[3]],pmesh[meshdims*neighbors[3]+1]);
+
+return fabs(volume);
 }*/
 
 
@@ -769,22 +787,22 @@ double mesh::cellvolume(int m_cindex) const
 //..Volume around point(corner point)..//
 
 /*double mesh::pointvolume(int m_pindex) const 
-{
-   int i;
-   std::vector<int> neighbors;
-   double volume; 
-   volume = 1.0;    
+  {
+  int i;
+  std::vector<int> neighbors;
+  double volume; 
+  volume = 1.0;    
 
 
-   for(i=0;i<2*meshdims; i++) neighbors.push_back(0);
+  for(i=0;i<2*meshdims; i++) neighbors.push_back(0);
 
-   //neighbors = cneighofp(m_pindex);
-   for(i=0;i<2*meshdims;i++) neighbors[i] = cofpneigh[2*m_pindex+i];   
+//neighbors = cneighofp(m_pindex);
+for(i=0;i<2*meshdims;i++) neighbors[i] = cofpneigh[2*m_pindex+i];   
 
-   if (meshdims==1) volume = (cmesh[neighbors[0]]-cmesh[neighbors[1]])*0.5*(area[neighbors[0]]+area[neighbors[1]]);
-   else if (meshdims == 2) volume = squarearea(cmesh[meshdims*neighbors[0]],cmesh[meshdims*neighbors[0]+1],cmesh[meshdims*neighbors[3]],cmesh[meshdims*neighbors[3]+1]);
-   
-   return fabs(volume);
+if (meshdims==1) volume = (cmesh[neighbors[0]]-cmesh[neighbors[1]])*0.5*(area[neighbors[0]]+area[neighbors[1]]);
+else if (meshdims == 2) volume = squarearea(cmesh[meshdims*neighbors[0]],cmesh[meshdims*neighbors[0]+1],cmesh[meshdims*neighbors[3]],cmesh[meshdims*neighbors[3]+1]);
+
+return fabs(volume);
 }*/
 
 
@@ -803,7 +821,7 @@ double mesh::squarearea(double x1,double y1,double x2,double y2) const
    double area; 
 
    area = (x2-x1)*(y2-y1);
-   
+
    return fabs(area);
 }
 
@@ -818,9 +836,9 @@ double mesh::facearea(int m_cindex) const
    for(i=0;i<meshdims; i++) neighbors.push_back(0);
 
    neighbors = pneighoff(m_cindex);
-   
+
    area  = pmesh[meshdims*neighbors[1]]-pmesh[meshdims*neighbors[0]];
-   
+
    return area;
 }
 
@@ -851,7 +869,7 @@ std::vector<double> mesh::pt_lineweight(double px,int pindex) const
 
    lineweight.push_back(fabs((px-hdeltax)-pmesh[pindex]));
    lineweight.push_back(fabs((px+hdeltax)-pmesh[pindex]));
-   
+
    return lineweight;
 }
 
@@ -883,7 +901,7 @@ std::vector<double> mesh::pt2part_lineweight(double px,std::vector<int> pindex) 
    lineweight.push_back((deltax-fabs(px-pmesh[pindex[0]]))/deltax);
    //lineweight.push_back((deltax-fabs(px-pmesh[pindex[1]]))/dx);
    lineweight.push_back(1.0-lineweight[0]);
-   
+
    return lineweight;
 }
 
@@ -926,7 +944,7 @@ std::vector<double> mesh::cell_lineweight(double px,int pindex) const
 
    lineweight.push_back(fabs((px-dx)-cmesh[pindex]));
    lineweight.push_back(fabs((px+dx)-cmesh[pindex]));
-   
+
    return lineweight;
 }
 
@@ -942,7 +960,7 @@ std::vector<double> mesh::cell2part_lineweight(double px,std::vector<int> pindex
 
    lineweight.push_back((dx-fabs(px-cmesh[pindex[0]]))/dx);
    lineweight.push_back((dx-fabs(px-cmesh[pindex[1]]))/dx);
-   
+
    return lineweight;
 }
 
@@ -1023,7 +1041,7 @@ double mesh::extrascal_p2c(std::vector<double> s_scal, int s_index)
 {
    int i,j;
    std::vector<int> s_neighbors;
-   double s_scalreturn;
+   double s_scalreturn = 0;
 
    for(i=0;i<(meshdims*meshdims);i++) s_neighbors.push_back(0.0);
 
@@ -1046,27 +1064,27 @@ void mesh::initconnectpartandmesh(particles & m_part)
 
    if(meshdims==1)
    {
-     for(i=0;i<m_part.pos.size()/meshdims;i++)//  m_part.cell.push_back(nearc(m_part,i)); 
-     {  
-       m_part.cell.push_back(nearc1Dnew(m_part,i)); 
-       //std::cout << i << "Cell: \t" << m_part.pos.size()/meshdims << "\t" << m_part.pos[i] << "\t" << m_part.cell[i-1] << "\t" << nearc(m_part,i) << std::endl;
-     //}
-     //for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.pt.push_back(nearp(m_part,i));
-       m_part.pt.push_back(nearp1Dnew(m_part,i));
-       //std::cout << i << "Point: \t" << m_part.pos[i] << "\t" << m_part.pt[i] << "\t" << nearp(m_part,i) << std::endl;
-       //wrtfile << i << "\t" << m_part.cell[i] << "\t" << m_part.pt[i] << std::endl;
-     }
+      for(i=0;i<m_part.pos.size()/meshdims;i++)//  m_part.cell.push_back(nearc(m_part,i)); 
+      {  
+         m_part.cell.push_back(nearc1Dnew(m_part,i)); 
+         //std::cout << i << "Cell: \t" << m_part.pos.size()/meshdims << "\t" << m_part.pos[i] << "\t" << m_part.cell[i-1] << "\t" << nearc(m_part,i) << std::endl;
+         //}
+         //for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.pt.push_back(nearp(m_part,i));
+         m_part.pt.push_back(nearp1Dnew(m_part,i));
+         //std::cout << i << "Point: \t" << m_part.pos[i] << "\t" << m_part.pt[i] << "\t" << nearp(m_part,i) << std::endl;
+         //wrtfile << i << "\t" << m_part.cell[i] << "\t" << m_part.pt[i] << std::endl;
    }
-   else
-   {
-     for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.cell.push_back(nearc(m_part,i)); 
-     for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.pt.push_back(nearp(m_part,i));
-   }
+}
+else
+{
+   for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.cell.push_back(nearc(m_part,i)); 
+   for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.pt.push_back(nearp(m_part,i));
+}
 
-   //for(i=0;i<m_part.cell.size();i++) std::cout << m_part.cell[i] << std::endl; 
-   //for(i=0;i<m_part.pt.size();i++) std::cout << m_part.pt[i] << std::endl;
-   //std::cout << "x";
-   wrtfile.close();
+//for(i=0;i<m_part.cell.size();i++) std::cout << m_part.cell[i] << std::endl; 
+//for(i=0;i<m_part.pt.size();i++) std::cout << m_part.pt[i] << std::endl;
+//std::cout << "x";
+wrtfile.close();
 }
 
 //..Connect particles and mesh..//
@@ -1079,23 +1097,23 @@ void mesh::connectpartandmesh(particles & m_part)
 
    if(meshdims==1)
    {
-     //#pragma omp parallel  //OMP
-     //{
-       //#pragma omp for schedule(static)  //OMP
-       for(i=0;i<m_part.pos.size()/meshdims;i++)  m_part.cell[i] = nearc1Dnew(m_part,i); 
-       //#pragma omp for schedule(static)  //OMP
-       for(i=0;i<m_part.pos.size()/meshdims;i++)  m_part.pt[i] = nearp1Dnew(m_part,i);
-     //}
+      //#pragma omp parallel  //OMP
+      //{
+      //#pragma omp for schedule(static)  //OMP
+      for(i=0;i<m_part.pos.size()/meshdims;i++)  m_part.cell[i] = nearc1Dnew(m_part,i); 
+      //#pragma omp for schedule(static)  //OMP
+      for(i=0;i<m_part.pos.size()/meshdims;i++)  m_part.pt[i] = nearp1Dnew(m_part,i);
+      //}
    }
    else
    {
-     //#pragma omp parallel  //OMP
-     //{
-       //#pragma omp for schedule(static)  //OMP
-       for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.cell[i] = nearc(m_part,i); 
-       //#pragma omp for schedule(static)  //OMP
-       for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.pt[i] = nearp(m_part,i);
-     //}
+      //#pragma omp parallel  //OMP
+      //{
+      //#pragma omp for schedule(static)  //OMP
+      for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.cell[i] = nearc(m_part,i); 
+      //#pragma omp for schedule(static)  //OMP
+      for(i=0;i<m_part.pos.size()/meshdims;i++) m_part.pt[i] = nearp(m_part,i);
+      //}
    }
 
    //for(i=0;i<m_part.cell.size();i++) std::cout << m_part.cell[i] << std::endl; 
@@ -1122,52 +1140,52 @@ void mesh::mesharea(fields m_EM)
 
    if(Bloc==0)
    {
-     if(q1dflag==0)
-     {
-       for(i=0;i<pmesh.size();i++)  parea.push_back(areain);
-       for(i=0;i<cmesh.size();i++)  carea.push_back(areain);
-       //for(i=0;i<pmesh.size();i++)  prarea.push_back(areain);
-       //for(i=0;i<cmesh.size();i++)  crarea.push_back(areain);
-       //for(i=0;i<cmesh.size();i++)  area.push_back(fabs(m_EM.B[0]*areain/m_EM.B[vecdims*i]));
-       //for(i=0;i<cmesh.size();i++)  area.push_back(fabs(m_EM.B[0]*areain/m_EM.B[vecdims*i]));
-     }
-     else if(q1dflag==1)
-     {
-       #if SIMTYPE==1
+      if(q1dflag==0)
+      {
+         for(i=0;i<pmesh.size();i++)  parea.push_back(areain);
+         for(i=0;i<cmesh.size();i++)  carea.push_back(areain);
+         //for(i=0;i<pmesh.size();i++)  prarea.push_back(areain);
+         //for(i=0;i<cmesh.size();i++)  crarea.push_back(areain);
+         //for(i=0;i<cmesh.size();i++)  area.push_back(fabs(m_EM.B[0]*areain/m_EM.B[vecdims*i]));
+         //for(i=0;i<cmesh.size();i++)  area.push_back(fabs(m_EM.B[0]*areain/m_EM.B[vecdims*i]));
+      }
+      else if(q1dflag==1)
+      {
+#if SIMTYPE==1
          for(i=0;i<cmesh.size();i++)  carea.push_back(areain);  //..MB check
          for(i=0;i<pmesh.size();i++)  parea.push_back(areain);  //..MB check
-       #else
+#else
          for(i=0;i<cmesh.size();i++)  carea.push_back(fabs(m_EM.B[0]*areain/m_EM.B[vecdims*i]));
          for(i=0;i<pmesh.size();i++)  parea.push_back(0.5*(carea[i]+carea[i+1]));
-       #endif
-       /*for(i=0;i<cmesh.size();i++) 
-       {
-         r_area = 2.0*pi*sqrt(area[i]/pi)*deltax;
-         rarea.push_back(r_area);
-       }*/
-     }
+#endif
+         /*for(i=0;i<cmesh.size();i++) 
+           {
+           r_area = 2.0*pi*sqrt(area[i]/pi)*deltax;
+           rarea.push_back(r_area);
+           }*/
+      }
    }
    else if(Bloc==1)
    {
-     if(q1dflag==0)
-     {
-       for(i=0;i<cmesh.size();i++)  carea.push_back(areain);
-       for(i=0;i<pmesh.size();i++)  parea.push_back(areain);
-       //for(i=0;i<pmesh.size();i++)  rarea.push_back(areain);
-     }
-     else if(q1dflag==1)
-     {
-       for(i=0;i<(pmesh.size());i++)  parea.push_back(fabs(m_EM.B[0]*areain/(m_EM.B[vecdims*i])));
+      if(q1dflag==0)
+      {
+         for(i=0;i<cmesh.size();i++)  carea.push_back(areain);
+         for(i=0;i<pmesh.size();i++)  parea.push_back(areain);
+         //for(i=0;i<pmesh.size();i++)  rarea.push_back(areain);
+      }
+      else if(q1dflag==1)
+      {
+         for(i=0;i<(pmesh.size());i++)  parea.push_back(fabs(m_EM.B[0]*areain/(m_EM.B[vecdims*i])));
 
-       carea.push_back(areain);
-       for(i=0;i<(cmesh.size()-2);i++)  carea.push_back(0.5*(parea[i]+parea[i+1]));
-       carea.push_back(parea[pmesh.size()-2]);
-       /*for(i=0;i<pmesh.size();i++) 
-       {
-         r_area = 2.0*pi*sqrt(area[i]/pi)*deltax;
-         rarea.push_back(r_area);
-       }*/
-     }
+         carea.push_back(areain);
+         for(i=0;i<(cmesh.size()-2);i++)  carea.push_back(0.5*(parea[i]+parea[i+1]));
+         carea.push_back(parea[pmesh.size()-2]);
+         /*for(i=0;i<pmesh.size();i++) 
+           {
+           r_area = 2.0*pi*sqrt(area[i]/pi)*deltax;
+           rarea.push_back(r_area);
+           }*/
+      }
    }
 
    //std::cout << std::endl << std::endl << "Area:   ";
@@ -1180,40 +1198,40 @@ void mesh::mesharea(fields m_EM)
 
 void mesh::meshPointNeighbors(std::vector<int> & m_pofpneigh, std::vector<int> & m_cofpneigh)
 {
-  int i,j;
-  std::vector<int> neighbors;
+   int i,j;
+   std::vector<int> neighbors;
 
-  for(i=0;i<2*meshdims;i++) neighbors.push_back(0);
+   for(i=0;i<2*meshdims;i++) neighbors.push_back(0);
 
-  for(i=0;i<pmesh.size();i++)  
-  {
-    neighbors = pneighofp(i);
-    for(j=0;j<neighbors.size();j++)   pofpneigh.push_back(neighbors[j]);
+   for(i=0;i<pmesh.size();i++)  
+   {
+      neighbors = pneighofp(i);
+      for(j=0;j<neighbors.size();j++)   pofpneigh.push_back(neighbors[j]);
 
-    neighbors = cneighofp(i);
-    for(j=0;j<neighbors.size();j++)   cofpneigh.push_back(neighbors[j]);
-  }
- 
-  //for(i=0;i<pofpneigh.size();i++) std::cout << pofpneigh[i] << "\t";
+      neighbors = cneighofp(i);
+      for(j=0;j<neighbors.size();j++)   cofpneigh.push_back(neighbors[j]);
+   }
+
+   //for(i=0;i<pofpneigh.size();i++) std::cout << pofpneigh[i] << "\t";
 
 }
 
 //....Create array of neighbors to cell centers......//
- 
+
 void mesh::meshCenterNeighbors(std::vector<int> & m_cofcneigh, std::vector<int> & m_pofcneigh)
 {
-  int i,j;
-  std::vector<int> neighbors;
+   int i,j;
+   std::vector<int> neighbors;
 
-  for(i=0;i<2*meshdims;i++) neighbors.push_back(0);
+   for(i=0;i<2*meshdims;i++) neighbors.push_back(0);
 
-  for(i=0;i<cmesh.size();i++)  
-  {
-    neighbors = cneighofc(i);
-    for(j=0;j<neighbors.size();j++)   m_cofcneigh.push_back(neighbors[j]);
+   for(i=0;i<cmesh.size();i++)  
+   {
+      neighbors = cneighofc(i);
+      for(j=0;j<neighbors.size();j++)   m_cofcneigh.push_back(neighbors[j]);
 
-    neighbors = pneighofc(i);
-    for(j=0;j<neighbors.size();j++)   m_pofcneigh.push_back(neighbors[j]);
-  }
+      neighbors = pneighofc(i);
+      for(j=0;j<neighbors.size();j++)   m_pofcneigh.push_back(neighbors[j]);
+   }
 
 }

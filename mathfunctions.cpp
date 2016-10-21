@@ -176,7 +176,7 @@ double mathFunctions::erfinv(double x)
    term3 = 2.0/(pi*a)+log(1-x*x)/2.0;
    
    if(x >= 0.0)   value = sqrt( sqrt(term1*term1-term2)-term3);
-   else if(x < 0.0)   value = -1.0*sqrt( sqrt(term1*term1-term2)-term3);
+   else value = -1.0*sqrt( sqrt(term1*term1-term2)-term3);
 
    return value;
 }
