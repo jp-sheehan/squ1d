@@ -21,3 +21,4 @@
 *.json
 reports/
 results/
+makefile_*
