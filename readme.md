@@ -105,6 +105,11 @@ To compile SQu1D on [Flux][flux-homepage], the folowing modules need to be loade
 2.  intel/16.0.3
 3.  openmpi/1.10.2/intel/16.0.3
 4.  mkl/11.3.3
+Compile SQu1D using on a computer node, not a log in node.  To do this most simply,
+run  an interactive job.
+```sh
+qsub -I -V -A <allocation> -q <queue> -l nodes=1:ppn=1,pmem=1gb,walltime=1:00:00,qos=flux
+```
 Use the makefile_FLUX makefile.
 
 ### 3.5. Type the command: `make -f \name of makefile`
