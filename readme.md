@@ -10,6 +10,7 @@
 4. [Input Files](#input)
 5. [Running](#running)
 6. [References](#references)
+7. [Supercomputing Commands](#commands)
 
 ---
 
@@ -108,7 +109,7 @@ To compile SQu1D on [Flux][flux-homepage], the following modules need to be load
 Compile SQu1D using on a compute node, not a log in node.  To do this most simply,
 run  an interactive job.
 ```sh
-qsub -I -V -A <allocation> -q <queue> -l nodes=1:ppn=1,pmem=1gb,walltime=1:00:00,qos=flux
+qsub -I -V -A allocation-name -q queue-name -l nodes=1:ppn=1,pmem=1gb,walltime=1:00:00,qos=flux
 ```
 Use the makefile_FLUX makefile.
 
@@ -216,11 +217,72 @@ The following modules are required to run the binary:
 3.  mkl/11.3.3
 
 
+
 <a name="references"></a>
 ## 6. References
 
 1. F. H. Ebersohn, J. P. Sheehan, A. D. Gallimore, and J. V. Shebalin, “Quasi-one-dimensional particle-in-cell simulation of magnetic nozzles,” in International Electric Propulsion Conference, 2015, pp. IEPC–2015–357. [pdf][IEPC-2015-357]
 2. F. H. Ebersohn, “Kinetic Method for Quasi-One-Dimensional Simulation of Magnetic Nozzle Plasmadynamics,” University of Michigan, 2016. [pdf][ebersohn-dissertation]
+
+<a name="commands"></a>
+## Appendix A: Supercomputer Commands
+
+### A.1. Flux
+
+#### A.1.1. Login
+*  UMich network login: `ssh uniqname@login.itd.umich.edu`
+*  Flux login: `ssh uniqname@flux-login.engin.umich.edu`
+
+#### A.1.2. File Transfer
+*  Upload file: `scp localfile login@flux-xfer.engin.umich.edu:remotefile`
+*  Upload directory: `scp -r localdir login@flux-xfer.engin.umich.edu:remotedir`
+*  Download file: `scp login@flux-login.engin.umich.edu:remotefile localfile`
+
+#### A.1.3. Modules
+*  Show loaded modules: `module list`
+*  Show available modules: `module av`
+*  Load a module: `module load module-name`
+*  Unload a module: `module unload module-name`
+
+#### A.1.4. Jobs
+*  Submit a job: `qsub hpc/runPIC_flux.pbs`
+*  Get the status of a job: `qstat job-id`
+*  Delete a job: `qdel job-id`
+*  Delete all of your own jobs: `cancel-my-jobs`
+*  Interactive job: `qsub -I -V -A allocation-name -q queue-name -l nodes=1:ppn=1,pmem=1gb,walltime=1:00:00,qos=flux`
+
+#### A.1.5. Queues and Allocations
+*  Show your usage: `showq -r -u $USER`
+*  Show jobs and queue for allocation: `showq -w acct=allocation-name`
+*  Show your user information: `mdiag -u $USER`
+*  `my_flux_info`
+*  Allocation availability: `freealloc allocation-name`
+*  Diagnose allocation: `mdiag -a allocation-name`
+
+
+### A.2. Stampede
+
+#### A.2.1. Login
+*  Stampede login: `ssh username@stampede.tacc.utexas.edu`
+
+#### A.2.2. File Transfer
+*  Upload file: `scp filename username@stampede.tacc.utexas.edu:/path/to/project/directory`
+
+#### A.2.3. Modules
+*  Show loaded modules: `module list`
+*  Show available modules: `module av`
+*  Load a module: `module load module-name`
+*  Unload a module: `module unload module-name`
+
+#### A.2.4. Jobs
+*  Submit a job: `sbatch hpc/runPIC_stampede`
+
+#### A.2.5. Queues and Alloations
+*  Show your usage: `showq -u $USER`
+*  Show your usage: `squeue -u $USER`
+
+
+
 
 
 [IEPC-2015-357]:                   http://pepl.engin.umich.edu/pdf/IEPC-2015-357.pdf
