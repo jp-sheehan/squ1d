@@ -209,13 +209,20 @@ code. For simulations which utilize species specific cross section data the fold
 
 ### 6.1. Flux
 To run SQu1D from a batch script on [Flux][flux-homepage], use a [Torque][flux-torque] PBS file.
-An example as been provided in
-runPIC_flux_default.pbs.  Be sure to change the default information.
+An example has been provided in
+hpc/runPIC_flux_default.pbs.  Be sure to change the default information.
 The following modules are required to run the binary:
+
 1.  intel/16.0.3
 2.  openmpi/1.10.2/intel/16.0.3
 3.  mkl/11.3.3
 
+### 6.2. Stampede
+To run SQu1D from a batch script on [Stampede][stampede-xsede], use a Slurm file.
+An example has been provided in hpc/ruPIC_stampede_default.  Be sure to change
+the default information.  The following modules are required to run the binary:
+
+1.  cxx11
 
 
 <a name="references"></a>
