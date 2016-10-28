@@ -100,17 +100,29 @@ computer.
 
 #### 3.4.1 Flux
 
-To compile SQu1D on [Flux][flux-homepage], the folowing modules need to be loaded, in order:
+To compile SQu1D on [Flux][flux-homepage], the following modules need to be loaded, in order:
 1.  gcc/4.8.5
 2.  intel/16.0.3
 3.  openmpi/1.10.2/intel/16.0.3
 4.  mkl/11.3.3
-Compile SQu1D using on a computer node, not a log in node.  To do this most simply,
+Compile SQu1D using on a compute node, not a log in node.  To do this most simply,
 run  an interactive job.
 ```sh
 qsub -I -V -A <allocation> -q <queue> -l nodes=1:ppn=1,pmem=1gb,walltime=1:00:00,qos=flux
 ```
 Use the makefile_FLUX makefile.
+
+#### 3.4.2 Stampede
+
+To compile SQu1D on [Stampede][stampede-xsede], the following modules need to be loaded:
+1.  cxx11
+Compile SQu1D using a compute node, not a log in node.  To do this most simply,
+run an interactive job.
+```sh
+idev -m 15
+```
+The -m argument is the number of minutes for the job.
+Use the makefile_STAMPEDE makefile
 
 ### 3.5. Type the command: `make -f \name of makefile`
 
@@ -221,3 +233,4 @@ The following modules are required to run the binary:
 [gifview]:                         http://manpages.ubuntu.com/manpages/wily/man1/gifview.1.html
 [flux-homepage]:                   http://arc-ts.umich.edu/systems-and-services/flux/
 [flux-torque]:                     http://arc-ts.umich.edu/flux-user-guide/
+[stampede-xsede]:                  https://portal.xsede.org/tacc-stampede
