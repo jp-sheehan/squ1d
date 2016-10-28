@@ -8,6 +8,9 @@
 !SolverInput_default.inp
 .pbs
 !runPIC_flux_default.pbs
+hpc/*
+!hpc/runPIC_flux_default.pbs
+!hpc/runPIC_stampede_default
 *.o
 *.out
 *.exe
@@ -22,3 +25,4 @@
 reports/
 results/
 makefile_*
+*.o*[0-9]

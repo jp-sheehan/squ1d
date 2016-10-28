@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH -J squ1d           # job name
+#SBATCH -o squ1d.o%j       # output and error file name (%j expands to jobID)
+#SBATCH -n 32              # total number of mpi tasks requested
+#SBATCH -p normal          # queue (partition) -- normal, development, etc. (https://portal.xsede.org/tacc-stampede#running-table1)
+#SBATCH -t 01:30:00        # run time (hh:mm:ss) - 1.5 hours
+#SBATCH --mail-user=username@tacc.utexas.edu
+#SBATCH --mail-type=begin  # email me when the job starts
+#SBATCH --mail-type=end    # email me when the job finishes
+
+module load cxx11
+ibrun mpirun -n 32 ./PIC.exe            # run the MPI executable named a.out
