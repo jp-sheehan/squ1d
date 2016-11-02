@@ -283,6 +283,7 @@ the default information.  The following modules are required to run the binary:
 
 #### A.2.4. Jobs
 *  Submit a job: `sbatch hpc/runPIC_stampede`
+*  Monitor jobs: `watch -n 10 squeue -u $USER`
 *  Cancel a job: `scancel jobid`
 
 #### A.2.5. Queues and Alloations
