@@ -20,7 +20,7 @@ clean:
 	rm *.o *.exe 
 
 cleandat: 
-	rm *.dat *.out *.gif *.png *.jpg
+	rm *.dat *.out squ1d.o*
 
 cleanjunk:
 	rm *~ .*~ .*.swp .*.swo
