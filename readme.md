@@ -293,7 +293,8 @@ the default information.  The following modules are required to run the binary:
 
 
 
-
+[mpich2]:                          http://www.mpich.org/
+[lapack]:                          http://www.netlib.org/lapack/
 [IEPC-2015-357]:                   http://pepl.engin.umich.edu/pdf/IEPC-2015-357.pdf
 [ebersohn-dissertation]:           http://pepl.engin.umich.edu/pdf/2016_Ebersohn_Thesis.pdf
 [intel-libs]:                      https://software.intel.com/en-us/qualify-for-free-software/academicresearcher
