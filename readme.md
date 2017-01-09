@@ -27,7 +27,8 @@ fully kinetic approach. The code is a variant of Particle-In-Cell (PIC) techniqu
 ## 2. Installing
 
 SQu1D requires Message Passing Interface (MPI) and linear algebra libraries.
-It is preferrable to use the [Intel Performance Libraries][intel-libs], which is
+It is preferrable to use the [Intel Performance Libraries][intel-libs]
+Math Kernel Libray and MPI Library, which are
 free for academic research.  These libraries give SQu1D the best perforamnce.
 Download and install the MPI and MKL libraries.
 
