@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# usage: animate.sh parameter1 [parameter2 ...] [-d dir] [-i ion] [-p program]
+#     parameter1, parameter2, etc.: ne, ni, Te, Ti, Phi, B, etc.
+#     dir: directory of the data files (default: current)
+#     ion: name of ion species for file name (default: from SolverInput.inp)
+#     program: name of plotting program (default: gnuplot)
+
 # defaults
 program="gnuplot"
 dir="./"
@@ -21,7 +27,7 @@ while getopts ":d:i:p:" opt; do
          fi
          ;;
       i)
-         # set the ion specie
+         # set the ion species
          ionspec=$OPTARG
          ;;
       p)
@@ -54,6 +60,7 @@ if [ $program == "gnuplot" ]
 then
    script="~/squ1d/scripts/animateplasma.gp"
 fi
+echo $number
 
 for p in "${parameters[@]}"; do
    #script="./plot/${program}_${p}.gp"

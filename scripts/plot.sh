@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# usage: plot.sh parameter1 [parameter2 ...] [-d dir] [-i ion] [-p program] [-n dataset]
+#     parameter1, parameter2, etc.: ne, ni, Te, Ti, Phi, B, etc.
+#     dir: directory of the data files (default: current)
+#     ion: name of ion species for file name (default: from SolverInput.inp)
+#     program: name of plotting program (default: gnuplot)
+#     dataset: number of data set to be plotted (default: last)
+
 # defaults
 program="gnuplot"
 dir="./"
@@ -22,7 +29,7 @@ while getopts ":d:i:p:n:" opt; do
          fi
          ;;
       i)
-         # set the ion specie
+         # set the ion species
          ionspec=$OPTARG
          ;;
       p)
@@ -66,6 +73,7 @@ for p in "${parameters[@]}"; do
    #script="./plot/${program}_${p}.gp"
    vars="fnum=$number; param='$p'; dir='$dir'; loc='$loc'; ionspec='$ionspec'"
    cmd="$program -e \"$vars\" $script"
+   echo $cmd
    eval $cmd #run script in this terminal
    # gnome-terminal -e sh $script #run script from new terminal (to have multiple windows)
 done
