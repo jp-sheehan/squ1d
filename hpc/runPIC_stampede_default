@@ -9,4 +9,6 @@
 #SBATCH --mail-type=end    # email me when the job finishes
 
 module load cxx11
-ibrun mpirun -n 32 ./PIC.exe            # run the MPI executable named a.out
+ibrun ./PIC.exe            # run the MPI executable named a.out
+                           # don't use mpiexec/mpirun
+

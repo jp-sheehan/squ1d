@@ -87,7 +87,7 @@ def printreport():
     else:
         es = "s"
 
-    printline = str(err.count) + " error" + es + ',' + \
+    printline = str(err.count) + " error" + es + ', ' + \
             str(warn.count) +  " warning" + ws
     print(printline)
 

@@ -27,7 +27,8 @@ fully kinetic approach. The code is a variant of Particle-In-Cell (PIC) techniqu
 ## 2. Installing
 
 SQu1D requires Message Passing Interface (MPI) and linear algebra libraries.
-It is preferrable to use the [Intel Performance Libraries][intel-libs], which is
+It is preferrable to use the [Intel Performance Libraries][intel-libs]
+Math Kernel Libray and MPI Library, which are
 free for academic research.  These libraries give SQu1D the best perforamnce.
 Download and install the MPI and MKL libraries.
 
@@ -283,6 +284,8 @@ the default information.  The following modules are required to run the binary:
 
 #### A.2.4. Jobs
 *  Submit a job: `sbatch hpc/runPIC_stampede`
+*  Monitor jobs: `watch -n 10 squeue -u $USER`
+*  Cancel a job: `scancel jobid`
 
 #### A.2.5. Queues and Alloations
 *  Show your usage: `showq -u $USER`
@@ -291,7 +294,8 @@ the default information.  The following modules are required to run the binary:
 
 
 
-
+[mpich2]:                          http://www.mpich.org/
+[lapack]:                          http://www.netlib.org/lapack/
 [IEPC-2015-357]:                   http://pepl.engin.umich.edu/pdf/IEPC-2015-357.pdf
 [ebersohn-dissertation]:           http://pepl.engin.umich.edu/pdf/2016_Ebersohn_Thesis.pdf
 [intel-libs]:                      https://software.intel.com/en-us/qualify-for-free-software/academicresearcher
