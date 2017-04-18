@@ -40,3 +40,72 @@ See note: Academic Research Performance Libraries from Intel
 1. [TecPlot](http://www.tecplot.com/)
 2. [GnuPlot](http://www.gnuplot.info/)
 
+## Execution
+
+1. Execution folder must contain:
+	1. PIC.exe
+	2. Cross section folder
+	3. SolverType.inp
+	4. SolverInput.inp
+2. Run `./PIC.exe`
+
+## Output files
+
+(****: species name; #: number)
+
+### ****Output_cField#.dat and ****Output_pField#.dat
+ 
+* Gives values of cell centered and edge values of parameters
+* position (2D), density, velocity (3D), temperature (3D), energy (1D), electric field (3D), magnetic field (3D), heat flux (I think?) (3D)
+
+### ****Particles#.dat
+ 
+* Gives values of individual particles
+* Position (2D), velocity (3D), energy
+* Provides some parameters of the simulation
+
+### ****phasespace#.dat
+ 
+* Binned phase space data
+* Position (1D), velocity (1D), f (?), Vi (?), fx, fy, fz
+
+### ****totalvdf#.dat
+ 
+* Velocity distribution function
+* total velocity, total vdf, Vx, fx, Vy, fy, Vz, fz
+
+### gmon.out
+ 
+* binary file
+
+### restart#.out
+ 
+* A few values without labels
+
+### Output_Field#.dat
+ 
+* A variety of values
+* Position (2D), number density, charge density, potential energy, kinetic energy, total energy
+
+### pmesh.out
+ 
+* position of edges
+* 2D mesh, X and Y
+
+### cmesh.out
+ 
+* position of centers
+* 2D mesh, X and Y
+
+### connect.out
+ 
+* Empty
+
+## Viewing results
+
+* GnuPlot 
+	* Linux: install gnuplot (using version 4.6 here) and gnuplot-x11 (for graphics)
+* Use script plot.sh for quick plotting to view results
+
+
+
