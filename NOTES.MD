@@ -6,8 +6,11 @@ get into the underlying operation of the code, not just how to run it.
 
 ## Installation
 
-[Intel MKL Link Advisor](https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/)
+[Intel MKL Link Advisor]
+(https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/)
+
 MKL install location: /opt/intel/parallel_studio_xe_2016.3.067
+
 See note: Academic Research Performance Libraries from Intel
 
 ### To install
@@ -241,12 +244,14 @@ Modules to load
 4. mkl/11.3.3
 
 Interactive node: `qsub -I -V -A sheehanj_fluxod -q fluxod -l nodes=1:ppn=1,pmem=1gb,walltime=1:00:00,qos=flux`
+
 alias: `interact`
 
 
 ### On Stampede
 
 `ssh sheehanj@stampede.tacc.utexas.edu`
+
 interactive: `idev -m 15`  (15 minutes)
 
 load module cxx11
